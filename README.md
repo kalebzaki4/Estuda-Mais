@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+Estuda+ Frontend
+!(https://placehold.co/800x400/8a2be2/ffffff?text=Estuda%2B+Dashboard+Preview)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bem-vindo ao repositório frontend do Estuda+! Este é um aplicativo web construído com React e Tailwind CSS, projetado para ajudar estudantes a organizar seus estudos, explorar cursos, monitorar seu progresso e interagir com uma comunidade.
 
-## Available Scripts
+🌟 Funcionalidades
+Autenticação: Páginas de Login e Registro de usuários.
 
-In the project directory, you can run:
+Dashboard (Início): Visão geral diária do estudo, resumo dos seus tópicos de estudo e atividade recente dos amigos.
 
-### `npm start`
+Explorar Cursos: Uma seção para descobrir diversos cursos, todos listados como "Grátis" e com links para recursos externos (como YouTube).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Estudar (Pomodoro): Um temporizador Pomodoro integrado para ajudar na gestão do tempo de estudo e foco.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Progresso: Acompanhe suas métricas de estudo, cursos concluídos, pontos de XP e conquistas.
 
-### `npm test`
+Perfil: Visualize e edite suas informações de perfil, e veja sua lista de amigos.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Resumo de Estudos Detalhado: Clique em um tópico de estudo no resumo para ver detalhes específicos, atividades recentes e links relevantes do YouTube.
 
-### `npm run build`
+Design Responsivo: Interface adaptável para dispositivos móveis e desktop.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Tema Escuro: Paleta de cores focada em preto, roxo e branco para uma experiência visual agradável.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🚀 Tecnologias Utilizadas
+React: Biblioteca JavaScript para construção de interfaces de usuário.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Tailwind CSS: Framework CSS utilitário para estilização rápida e responsiva.
 
-### `npm run eject`
+gh-pages: Pacote para facilitar o deploy no GitHub Pages.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+🛠️ Como Configurar e Rodar o Projeto Localmente
+Siga estas instruções para ter uma cópia do projeto rodando em sua máquina local para desenvolvimento e testes.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Pré-requisitos
+Certifique-se de ter o Node.js e o npm (ou Yarn) instalados em sua máquina.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Node.js (inclui npm)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Instalação
+Clone o repositório:
 
-## Learn More
+git clone https://github.com/<SEU_USUARIO_GITHUB>/estuda-mais-frontend.git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+(Substitua <SEU_USUARIO_GITHUB> pelo seu nome de usuário do GitHub e estuda-mais-frontend pelo nome real do seu repositório).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Navegue até o diretório do projeto frontend:
 
-### Code Splitting
+cd estuda-mais-frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+(Ou cd C:\Users\kalebzaki\Downloads\Estuda +\estuda-mais\frontend se você estiver navegando a partir de um diretório diferente).
 
-### Analyzing the Bundle Size
+Instale as dependências:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+npm install
+# ou
+# yarn install
 
-### Making a Progressive Web App
+Rodar o Aplicativo
+No diretório do projeto (estuda-mais-frontend), você pode rodar o aplicativo em modo de desenvolvimento:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+npm start
+# ou
+# npm run dev (se o seu projeto foi criado com Vite)
 
-### Advanced Configuration
+O aplicativo será aberto automaticamente no seu navegador em http://localhost:3000 (ou outra porta, se a 3000 estiver ocupada). As alterações no código serão recarregadas automaticamente.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+🌐 Deploy no GitHub Pages
+Este projeto está configurado para ser facilmente implantado no GitHub Pages usando o pacote gh-pages.
 
-### Deployment
+Certifique-se de que o pacote gh-pages está instalado:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+npm install --save-dev gh-pages
 
-### `npm run build` fails to minify
+Configure o homepage no package.json:
+Abra package.json e adicione a linha homepage (se ainda não estiver lá), substituindo SEU_USUARIO_GITHUB e NOME_DO_REPOSITORIO pelos valores corretos:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+{
+  "name": "estuda-mais-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://<SEU_USUARIO_GITHUB>.github.io/<NOME_DO_REPOSITORIO>",
+  "dependencies": {
+    // ...
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  // ...
+}
+
+(Se você usa Vite, mude gh-pages -d build para gh-pages -d dist)
+
+Faça o deploy:
+Certifique-se de que todas as suas alterações estão comitadas e enviadas para a branch main (ou master) no GitHub. Então, execute:
+
+npm run deploy
+
+Este comando irá construir seu aplicativo e enviá-lo para a branch gh-pages do seu repositório. Seu aplicativo estará disponível no URL configurado em homepage em poucos minutos.
+
+🎨 Paleta de Cores
+O projeto utiliza uma paleta de cores consistente para um tema escuro:
+
+Pretos/Cinzas Escuros: #121212 (primário), #1e1e1e (secundário), #2a2a2a (terciário) para fundos e elementos.
+
+Roxos: #8a2be2 (principal), #6a1aae (escuro), #b366ff (claro) para destaque e interatividade.
+
+Branco: #ffffff para texto principal e elementos de alto contraste.
+
+Cinza Claro: #b0b0b0 para texto mutado/secundário.
+
+Bordas: #444444.
+
+Cores de Feedback: Verde para sucesso (#28a745), vermelho para erro (#dc3545), azul para informação (#007bff).
+
+🤝 Contribuição
+Contribuições são bem-vindas! Se você tiver sugestões ou quiser reportar um problema, por favor, abra uma issue neste repositório.
+
+📄 Licença
+Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
