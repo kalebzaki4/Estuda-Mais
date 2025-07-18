@@ -1,0 +1,27 @@
+/* src/index.css */
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Apply Inter font globally and set default background/text colors */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif; /* Ensure Inter is applied */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1a1a1a; /* Dark background for the entire page */
+  color: #f0f0f0; /* Light text color for the entire page */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Ensure the root div takes full height and applies global styling */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
