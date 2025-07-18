@@ -1,125 +1,103 @@
-Estuda+ Frontend
-!(https://placehold.co/800x400/8a2be2/ffffff?text=Estuda%2B+Dashboard+Preview)
+# Estuda+ Frontend: O Seu Companheiro de Estudos Interativo e Inteligente
 
-Bem-vindo ao repositório frontend do Estuda+! Este é um aplicativo web construído com React e Tailwind CSS, projetado para ajudar estudantes a organizar seus estudos, explorar cursos, monitorar seu progresso e interagir com uma comunidade.
+Bem-vindo ao repositório frontend do **Estuda+**! Esta aplicação web interativa, desenvolvida com **React** e estilizada com **Tailwind CSS**, foi meticulosamente criada para transformar a sua experiência de aprendizagem. Com um design intuitivo, foco na usabilidade e funcionalidades inteligentes, o Estuda+ é o seu parceiro definitivo para organizar, explorar e monitorar o seu percurso de estudos de forma eficaz e motivadora.
 
-🌟 Funcionalidades
-Autenticação: Páginas de Login e Registro de usuários.
+## 📚 Tabela de Conteúdos
 
-Dashboard (Início): Visão geral diária do estudo, resumo dos seus tópicos de estudo e atividade recente dos amigos.
+1.  [🌟 Destaques e Funcionalidades Principais](#-destaques-e-funcionalidades-principais)
+2.  [🚀 Tecnologias e Ferramentas](#-tecnologias-e-ferramentas)
+3.  [🛠️ Como Configurar e Rodar o Projeto Localmente](#%EF%B8%8F-como-configurar-e-rodar-o-projeto-localmente)
+    * [Pré-requisitos](#pré-requisitos)
+    * [Instalação](#instalação)
+    * [Rodar o Aplicativo](#rodar-o-aplicativo)
+4.  [🌐 Deploy no GitHub Pages](#-deploy-no-github-pages)
+5.  [🎨 Paleta de Cores](#-paleta-de-cores)
+6.  [📈 Status do Projeto e Próximos Passos](#-status-do-projeto-e-próximos-passos)
+7.  [🤝 Contribuição](#-contribuição)
+8.  [📄 Licença](#-licença)
+9.  [📧 Contacto](#-contacto)
 
-Explorar Cursos: Uma seção para descobrir diversos cursos, todos listados como "Grátis" e com links para recursos externos (como YouTube).
+## 🌟 Destaques e Funcionalidades Principais
 
-Estudar (Pomodoro): Um temporizador Pomodoro integrado para ajudar na gestão do tempo de estudo e foco.
+O Estuda+ oferece um conjunto robusto e crescente de funcionalidades, desenhadas para otimizar a sua jornada de estudos:
 
-Progresso: Acompanhe suas métricas de estudo, cursos concluídos, pontos de XP e conquistas.
+* **Autenticação Segura**:
+    * **Login**: Acesso simplificado e seguro à sua conta pessoal.
+    * **Registo**: Crie a sua nova conta de forma rápida e intuitiva, com validações inteligentes.
+* **Dashboard Dinâmico e Personalizado (Início)**:
+    * **Visão Geral Diária**: Um resumo conciso do seu tempo de estudo e progresso recente.
+    * **Resumo dos Seus Tópicos de Estudo**: Acompanhe visualmente o tempo dedicado e o progresso em cada área de conhecimento.
+    * **Atividade Recente dos Amigos**: Mantenha-se conectado e motivado pela atividade de estudo da sua rede de amigos.
+* **Exploração de Cursos Abrangente**:
+    * Uma vasta biblioteca de cursos, com foco em recursos "Grátis" e curadoria de conteúdo.
+    * Integração direta com plataformas externas, como vídeos do YouTube, para um aprendizado flexível e diversificado.
+* **Temporizador Pomodoro Integrado**:
+    * Ferramenta de gestão de tempo essencial para otimizar o foco, combater a procrastinação e aumentar a produtividade nas suas sessões de estudo.
+* **Monitorização Detalhada do Progresso**:
+    * Métricas claras e visualizações sobre o seu tempo total de estudo, cursos concluídos e pontos de experiência (XP) acumulados.
+    * Secção de **Conquistas** para celebrar os seus marcos de aprendizagem e manter a motivação em alta.
+* **Gestão de Perfil de Utilizador**:
+    * Visualize e edite as suas informações pessoais e preferências.
+    * Acompanhe a sua lista de amigos e as suas interações.
+* **Resumo de Estudos Detalhado e Interativo**:
+    * Aprofunde-se em qualquer tópico de estudo com uma página dedicada que exibe:
+        * Uma descrição aprofundada do conteúdo.
+        * Um registo cronológico das suas atividades recentes de estudo.
+        * Links diretos para recursos relevantes no YouTube, cuidadosamente selecionados.
+* **Design Responsivo e Acessível**:
+    * A interface adapta-se perfeitamente a qualquer tamanho de ecrã, proporcionando uma excelente experiência de utilizador em dispositivos desktop, tablets e telemóveis.
+* **Tema Escuro Moderno e Ergonómico**:
+    * Uma paleta de cores cuidadosamente selecionada (preto, roxo e branco) para reduzir a fadiga ocular durante longas sessões de estudo e proporcionar uma estética elegante e focada.
 
-Perfil: Visualize e edite suas informações de perfil, e veja sua lista de amigos.
+## 🚀 Tecnologias e Ferramentas
 
-Resumo de Estudos Detalhado: Clique em um tópico de estudo no resumo para ver detalhes específicos, atividades recentes e links relevantes do YouTube.
+Este projeto foi construído utilizando as seguintes tecnologias de ponta, escolhidas pela sua robustez, flexibilidade e capacidade de criar experiências de utilizador de alta qualidade:
 
-Design Responsivo: Interface adaptável para dispositivos móveis e desktop.
+* **Frontend**:
+    * **React**: A biblioteca JavaScript líder para a construção de interfaces de utilizador dinâmicas e reativas. Escolhido pela sua arquitetura baseada em componentes, que facilita a manutenção e escalabilidade do código.
+    * **Tailwind CSS**: Um framework CSS utilitário que permite a construção rápida de designs personalizados e responsivos diretamente no HTML, promovendo um desenvolvimento ágil e consistente.
+    * **gh-pages**: Uma ferramenta simples e eficaz para automatizar o processo de deploy do frontend diretamente para o GitHub Pages.
 
-Tema Escuro: Paleta de cores focada em preto, roxo e branco para uma experiência visual agradável.
+## 🛠️ Como Configurar e Rodar o Projeto Localmente
 
-🚀 Tecnologias Utilizadas
-React: Biblioteca JavaScript para construção de interfaces de usuário.
+Siga estas instruções detalhadas para ter uma cópia do projeto rodando em sua máquina local para desenvolvimento e testes.
 
-Tailwind CSS: Framework CSS utilitário para estilização rápida e responsiva.
+### Pré-requisitos
 
-gh-pages: Pacote para facilitar o deploy no GitHub Pages.
+Certifique-se de ter as seguintes ferramentas instaladas no seu sistema:
 
-🛠️ Como Configurar e Rodar o Projeto Localmente
-Siga estas instruções para ter uma cópia do projeto rodando em sua máquina local para desenvolvimento e testes.
+* **Node.js** (versão 14 ou superior, que inclui o npm): [Baixar Node.js](https://nodejs.org/en/)
+* **Git**: [Baixar Git](https://git-scm.com/downloads)
 
-Pré-requisitos
-Certifique-se de ter o Node.js e o npm (ou Yarn) instalados em sua máquina.
+### Instalação
 
-Node.js (inclui npm)
+1.  **Clone o repositório:**
+    Abra o seu terminal (PowerShell, Git Bash, CMD, etc.) e execute o comando para clonar o projeto:
+    ```bash
+    git clone [https://github.com/](https://github.com/)<SEU_USUARIO_GITHUB>/estuda-mais-frontend.git
+    ```
+    *(Substitua `<SEU_USUARIO_GITHUB>` pelo seu nome de utilizador do GitHub e `estuda-mais-frontend` pelo nome real do seu repositório).*
 
-Instalação
-Clone o repositório:
+2.  **Navegue até o diretório do projeto frontend:**
+    Após a clonagem, entre na pasta do projeto:
+    ```bash
+    cd estuda-mais-frontend
+    ```
+    *(Se você clonou para um diretório específico, como `C:\Users\kalebzaki\Downloads\Estuda +\estuda-mais\frontend`, certifique-se de navegar para ele).*
 
-git clone https://github.com/<SEU_USUARIO_GITHUB>/estuda-mais-frontend.git
+3.  **Instale as dependências:**
+    No diretório do projeto, instale todas as bibliotecas e pacotes necessários:
+    ```bash
+    npm install
+    # Ou, se preferir Yarn:
+    # yarn install
+    ```
 
-(Substitua <SEU_USUARIO_GITHUB> pelo seu nome de usuário do GitHub e estuda-mais-frontend pelo nome real do seu repositório).
+### Rodar o Aplicativo
 
-Navegue até o diretório do projeto frontend:
+No diretório do projeto (`estuda-mais-frontend`), você pode iniciar o aplicativo em modo de desenvolvimento:
 
-cd estuda-mais-frontend
-
-(Ou cd C:\Users\kalebzaki\Downloads\Estuda +\estuda-mais\frontend se você estiver navegando a partir de um diretório diferente).
-
-Instale as dependências:
-
-npm install
-# ou
-# yarn install
-
-Rodar o Aplicativo
-No diretório do projeto (estuda-mais-frontend), você pode rodar o aplicativo em modo de desenvolvimento:
-
+```bash
 npm start
-# ou
-# npm run dev (se o seu projeto foi criado com Vite)
-
-O aplicativo será aberto automaticamente no seu navegador em http://localhost:3000 (ou outra porta, se a 3000 estiver ocupada). As alterações no código serão recarregadas automaticamente.
-
-🌐 Deploy no GitHub Pages
-Este projeto está configurado para ser facilmente implantado no GitHub Pages usando o pacote gh-pages.
-
-Certifique-se de que o pacote gh-pages está instalado:
-
-npm install --save-dev gh-pages
-
-Configure o homepage no package.json:
-Abra package.json e adicione a linha homepage (se ainda não estiver lá), substituindo SEU_USUARIO_GITHUB e NOME_DO_REPOSITORIO pelos valores corretos:
-
-{
-  "name": "estuda-mais-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://<SEU_USUARIO_GITHUB>.github.io/<NOME_DO_REPOSITORIO>",
-  "dependencies": {
-    // ...
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  // ...
-}
-
-(Se você usa Vite, mude gh-pages -d build para gh-pages -d dist)
-
-Faça o deploy:
-Certifique-se de que todas as suas alterações estão comitadas e enviadas para a branch main (ou master) no GitHub. Então, execute:
-
-npm run deploy
-
-Este comando irá construir seu aplicativo e enviá-lo para a branch gh-pages do seu repositório. Seu aplicativo estará disponível no URL configurado em homepage em poucos minutos.
-
-🎨 Paleta de Cores
-O projeto utiliza uma paleta de cores consistente para um tema escuro:
-
-Pretos/Cinzas Escuros: #121212 (primário), #1e1e1e (secundário), #2a2a2a (terciário) para fundos e elementos.
-
-Roxos: #8a2be2 (principal), #6a1aae (escuro), #b366ff (claro) para destaque e interatividade.
-
-Branco: #ffffff para texto principal e elementos de alto contraste.
-
-Cinza Claro: #b0b0b0 para texto mutado/secundário.
-
-Bordas: #444444.
-
-Cores de Feedback: Verde para sucesso (#28a745), vermelho para erro (#dc3545), azul para informação (#007bff).
-
-🤝 Contribuição
-Contribuições são bem-vindas! Se você tiver sugestões ou quiser reportar um problema, por favor, abra uma issue neste repositório.
-
-📄 Licença
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+# Ou, se o seu projeto foi criado com Vite:
+# npm run dev
