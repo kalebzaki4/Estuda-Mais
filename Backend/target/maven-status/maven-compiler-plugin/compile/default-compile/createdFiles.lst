@@ -1,0 +1,9 @@
+com\estudamais\api_estudos\service\AuthService.class
+com\estudamais\api_estudos\controller\ProfileController.class
+com\estudamais\api_estudos\model\User.class
+com\estudamais\api_estudos\repository\UserRepository.class
+com\estudamais\api_estudos\ApiEstudosApplication.class
+com\estudamais\api_estudos\config\SecurityConfig.class
+com\estudamais\api_estudos\controller\TopicoEstudoController.class
+com\estudamais\api_estudos\model\TopicoEstudo.class
+com\estudamais\api_estudos\controller\AuthController.class

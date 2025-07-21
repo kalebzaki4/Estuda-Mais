@@ -1,0 +1,9 @@
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\ApiEstudosApplication.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\config\SecurityConfig.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\controller\AuthController.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\controller\ProfileController.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\controller\TopicoEstudoController.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\model\TopicoEstudo.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\model\User.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\repository\UserRepository.java
+C:\Users\kalebzaki\Documents\GitHub\Estuda-Mais\Backend\src\main\java\com\estudamais\api_estudos\service\AuthService.java

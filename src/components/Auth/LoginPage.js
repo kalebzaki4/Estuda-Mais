@@ -1,35 +1,56 @@
-// src/components/Auth/LoginPage.js
 import React, { useState } from 'react';
-import RegisterPage from './RegisterPage'; // Certifique-se de que RegisterPage está no mesmo diretório
+import RegisterPage from './RegisterPage';
 
 export default function LoginPage({ onLoginSuccess }) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [showRegister, setShowRegister] = useState(false);
+
+  const BASE_URL = 'http://localhost:8080';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setMessage('');
 
-    if (!email || !password) {
+    if (!username || !password) {
       setMessage('Por favor, preencha todos os campos.');
       return;
     }
 
     try {
-      // Simulação de login - em um backend real, você faria uma chamada API aqui
-      if (email === 'test@example.com' && password === 'password123') {
-        setMessage('Login bem-sucedido! Redirecionando...');
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        // Login bem-sucedido (status 200 OK)
+        const data = await response.json(); // Espera JSON para sucesso
+        setMessage(`Login bem-sucedido! Bem-vindo, ${data.user || username}!`);
         setTimeout(() => {
           onLoginSuccess();
         }, 1000);
       } else {
-        setMessage('Email ou senha incorretos.');
+        // Erro no login (ex: 401 Unauthorized, 400 Bad Request)
+        let errorMessage = 'Ocorreu um erro. Tente novamente.';
+        try {
+          // Tenta ler a resposta como JSON primeiro
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          // Se falhar, lê a resposta como texto simples
+          const errorText = await response.text();
+          errorMessage = errorText || errorMessage;
+        }
+        setMessage(errorMessage);
       }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      setMessage('Ocorreu um erro ao tentar fazer login. Tente novamente.');
+      setMessage('Ocorreu um erro de rede. Verifique se o backend está rodando e acessível.');
     }
   };
 
@@ -48,9 +69,7 @@ export default function LoginPage({ onLoginSuccess }) {
   }
 
   return (
-    // Container principal com fundo escuro
     <div className="min-h-screen flex items-center justify-center bg-bg-dark-primary text-text-light p-4 font-inter antialiased">
-      {/* Card de login com fundo secundário escuro e sombra */}
       <div className="bg-bg-dark-secondary p-8 rounded-lg shadow-custom-dark-lg max-w-md w-full border border-border-dark transform hover:scale-[1.01] transition duration-300 ease-in-out">
         <h2 className="text-4xl font-extrabold text-accent-purple mb-6 text-center tracking-wide">Estuda+</h2>
         <p className="text-xl font-semibold text-text-light mb-8 text-center">Acesse sua conta</p>
@@ -63,16 +82,16 @@ export default function LoginPage({ onLoginSuccess }) {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-text-muted-dark text-sm font-medium mb-2">
-              Email
+            <label htmlFor="username" className="block text-text-muted-dark text-sm font-medium mb-2">
+              Nome de Usuário
             </label>
             <input
-              type="email"
-              id="email"
+              type="text"
+              id="username"
               className="w-full px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-md text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple focus:border-accent-purple transition duration-200"
-              placeholder="seuemail@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Seu nome de usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>

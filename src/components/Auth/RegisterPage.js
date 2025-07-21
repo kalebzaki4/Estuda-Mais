@@ -1,21 +1,20 @@
-// src/components/Auth/RegisterPage.js
 import React, { useState } from 'react';
 
-// RegisterPage component handles new user registration
 export default function RegisterPage({ onRegisterSuccess, onGoToLogin }) {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState(''); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  // Handles the form submission for registration
+
+  const BASE_URL = 'http://localhost:8080';
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    setMessage(''); // Clear previous messages
+    setMessage('');
 
-    // Basic client-side validation
-    if (!name || !email || !password || !confirmPassword) {
+    if (!username || !email || !password || !confirmPassword) {
       setMessage('Por favor, preencha todos os campos.');
       return;
     }
@@ -30,37 +29,40 @@ export default function RegisterPage({ onRegisterSuccess, onGoToLogin }) {
       return;
     }
 
-    // Simulate API call to backend for registration
-    // In a real application, this would be a fetch or axios call to your Java backend
     try {
-      // Placeholder for actual API call
-      // const response = await fetch('/api/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, password }),
-      // });
-      // const data = await response.json();
+      const response = await fetch(`${BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }), 
+      });
 
-      // For demonstration:
-      // Simulate successful registration after a delay
-      setMessage('Cadastro bem-sucedido! Redirecionando para o login...');
-      setTimeout(() => {
-        onRegisterSuccess(); // Call this to go back to login or directly to dashboard
-      }, 1500);
-
-      // In a real app, you might want to automatically log them in or redirect to login page
-      // For now, we'll just go back to the login page.
-
+      if (response.ok && response.status === 201) {
+        const data = await response.json();
+        setMessage(`Usuário ${data.username} registrado com sucesso! Faça login agora.`);
+        setTimeout(() => {
+          onRegisterSuccess(); 
+        }, 1500);
+      } else {
+        const errorText = await response.text(); 
+        console.error('Erro na resposta do backend:', errorText);
+        let errorMessage = 'Ocorreu um erro ao registrar. Tente novamente.';
+        if (errorText.includes("Nome de usuário ou email já em uso.")) {
+            errorMessage = "Nome de usuário ou email já em uso.";
+        } else if (response.status === 400) {
+            errorMessage = "Dados inválidos fornecidos.";
+        }
+        setMessage(errorMessage);
+      }
     } catch (error) {
       console.error('Erro ao registrar:', error);
-      setMessage('Ocorreu um erro ao tentar registrar. Tente novamente.');
+      setMessage('Ocorreu um erro de rede. Verifique se o backend está rodando.');
     }
   };
 
   return (
-    // Full screen container with dark background
     <div className="min-h-screen flex items-center justify-center bg-bg-dark-primary text-text-light p-4 font-inter antialiased">
-      {/* Registration form container with dark background, rounded corners, subtle shadow, and border */}
       <div className="bg-bg-dark-secondary p-8 rounded-lg shadow-custom-dark-lg max-w-md w-full border border-border-dark transform hover:scale-[1.01] transition duration-300 ease-in-out">
         <h2 className="text-4xl font-extrabold text-accent-purple mb-6 text-center tracking-wide">Estuda+</h2>
         <p className="text-xl font-semibold text-text-light mb-8 text-center">Crie sua conta</p>
@@ -73,16 +75,16 @@ export default function RegisterPage({ onRegisterSuccess, onGoToLogin }) {
 
         <form onSubmit={handleRegister} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-text-muted-dark text-sm font-medium mb-2">
-              Nome Completo
+            <label htmlFor="username" className="block text-text-muted-dark text-sm font-medium mb-2">
+              Nome de Usuário
             </label>
             <input
               type="text"
-              id="name"
+              id="username"
               className="w-full px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-md text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple focus:border-accent-purple transition duration-200"
-              placeholder="Seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Escolha um nome de usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
