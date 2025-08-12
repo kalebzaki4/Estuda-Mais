@@ -1,13 +1,13 @@
-package com.estudamais.api_estudos;
+package com.estudamais.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiEstudosApplication {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiEstudosApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }

@@ -1,10 +1,10 @@
-package com.estudamais.api_estudos;
+package com.estudamais.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiEstudosApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
