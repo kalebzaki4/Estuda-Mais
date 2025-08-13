@@ -15,29 +15,21 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario salvar(Usuario usuario) {
+    public Usuario cadastrarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
-    }
-
-    public Optional<Usuario> buscarPorId(Long id) {
-        return usuarioRepository.findById(id);
     }
 
     public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 
-    // Método para a lógica de login
-    public Optional<Usuario> login(String email, String senha) {
+    public Optional<Usuario> realizarLogin(String email, String senha) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
 
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            if (usuario.getSenha().equals(senha)) {
-                return usuarioOptional;
-            }
+        if (usuarioOptional.isPresent() && usuarioOptional.get().getSenha().equals(senha)) {
+            return usuarioOptional;
         }
 
-        return Optional.empty(); // Retorna vazio se o login falhar
+        return Optional.empty();
     }
 }
