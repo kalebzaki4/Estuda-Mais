@@ -22,6 +22,9 @@ public class Disciplina {
     // Construtores, Getters e Setters
     public Disciplina() {}
 
+    public Disciplina(Long id, String história) {
+    }
+
     public Long getId() {
         return id;
     }

@@ -86,4 +86,11 @@ public class SessaoDeEstudo {
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
     }
+
+    public void setTitulo(String estudoDeMatemática) {
+    }
+
+    public String getTitulo() {
+        return null;
+    }
 }
