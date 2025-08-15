@@ -45,14 +45,57 @@ class SessaoDeEstudoServiceTest {
 
     @Test
     void buscarPorId_DeveRetornarSessao_QuandoSessaoExiste() {
+        // Arrange
+        Long id = 1L;
+        SessaoDeEstudo sessaoExistente = new SessaoDeEstudo();
+        sessaoExistente.setId(id);
+        when(sessaoDeEstudoRepository.findById(id)).thenReturn(Optional.of(sessaoExistente));
+
+        // Act
+        Optional<SessaoDeEstudo> sessaoEncontrada = sessaoDeEstudoService.buscarPorId(id);
+
+        // Assert
+        assertTrue(sessaoEncontrada.isPresent());
+        assertEquals(id, sessaoEncontrada.get().getId());
+
+        verify(sessaoDeEstudoRepository, times(1)).findById(id);
     }
 
     @Test
     void buscarPorId_DeveRetornarVazio_QuandoSessaoNaoExiste() {
+        // Arrange
+        Long id = 1L;
+        when(sessaoDeEstudoRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Act
+        Optional<SessaoDeEstudo> sessaoEncontrada = sessaoDeEstudoService.buscarPorId(id);
+
+        // Assert
+        assertFalse(sessaoEncontrada.isPresent());
+
+        verify(sessaoDeEstudoRepository, times(1)).findById(id);
     }
 
     @Test
     void buscarTodasAsSessoes_DeveRetornarListaDeSessoes() {
+        // Arrange
+        SessaoDeEstudo sessao1 = new SessaoDeEstudo();
+        sessao1.setTitulo("Estudo de Física");
+        SessaoDeEstudo sessao2 = new SessaoDeEstudo();
+        sessao2.setTitulo("Estudo de Química");
+        List<SessaoDeEstudo> sessoes = Arrays.asList(sessao1, sessao2);
+        when(sessaoDeEstudoRepository.findAll()).thenReturn(sessoes);
+
+        // Act
+        List<SessaoDeEstudo> sessoesEncontradas = sessaoDeEstudoService.buscarTodasAsSessoes();
+
+        // Assert
+        assertNotNull(sessoesEncontradas);
+        assertEquals(2, sessoesEncontradas.size());
+        assertEquals("Estudo de Física", sessoesEncontradas.get(0).getTitulo());
+        assertEquals("Estudo de Química", sessoesEncontradas.get(1).getTitulo());
+
+        verify(sessaoDeEstudoRepository, times(1)).findAll();
 
     }
 }
