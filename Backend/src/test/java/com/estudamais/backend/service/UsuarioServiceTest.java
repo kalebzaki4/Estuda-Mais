@@ -29,7 +29,7 @@ class UsuarioServiceTest {
         usuario = new Usuario();
         usuario.setEmail("teste@email.com");
         usuario.setSenha("senha123");
-        usuario.setId(1L); 
+        usuario.setId(1L);
     }
 
 
