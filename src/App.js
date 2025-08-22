@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import LoginPage from './components/Auth/LoginPage';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -7,13 +6,18 @@ import StudyPage from './components/Study/StudyPage';
 import ProgressPage from './components/Progress/ProgressPage';
 import ProfilePage from './components/Profile/ProfilePage';
 import StudySummaryPage from './components/StudySummary/StudySummaryPage';
-import StudyTopicDetailPage from './components/StudySummary/StudyTopicDetailPage'; // NEW: Import StudyTopicDetailPage
+import StudyTopicDetailPage from './components/StudySummary/StudyTopicDetailPage';
+import { AuthProvider, useAuth } from './contexts/AuthContext'; 
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  return <AppContent />;
+}
+
+function AppContent() {
+  const { isLoggedIn, logout, currentUser, loading } = useAuth();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [selectedStudyTopic, setSelectedStudyTopic] = useState(null); // NEW: State to hold selected topic data
+  const [selectedStudyTopic, setSelectedStudyTopic] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,26 +28,34 @@ export default function App() {
   }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
     setActiveSection('dashboard');
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setActiveSection('dashboard');
   };
 
-  // NEW: Function to handle selecting a study topic and navigating to its detail page
   const handleSelectStudyTopic = (topic) => {
     setSelectedStudyTopic(topic);
     setActiveSection('study-topic-detail');
   };
 
-  // NEW: Function to go back from the study topic detail page to the summary page
   const handleBackToStudySummary = () => {
-    setSelectedStudyTopic(null); // Clear selected topic
+    setSelectedStudyTopic(null);
     setActiveSection('study-summary');
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-bg-dark-primary flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-accent-purple border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-text-light text-lg">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!isLoggedIn) {
     return <LoginPage onLoginSuccess={handleLoginSuccess} />;
@@ -118,12 +130,22 @@ export default function App() {
           </nav>
         )}
 
-        <button
-          onClick={handleLogout}
-          className="px-5 py-2 bg-accent-purple-dark hover:bg-accent-purple text-text-light font-semibold rounded-full shadow-custom-dark transition duration-300 ease-in-out transform hover:scale-105"
-        >
-          Sair
-        </button>
+        <div className="flex items-center gap-4">
+          {currentUser && (
+            <div className="hidden md:flex items-center gap-2">
+              <div className="w-8 h-8 bg-accent-purple rounded-full flex items-center justify-center text-sm font-bold text-text-light">
+                {currentUser.name.charAt(0)}
+              </div>
+              <span className="text-text-light">{currentUser.name}</span>
+            </div>
+          )}
+          <button
+            onClick={handleLogout}
+            className="px-5 py-2 bg-accent-purple-dark hover:bg-accent-purple text-text-light font-semibold rounded-full shadow-custom-dark transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Sair
+          </button>
+        </div>
       </header>
 
       <main className={`flex-grow p-4 md:p-6 lg:p-8 ${isMobile ? 'pb-20' : ''} overflow-y-auto`}>

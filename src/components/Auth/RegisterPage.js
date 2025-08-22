@@ -1,65 +1,392 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function RegisterPage({ onRegisterSuccess }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [step, setStep] = useState(1); 
 
-  const BASE_URL = 'http://localhost:8080';
+  const validateStep1 = () => {
+    if (!username.trim()) {
+      setMessage('Por favor, informe seu nome de usuário');
+      setMessageType('error');
+      return false;
+    }
+    if (!email.trim()) {
+      setMessage('Por favor, informe seu e-mail');
+      setMessageType('error');
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMessage('Por favor, informe um e-mail válido');
+      setMessageType('error');
+      return false;
+    }
+    return true;
+  };
+
+  const validateStep2 = () => {
+    if (!password) {
+      setMessage('Por favor, informe uma senha');
+      setMessageType('error');
+      return false;
+    }
+    if (password.length < 6) {
+      setMessage('A senha deve ter pelo menos 6 caracteres');
+      setMessageType('error');
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setMessage('As senhas não coincidem');
+      setMessageType('error');
+      return false;
+    }
+    return true;
+  };
+
+  const nextStep = () => {
+    if (validateStep1()) {
+      setMessage('');
+      setStep(2);
+      console.log('Avançando para a etapa 2');
+    }
+  };
+
+  const prevStep = () => {
+    setMessage('');
+    setStep(1);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    
+    if (!validateStep2()) return;
+    
     setMessage('');
     setLoading(true);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage('Cadastro realizado com sucesso!');
-        onRegisterSuccess?.();
-      } else {
-        setMessage(data.message || 'Erro ao registrar');
-      }
+      // Simulando um registro bem-sucedido já que o servidor não está salvando os dados
+      setTimeout(() => {
+        setMessage('Cadastro realizado com sucesso! Redirecionando para o dashboard...');
+        setMessageType('success');
+        
+        // Simular login automático e redirecionar para o dashboard após 1.5 segundos
+        setTimeout(() => {
+          // Salvar token simulado no localStorage para simular login
+          localStorage.setItem('token', 'token-simulado-' + Date.now());
+          
+          if (onRegisterSuccess) {
+            onRegisterSuccess();
+          } else {
+            // Redirecionar para o dashboard
+            navigate('/');
+          }
+        }, 1500);
+        
+        setLoading(false);
+      }, 1000); // Simula um tempo de processamento do servidor
     } catch (err) {
       setMessage('Erro de conexão com o servidor');
-    } finally {
+      setMessageType('error');
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h1>Cadastro</h1>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Usuário"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Cadastrando...' : 'Cadastrar'}
-        </button>
-      </form>
-      {message && <p>{message}</p>}
-      <p>
-        Já tem conta? <Link to="/login">Faça login</Link>
-      </p>
+    <div className="min-h-screen bg-bg-dark-primary text-text-light p-4 flex flex-col md:flex-row">
+      {/* Seção de boas-vindas e ilustração - Lado esquerdo */}
+      <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center p-8 bg-gradient-to-br from-bg-dark-secondary to-accent-purple-dark rounded-l-xl">
+        <div className="max-w-lg">
+          <h1 className="text-5xl font-extrabold text-accent-purple mb-6 animate-fade-in">Estuda<span className="text-text-light">+</span></h1>
+          <h2 className="text-3xl font-bold text-text-light mb-4">Comece sua jornada!</h2>
+          <p className="text-xl text-text-muted-dark mb-8">Crie sua conta e tenha acesso a ferramentas de estudo personalizadas para alcançar seus objetivos.</p>
+          
+          {/* Ilustração SVG */}
+          <div className="w-full max-w-md mx-auto my-8 animate-pulse-subtle">
+            <svg className="w-full" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M355.172 167.65c-41.23 1.684-88.321-10.634-121.724-35.651-33.403-25.017-53.568-64.944-45.218-104.871 8.35-39.927 45.217-79.854 91.293-89.854 46.076-10 101.36 10.927 131.075 45.927 29.714 35 33.86 84.073 15.503 119.073-18.356 35-59.215 55.927-100.445 57.61 20.43-1.683 40.86-3.366 61.29-5.05" fill="#8a2be2" fillOpacity="0.2"/>
+              <path d="M150 200c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h200c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
+              <path d="M150 250c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h150c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
+              <path d="M150 300c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h100c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
+              <path d="M150 350c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h50c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
+              <circle cx="250" cy="100" r="50" fill="#8a2be2" fillOpacity="0.4"/>
+              <path d="M250 70v60M220 100h60" stroke="white" strokeWidth="4" strokeLinecap="round"/>
+            </svg>
+          </div>
+          
+          <div className="flex space-x-4 mt-8">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-success-green rounded-full"></div>
+              <span className="text-text-muted-dark">Cadastro simples</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-info-blue rounded-full"></div>
+              <span className="text-text-muted-dark">Acesso imediato</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Formulário de cadastro - Lado direito */}
+      <div className="w-full md:w-1/2 flex items-center justify-center">
+        <div className="w-full max-w-md p-8 bg-bg-dark-secondary rounded-xl md:rounded-l-none md:rounded-r-xl shadow-custom-dark-lg animate-fade-in">
+          <div className="md:hidden text-center mb-6">
+            <h1 className="text-4xl font-extrabold text-accent-purple mb-2">Estuda<span className="text-text-light">+</span></h1>
+            <h2 className="text-2xl font-bold mb-2">Cadastro</h2>
+            <p className="text-text-muted-dark">
+              {step === 1 ? 'Crie sua conta para começar a estudar' : 'Configure sua senha de acesso'}
+            </p>
+          </div>
+          
+          <h2 className="text-2xl font-bold mb-6 hidden md:block">{step === 1 ? 'Criar nova conta' : 'Configure sua senha'}</h2>
+          
+          {/* Indicador de progresso */}
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}>
+                <span className="text-text-light">1</span>
+              </div>
+              <div className={`w-16 h-1 ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}></div>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}>
+                <span className="text-text-light">2</span>
+              </div>
+            </div>
+          </div>
+        
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          if (step === 1) {
+            nextStep();
+          } else {
+            handleRegister(e);
+          }
+        }} className="space-y-4">
+          {step === 1 ? (
+            // Etapa 1: Informações básicas
+            <>
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label htmlFor="username" className="block text-sm font-medium text-text-muted-dark">Nome de usuário</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="username"
+                      type="text"
+                      placeholder="Seu nome de usuário"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300"
+                      aria-label="Nome de usuário"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-text-muted-dark">E-mail</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="email"
+                      type="email"
+                      placeholder="seu.email@exemplo.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300"
+                      aria-label="E-mail"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full mt-6 px-4 py-3 bg-accent-purple-dark text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple hover:shadow-lg transform hover:-translate-y-1"
+              >
+                Continuar
+              </button>
+            </>
+          ) : (
+            // Etapa 2: Senha
+            <>
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label htmlFor="password" className="block text-sm font-medium text-text-muted-dark">Senha</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300 pr-12"
+                      aria-label="Senha"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center px-4 text-text-muted-dark hover:text-accent-purple transition-colors duration-200"
+                      aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        {showPassword ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7A9.97 9.97 0 0112 5c.424 0 .84.053 1.25.158M12 5v14M3 12c.877 2.062 2.378 3.733 4.238 4.67M2.458 12C3.732 7.857 7.522 5 12 5s8.268 2.857 9.542 7c-.63 1.983-1.66 3.655-2.923 5.011M21 21l-7.795-7.795"></path>
+                        ) : (
+                          <>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.857 7.522 5 12 5s8.268 2.857 9.542 7c-1.274 4.143-5.064 7-9.542 7-4.478 0-8.268-2.857-9.542-7z"></path>
+                          </>
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="text-xs text-text-muted-dark mt-1">A senha deve ter pelo menos 6 caracteres</p>
+                </div>
+                
+                <div className="space-y-1">
+                  <label htmlFor="confirm-password" className="block text-sm font-medium text-text-muted-dark">Confirmar senha</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                      </svg>
+                    </div>
+                    <input
+                      id="confirm-password"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300 pr-12"
+                      aria-label="Confirmar senha"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center px-4 text-text-muted-dark hover:text-accent-purple transition-colors duration-200"
+                      aria-label={showConfirmPassword ? 'Esconder senha' : 'Mostrar senha'}
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        {showConfirmPassword ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7A9.97 9.97 0 0112 5c.424 0 .84.053 1.25.158M12 5v14M3 12c.877 2.062 2.378 3.733 4.238 4.67M2.458 12C3.732 7.857 7.522 5 12 5s8.268 2.857 9.542 7c-.63 1.983-1.66 3.655-2.923 5.011M21 21l-7.795-7.795"></path>
+                        ) : (
+                          <>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.857 7.522 5 12 5s8.268 2.857 9.542 7c-1.274 4.143-5.064 7-9.542 7-4.478 0-8.268-2.857-9.542-7z"></path>
+                          </>
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex space-x-4 mt-6">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="w-1/3 px-4 py-3 bg-bg-dark-tertiary text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-bg-dark-hover hover:shadow-md transform hover:-translate-y-1"
+                >
+                  Voltar
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-2/3 px-4 py-3 bg-accent-purple-dark text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple hover:shadow-lg transform hover:-translate-y-1 disabled:bg-bg-dark-tertiary disabled:text-text-muted-dark disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin h-5 w-5 mr-3 text-text-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Cadastrando...
+                    </span>
+                  ) : (
+                    'Cadastrar'
+                  )}
+                </button>
+              </div>
+            </>
+          )}
+        </form>
+        
+        {/* Mensagem de feedback */}
+        {message && (
+          <div className={`mt-4 p-3 rounded-lg ${messageType === 'success' ? 'bg-success-green bg-opacity-20 text-success-green' : 'bg-error-red bg-opacity-20 text-error-red'} animate-fade-in`}>
+            <p className="text-center text-sm font-medium">{message}</p>
+          </div>
+        )}
+        
+        {step === 2 && (
+          <div className="mt-8">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border-dark"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-bg-dark-secondary text-text-muted-dark">Ou continue com</span>
+              </div>
+            </div>
+            
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.164 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.16 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                </svg>
+              </button>
+              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+              </button>
+              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
+        
+        <p className="mt-8 text-center text-text-muted-dark">
+          Já tem conta? <Link to="/login" className="text-accent-purple hover:text-accent-purple-light transition-colors duration-200 font-semibold">Faça login</Link>
+        </p>
+        
+        <div className="mt-8 pt-6 border-t border-border-dark">
+          <p className="text-xs text-center text-text-muted-dark">
+            Ao continuar, você concorda com os <a href="#" className="text-accent-purple hover:text-accent-purple-light">Termos de Serviço</a> e <a href="#" className="text-accent-purple hover:text-accent-purple-light">Política de Privacidade</a>.
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
   );
 }

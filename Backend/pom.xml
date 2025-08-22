@@ -14,7 +14,7 @@
     <name>backend</name>
     <description>Estuda Mais backend service</description>
     <properties>
-        <java.version>24</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <!-- As dependências que já existiam... -->
