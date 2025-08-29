@@ -1,26 +1,25 @@
 package com.estudamais.backend.controller;
 
 import com.estudamais.backend.model.Usuario;
-import com.estudamais.backend.service.UsuarioService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.estudamais.backend.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    @GetMapping
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
     }
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = usuarioService.cadastrarUsuario(usuario);
-        return ResponseEntity.ok(novoUsuario);
+    @PostMapping
+    public Usuario criar(@RequestBody Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 }

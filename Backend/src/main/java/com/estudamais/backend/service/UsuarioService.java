@@ -4,6 +4,7 @@ import com.estudamais.backend.model.Usuario;
 import com.estudamais.backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,9 @@ public class UsuarioService {
         }
 
         return Optional.empty();
+    }
+
+    public List<Usuario> buscarTodosUsuarios() {
+        return List.of();
     }
 }
