@@ -9,31 +9,64 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Validated
 public class AuthController {
-
-    // Método de login com retorno JSON
+    
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private UsuarioService usuarioService;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+    
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        if ("teste".equals(loginRequest.getUsername()) && "12345".equals(loginRequest.getPassword())) {
-            LoginResponse response = new LoginResponse("Login bem-sucedido!", loginRequest.getUsername());
-            return ResponseEntity.ok(response);
-        } else {
-            LoginResponse errorResponse = new LoginResponse("Credenciais inválidas.", null);
-            return ResponseEntity.status(401).body(errorResponse);
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginRequest.getEmail(), 
+                    loginRequest.getPassword()
+                )
+            );
+            
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String jwt = jwtUtil.generateJwtToken(userDetails);
+            
+            Optional<Usuario> usuario = usuarioService.buscarPorEmail(loginRequest.getEmail());
+            
+            return ResponseEntity.ok(new AuthResponse(
+                jwt,
+                usuario.get().getId(),
+                usuario.get().getNome()
+            ));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse("Credenciais inválidas"));
         }
     }
-
-    // Método de registro, agora retornando um JSON com status 201 Created
+    
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        if (registerRequest.getUsername() == null || registerRequest.getUsername().isEmpty()
-                || registerRequest.getPassword() == null || registerRequest.getPassword().isEmpty()
-                || registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest().body("Todos os campos são obrigatórios.");
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+        if (usuarioService.buscarPorEmail(registerRequest.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .body(new ErrorResponse("Email já está em uso"));
         }
-
-        RegisterResponse response = new RegisterResponse("Usuário cadastrado com sucesso!", registerRequest.getUsername());
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        
+        Usuario usuario = new Usuario();
+        usuario.setNome(registerRequest.getUsername());
+        usuario.setEmail(registerRequest.getEmail());
+        usuario.setSenha(passwordEncoder.encode(registerRequest.getPassword()));
+        usuario.setDataDeCadastro(LocalDate.now());
+        
+        Usuario usuarioSalvo = usuarioService.cadastrarUsuario(usuario);
+        
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(new RegisterResponse("Usuário cadastrado com sucesso!", usuarioSalvo.getNome()));
     }
 }
 
