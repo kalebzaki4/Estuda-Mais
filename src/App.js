@@ -7,10 +7,20 @@ import ProgressPage from './components/Progress/ProgressPage';
 import ProfilePage from './components/Profile/ProfilePage';
 import StudySummaryPage from './components/StudySummary/StudySummaryPage';
 import StudyTopicDetailPage from './components/StudySummary/StudyTopicDetailPage';
-import { AuthProvider, useAuth } from './contexts/AuthContext'; 
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { PomodoroProvider } from './contexts/PomodoroContext';
+import { StudyProvider } from './contexts/StudyContext'; 
 
 export default function App() {
-  return <AppContent />;
+  return (
+    <AuthProvider>
+      <StudyProvider>
+        <PomodoroProvider>
+          <AppContent />
+        </PomodoroProvider>
+      </StudyProvider>
+    </AuthProvider>
+  );
 }
 
 function AppContent() {

@@ -1,5 +1,6 @@
 // src/components/StudySummary/StudyTopicDetailPage.js
 import React from 'react';
+import { useStudy } from '../../contexts/StudyContext';
 
 export default function StudyTopicDetailPage({ topicData, onBack }) {
   if (!topicData) {

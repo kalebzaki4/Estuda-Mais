@@ -1,79 +1,48 @@
 // src/components/StudySummary/StudySummaryPage.js
 import React from 'react';
+import { useStudy } from '../../contexts/StudyContext';
 
 export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelectTopic como prop
-  // Dados de exemplo para o resumo dos seus estudos
-  // Adicionei mais detalhes para a página de detalhes do tópico
-  const yourStudySummary = [
-    {
-      id: 1,
-      topic: 'Desenvolvimento Web',
-      lastSession: 'Hoje',
-      time: '3h 15min',
-      progress: '85%',
-      avatar: 'W',
-      description: 'Este tópico abrange HTML, CSS, JavaScript, React e Node.js. Foco em construir aplicações web modernas e responsivas.',
-      sessionsCompleted: 15,
-      recentActivities: [
-        { date: '18/07/2025', duration: '1h 30min', whatWasStudied: 'React Hooks e Context API', type: 'Estudo' },
-        { date: '17/07/2025', duration: '45min', whatWasStudied: 'Tailwind CSS para responsividade', type: 'Revisão' },
-      ],
-      youtubeLinks: [
-        { title: 'Curso Completo de React para Iniciantes', url: 'https://www.youtube.com/watch?v=some-react-course' },
-        { title: 'Guia Definitivo de Tailwind CSS', url: 'https://www.youtube.com/watch?v=some-tailwind-guide' },
-      ],
-    },
-    {
-      id: 2,
-      topic: 'Estruturas de Dados',
-      lastSession: 'Ontem',
-      time: '2h 00min',
-      progress: '60%',
-      avatar: 'D',
-      description: 'Estudo de estruturas de dados fundamentais como listas, árvores, grafos e algoritmos de busca e ordenação. Essencial para otimização de código.',
-      sessionsCompleted: 10,
-      recentActivities: [
-        { date: '17/07/2025', duration: '1h 00min', whatWasStudied: 'Algoritmos de Ordenação (QuickSort)', type: 'Estudo' },
-        { date: '16/07/2025', duration: '1h 00min', whatWasStudied: 'Listas Encadeadas e Pilhas', type: 'Estudo' },
-      ],
-      youtubeLinks: [
-        { title: 'Estruturas de Dados e Algoritmos em Python', url: 'https://www.youtube.com/watch?v=some-data-structures' },
-      ],
-    },
-    {
-      id: 3,
-      topic: 'Inteligência Artificial',
-      lastSession: '2 dias atrás',
-      time: '1h 45min',
-      progress: '40%',
-      avatar: 'AI',
-      description: 'Introdução aos conceitos de Inteligência Artificial, Machine Learning e Deep Learning. Explorando redes neurais e processamento de linguagem natural.',
-      sessionsCompleted: 7,
-      recentActivities: [
-        { date: '16/07/2025', duration: '45min', whatWasStudied: 'Introdução a Redes Neurais', type: 'Estudo' },
-        { date: '15/07/2025', duration: '1h 00min', whatWasStudied: 'Fundamentos de Machine Learning', type: 'Estudo' },
-      ],
-      youtubeLinks: [
-        { title: 'Desvendando a Inteligência Artificial', url: 'https://www.youtube.com/watch?v=some-ai-intro' },
-      ],
-    },
-    {
-      id: 4,
-      topic: 'Design UX/UI',
-      lastSession: '3 dias atrás',
-      time: '1h 00min',
-      progress: '25%',
-      avatar: 'UX',
-      description: 'Aprendizado sobre a experiência do usuário (UX) e interface do usuário (UI), incluindo princípios de design, wireframing e prototipagem com Figma.',
-      sessionsCompleted: 5,
-      recentActivities: [
-        { date: '15/07/2025', duration: '1h 00min', whatWasStudied: 'Princípios de UX Design', type: 'Estudo' },
-      ],
-      youtubeLinks: [
-        { title: 'Curso Rápido de UI/UX Design', url: 'https://www.youtube.com/watch?v=some-uxui-course' },
-      ],
-    },
-  ];
+  const { studies, loading } = useStudy();
+  
+  // Função para formatar o tempo total em horas e minutos
+  const formatTotalTime = (totalMinutes) => {
+    if (!totalMinutes) return '0min';
+    
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    
+    if (hours > 0) {
+      return `${hours}h ${minutes > 0 ? `${minutes}min` : ''}`;
+    }
+    return `${minutes}min`;
+  };
+  
+  // Função para formatar a data da última sessão
+  const formatLastSession = (dateString) => {
+    if (!dateString) return 'Nunca';
+    
+    const lastSession = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - lastSession);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return 'Hoje';
+    } else if (diffDays === 1) {
+      return 'Ontem';
+    } else if (diffDays < 7) {
+      return `${diffDays} dias atrás`;
+    } else {
+      return lastSession.toLocaleDateString('pt-BR');
+    }
+  };
+  
+  // Função para obter a inicial do tópico para o avatar
+  const getTopicInitial = (title) => {
+    if (!title) return '?';
+    return title.charAt(0).toUpperCase();
+  };
 
   return (
     // Main container for the study summary page with dark background
@@ -87,36 +56,71 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
 
       {/* Grid for study summary cards */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in delay-200">
-        {yourStudySummary.map((item) => (
-          // Individual study summary card with dark secondary background, now clickable
-          <div
-            key={item.id}
-            onClick={() => onSelectTopic(item)} // Passa o item completo ao clicar
-            className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark flex flex-col items-start transform transition duration-300 hover:scale-[1.02] cursor-pointer"
-          >
-            <div className="flex items-center mb-4 w-full">
-              {/* Avatar/Icon for the topic */}
-              <div className="w-12 h-12 bg-accent-purple-dark rounded-full flex items-center justify-center text-xl font-bold text-text-light flex-shrink-0 mr-4">
-                {item.avatar}
-              </div>
-              <div className="flex-grow">
-                <h3 className="text-2xl font-bold text-text-light mb-1">{item.topic}</h3>
-                <p className="text-text-muted-dark text-sm">Última sessão: {item.lastSession}</p>
-              </div>
-            </div>
-            <div className="w-full flex justify-between items-end mt-auto pt-4 border-t border-border-dark">
-              {/* Study time and progress */}
-              <div className="text-left">
-                <p className="text-text-light text-lg font-semibold">Tempo Total:</p>
-                <p className="text-accent-purple text-2xl font-extrabold">{item.time}</p>
-              </div>
-              <div className="text-right">
-                <p className="text-text-light text-lg font-semibold">Progresso:</p>
-                <p className="text-info-blue text-2xl font-extrabold">{item.progress}</p>
-              </div>
+        {loading ? (
+          <div className="col-span-full flex justify-center items-center py-12">
+            <div className="animate-pulse flex flex-col items-center">
+              <div className="w-12 h-12 border-4 border-accent-purple border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-text-light text-lg">Carregando estudos...</p>
             </div>
           </div>
-        ))}
+        ) : studies.length > 0 ? (
+          studies.map((study) => {
+            // Preparar os dados para exibição
+            const studyItem = {
+              id: study.id,
+              topic: study.title,
+              lastSession: formatLastSession(study.lastSession),
+              time: formatTotalTime(study.totalTimeMinutes),
+              progress: `${study.progress || 0}%`,
+              avatar: getTopicInitial(study.title),
+              description: study.description || 'Sem descrição disponível.',
+              startTime: study.startTime,
+              totalTimeMinutes: study.totalTimeMinutes || 0,
+              // Campos adicionais para compatibilidade com a página de detalhes
+              sessionsCompleted: 0,
+              recentActivities: [],
+              youtubeLinks: []
+            };
+            
+            return (
+              <div
+                key={studyItem.id}
+                onClick={() => onSelectTopic(studyItem)}
+                className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark flex flex-col items-start transform transition duration-300 hover:scale-[1.02] cursor-pointer"
+              >
+                <div className="flex items-center mb-4 w-full">
+                  {/* Avatar/Icon for the topic */}
+                  <div className="w-12 h-12 bg-accent-purple-dark rounded-full flex items-center justify-center text-xl font-bold text-text-light flex-shrink-0 mr-4">
+                    {studyItem.avatar}
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="text-2xl font-bold text-text-light mb-1">{studyItem.topic}</h3>
+                    <p className="text-text-muted-dark text-sm">Última sessão: {studyItem.lastSession}</p>
+                  </div>
+                </div>
+                <div className="w-full flex justify-between items-end mt-auto pt-4 border-t border-border-dark">
+                  {/* Study time and progress */}
+                  <div className="text-left">
+                    <p className="text-text-light text-lg font-semibold">Tempo Total:</p>
+                    <p className="text-accent-purple text-2xl font-extrabold">{studyItem.time}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-text-light text-lg font-semibold">Progresso:</p>
+                    <p className="text-info-blue text-2xl font-extrabold">{studyItem.progress}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="col-span-full bg-bg-dark-secondary p-8 rounded-xl shadow-custom-dark border border-border-dark text-center">
+            <svg className="w-16 h-16 mx-auto mb-4 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            <h3 className="text-2xl font-bold text-text-light mb-2">Nenhum estudo encontrado</h3>
+            <p className="text-text-muted-dark mb-6">Você ainda não iniciou nenhum estudo. Vá para a seção "Estudar" para começar.</p>
+          </div>
+        )}
       </section>
 
       <div className="text-center mt-12 animate-fade-in delay-300">

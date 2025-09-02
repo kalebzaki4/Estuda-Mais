@@ -102,62 +102,65 @@ export default function RegisterPage({ onRegisterSuccess }) {
   };
 
   return (
-    <div className="min-h-screen bg-bg-dark-primary text-text-light p-4 flex flex-col md:flex-row">
+    <div className="min-h-screen bg-bg-dark-primary text-text-light flex flex-col md:flex-row">
       {/* Seção de boas-vindas e ilustração - Lado esquerdo */}
-      <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center p-8 bg-gradient-to-br from-bg-dark-secondary to-accent-purple-dark rounded-l-xl">
+      <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center p-8 bg-accent-purple rounded-none">
         <div className="max-w-lg">
-          <h1 className="text-5xl font-extrabold text-accent-purple mb-6 animate-fade-in">Estuda<span className="text-text-light">+</span></h1>
-          <h2 className="text-3xl font-bold text-text-light mb-4">Comece sua jornada!</h2>
-          <p className="text-xl text-text-muted-dark mb-8">Crie sua conta e tenha acesso a ferramentas de estudo personalizadas para alcançar seus objetivos.</p>
+          <h1 className="text-4xl font-bold text-white mb-4 animate-fade-in">Estuda<span className="text-white">+</span></h1>
+          <h2 className="text-2xl font-bold text-white mb-2">Comece sua jornada!</h2>
+          <p className="text-base text-white/80 mb-6">Crie sua conta e tenha acesso a ferramentas de estudo personalizadas para alcançar seus objetivos.</p>
           
-          {/* Ilustração SVG */}
-          <div className="w-full max-w-md mx-auto my-8 animate-pulse-subtle">
-            <svg className="w-full" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M355.172 167.65c-41.23 1.684-88.321-10.634-121.724-35.651-33.403-25.017-53.568-64.944-45.218-104.871 8.35-39.927 45.217-79.854 91.293-89.854 46.076-10 101.36 10.927 131.075 45.927 29.714 35 33.86 84.073 15.503 119.073-18.356 35-59.215 55.927-100.445 57.61 20.43-1.683 40.86-3.366 61.29-5.05" fill="#8a2be2" fillOpacity="0.2"/>
-              <path d="M150 200c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h200c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
-              <path d="M150 250c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h150c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
-              <path d="M150 300c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h100c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
-              <path d="M150 350c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15h50c8.284 0 15 6.716 15 15 0 8.284-6.716 15-15 15H150z" fill="#8a2be2" fillOpacity="0.3"/>
-              <circle cx="250" cy="100" r="50" fill="#8a2be2" fillOpacity="0.4"/>
-              <path d="M250 70v60M220 100h60" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-            </svg>
+          {/* Ilustração estilo Lyfta */}
+          <div className="w-full max-w-md mx-auto my-8 relative">
+            <div className="absolute -top-10 -left-10 w-20 h-20 bg-white/10 rounded-full"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full"></div>
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                </svg>
+              </div>
+              <div className="w-full h-6 bg-white/20 rounded-full mb-4"></div>
+              <div className="w-3/4 h-6 bg-white/20 rounded-full mb-4"></div>
+              <div className="w-1/2 h-6 bg-white/20 rounded-full"></div>
+            </div>
           </div>
           
           <div className="flex space-x-4 mt-8">
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-success-green rounded-full"></div>
-              <span className="text-text-muted-dark">Cadastro simples</span>
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <span className="text-white/80 text-sm">Cadastro simples</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-info-blue rounded-full"></div>
-              <span className="text-text-muted-dark">Acesso imediato</span>
+              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <span className="text-white/80 text-sm">Acesso imediato</span>
             </div>
           </div>
         </div>
       </div>
       
       {/* Formulário de cadastro - Lado direito */}
-      <div className="w-full md:w-1/2 flex items-center justify-center">
-        <div className="w-full max-w-md p-8 bg-bg-dark-secondary rounded-xl md:rounded-l-none md:rounded-r-xl shadow-custom-dark-lg animate-fade-in">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-8">
+        <div className="w-full max-w-md p-6 bg-bg-dark-secondary rounded-xl shadow-custom-dark-lg animate-fade-in">
           <div className="md:hidden text-center mb-6">
-            <h1 className="text-4xl font-extrabold text-accent-purple mb-2">Estuda<span className="text-text-light">+</span></h1>
-            <h2 className="text-2xl font-bold mb-2">Cadastro</h2>
-            <p className="text-text-muted-dark">
+            <h1 className="text-4xl font-bold text-accent-purple mb-2">Estuda<span className="text-text-light">+</span></h1>
+            <h2 className="text-xl font-semibold mb-2">Cadastro</h2>
+            <p className="text-text-muted-dark text-sm">
               {step === 1 ? 'Crie sua conta para começar a estudar' : 'Configure sua senha de acesso'}
             </p>
           </div>
           
-          <h2 className="text-2xl font-bold mb-6 hidden md:block">{step === 1 ? 'Criar nova conta' : 'Configure sua senha'}</h2>
+          <h2 className="text-xl font-semibold mb-6 hidden md:block">{step === 1 ? 'Criar nova conta' : 'Configure sua senha'}</h2>
           
-          {/* Indicador de progresso */}
-          <div className="flex justify-center mb-8">
+          {/* Indicador de progresso estilo Lyfta */}
+          <div className="flex justify-center mb-6">
             <div className="flex items-center">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}>
-                <span className="text-text-light">1</span>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300 shadow-md`}>
+                <span className="text-white font-medium">1</span>
               </div>
-              <div className={`w-16 h-1 ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}></div>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300`}>
-                <span className="text-text-light">2</span>
+              <div className={`w-20 h-1 ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary/50'} transition-colors duration-300`}></div>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-accent-purple' : 'bg-bg-dark-tertiary'} transition-colors duration-300 shadow-md`}>
+                <span className="text-white font-medium">2</span>
               </div>
             </div>
           </div>
@@ -175,10 +178,10 @@ export default function RegisterPage({ onRegisterSuccess }) {
             <>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label htmlFor="username" className="block text-sm font-medium text-text-muted-dark">Nome de usuário</label>
+                  <label htmlFor="username" className="block text-sm font-medium text-text-light">Nome de usuário</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-5 h-5 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                       </svg>
                     </div>
@@ -188,7 +191,7 @@ export default function RegisterPage({ onRegisterSuccess }) {
                       placeholder="Seu nome de usuário"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300"
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border-0 rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple transition-all duration-300"
                       aria-label="Nome de usuário"
                       required
                     />
@@ -196,10 +199,10 @@ export default function RegisterPage({ onRegisterSuccess }) {
                 </div>
                 
                 <div className="space-y-1">
-                  <label htmlFor="email" className="block text-sm font-medium text-text-muted-dark">E-mail</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-text-light">E-mail</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-5 h-5 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                       </svg>
                     </div>
@@ -209,7 +212,7 @@ export default function RegisterPage({ onRegisterSuccess }) {
                       placeholder="seu.email@exemplo.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300"
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border-0 rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple transition-all duration-300"
                       aria-label="E-mail"
                       required
                     />
@@ -218,7 +221,7 @@ export default function RegisterPage({ onRegisterSuccess }) {
               </div>
               <button
                 type="submit"
-                className="w-full mt-6 px-4 py-3 bg-accent-purple-dark text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple hover:shadow-lg transform hover:-translate-y-1"
+                className="w-full mt-6 px-4 py-3 bg-accent-purple text-white font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple/90 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 Continuar
               </button>
@@ -228,10 +231,10 @@ export default function RegisterPage({ onRegisterSuccess }) {
             <>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label htmlFor="password" className="block text-sm font-medium text-text-muted-dark">Senha</label>
+                  <label htmlFor="password" className="block text-sm font-medium text-text-light">Senha</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-5 h-5 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                       </svg>
                     </div>
@@ -241,7 +244,7 @@ export default function RegisterPage({ onRegisterSuccess }) {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300 pr-12"
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border-0 rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple transition-all duration-300 pr-12"
                       aria-label="Senha"
                       required
                     />
@@ -267,10 +270,10 @@ export default function RegisterPage({ onRegisterSuccess }) {
                 </div>
                 
                 <div className="space-y-1">
-                  <label htmlFor="confirm-password" className="block text-sm font-medium text-text-muted-dark">Confirmar senha</label>
+                  <label htmlFor="confirm-password" className="block text-sm font-medium text-text-light">Confirmar senha</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-5 h-5 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                       </svg>
                     </div>
@@ -280,7 +283,7 @@ export default function RegisterPage({ onRegisterSuccess }) {
                       placeholder="••••••••"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border border-border-dark rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-accent-purple transition-all duration-300 pr-12"
+                      className="w-full pl-10 px-4 py-3 bg-bg-dark-tertiary border-0 rounded-lg text-text-light placeholder-text-muted-dark focus:outline-none focus:ring-1 focus:ring-accent-purple transition-all duration-300 pr-12"
                       aria-label="Confirmar senha"
                       required
                     />
@@ -309,14 +312,14 @@ export default function RegisterPage({ onRegisterSuccess }) {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="w-1/3 px-4 py-3 bg-bg-dark-tertiary text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-bg-dark-hover hover:shadow-md transform hover:-translate-y-1"
+                  className="w-1/3 px-4 py-3 bg-bg-dark-tertiary text-text-light font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-bg-dark-hover hover:shadow-md"
                 >
                   Voltar
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-2/3 px-4 py-3 bg-accent-purple-dark text-text-light font-semibold rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple hover:shadow-lg transform hover:-translate-y-1 disabled:bg-bg-dark-tertiary disabled:text-text-muted-dark disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-2/3 px-4 py-3 bg-accent-purple text-white font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-accent-purple/90 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <span className="flex items-center justify-center">
@@ -335,40 +338,40 @@ export default function RegisterPage({ onRegisterSuccess }) {
           )}
         </form>
         
-        {/* Mensagem de feedback */}
+        {/* Mensagem de feedback estilo Lyfta */}
         {message && (
-          <div className={`mt-4 p-3 rounded-lg ${messageType === 'success' ? 'bg-success-green bg-opacity-20 text-success-green' : 'bg-error-red bg-opacity-20 text-error-red'} animate-fade-in`}>
+          <div className={`mt-4 p-3 rounded-lg ${messageType === 'success' ? 'bg-success-green/10 text-success-green' : 'bg-error-red/10 text-error-red'} animate-fade-in`}>
             <p className="text-center text-sm font-medium">{message}</p>
           </div>
         )}
         
         {step === 2 && (
-          <div className="mt-8">
+          <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border-dark"></div>
+                <div className="w-full border-t border-border-dark/30"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-bg-dark-secondary text-text-muted-dark">Ou continue com</span>
+                <span className="px-3 bg-bg-dark-secondary text-text-muted-dark">Ou continue com</span>
               </div>
             </div>
             
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <div className="mt-6 flex justify-center space-x-4">
+              <button type="button" className="w-12 h-12 flex justify-center items-center rounded-full bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200 shadow-md">
+                <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.164 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.16 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
                 </svg>
               </button>
-              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <button type="button" className="w-12 h-12 flex justify-center items-center rounded-full bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200 shadow-md">
+                <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                   <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                   <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                 </svg>
               </button>
-              <button type="button" className="flex justify-center items-center py-2 px-4 border border-border-dark rounded-md shadow-sm bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+              <button type="button" className="w-12 h-12 flex justify-center items-center rounded-full bg-bg-dark-tertiary hover:bg-bg-dark-hover transition-colors duration-200 shadow-md">
+                <svg className="h-5 w-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
                 </svg>
               </button>
@@ -376,13 +379,13 @@ export default function RegisterPage({ onRegisterSuccess }) {
           </div>
         )}
         
-        <p className="mt-8 text-center text-text-muted-dark">
-          Já tem conta? <Link to="/login" className="text-accent-purple hover:text-accent-purple-light transition-colors duration-200 font-semibold">Faça login</Link>
+        <p className="mt-6 text-center text-text-muted-dark text-sm">
+          Já tem conta? <Link to="/login" className="text-accent-purple hover:text-accent-purple-light transition-colors duration-200 font-medium">Faça login</Link>
         </p>
         
-        <div className="mt-8 pt-6 border-t border-border-dark">
+        <div className="mt-6 pt-4 border-t border-border-dark/30">
           <p className="text-xs text-center text-text-muted-dark">
-            Ao continuar, você concorda com os <a href="#" className="text-accent-purple hover:text-accent-purple-light">Termos de Serviço</a> e <a href="#" className="text-accent-purple hover:text-accent-purple-light">Política de Privacidade</a>.
+            Ao continuar, você concorda com os <a href="#" className="text-accent-purple hover:text-accent-purple-light">Termos</a> e <a href="#" className="text-accent-purple hover:text-accent-purple-light">Privacidade</a>.
           </p>
         </div>
       </div>
