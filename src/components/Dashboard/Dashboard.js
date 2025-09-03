@@ -221,7 +221,7 @@ export default function Dashboard() {
             </button>
             <button className="w-10 h-10 bg-bg-dark-tertiary rounded-full flex items-center justify-center">
               <svg className="w-5 h-5 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065z"></path>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
             </button>
@@ -310,41 +310,70 @@ export default function Dashboard() {
                     <div className="mb-3">
                       <div className="flex justify-between items-center mb-1">
                         <span className="text-text-muted-dark text-xs">Progresso</span>
-                      <span className="text-text-light text-xs font-bold">{item.progress}%</span>
-                    </div>
-                    <div className="w-full bg-bg-dark-tertiary rounded-full h-1.5">
-                      <div 
-                        className="bg-accent-purple h-1.5 rounded-full" 
-                        style={{ width: `${item.progress}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-bg-dark-tertiary rounded-full flex items-center justify-center">
-                        <svg className="w-3 h-3 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                        <span className="text-text-light text-xs font-bold">{study.progress || 0}%</span>
                       </div>
-                      <span className="text-text-muted-dark text-xs">{item.lastStudy}</span>
+                      <div className="w-full bg-bg-dark-tertiary rounded-full h-1.5">
+                        <div 
+                          className="bg-accent-purple h-1.5 rounded-full" 
+                          style={{ width: `${study.progress || 0}%` }}
+                        ></div>
+                      </div>
                     </div>
-                    <button className="px-4 py-1.5 bg-accent-purple text-white text-xs font-bold rounded-lg shadow-md">
-                      Iniciar
-                    </button>
+                  
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-6 h-6 bg-bg-dark-tertiary rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                          </svg>
+                        </div>
+                        <span className="text-text-muted-dark text-xs">{formatLastSession(study.lastSession)}</span>
+                      </div>
+                      <button className="px-4 py-1.5 bg-accent-purple text-white text-xs font-bold rounded-lg shadow-md">
+                        Iniciar
+                      </button>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark text-center">
+                  <svg className="w-12 h-12 mx-auto mb-4 text-text-muted-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  <h3 className="text-xl font-bold text-text-light mb-2">Nenhum estudo encontrado</h3>
+                  <p className="text-text-muted-dark mb-4">Você ainda não iniciou nenhum estudo.</p>
+                  <button className="px-4 py-2 bg-accent-purple text-white text-sm font-bold rounded-lg hover:bg-accent-purple-dark transition-colors duration-200 shadow-md">
+                    Iniciar um estudo
+                  </button>
                 </div>
-              ))}
+              )
             </div>
           </div>
           
-          {/* Atividades Recentes dos Amigos */}
+          {/* Seção de Dicas de Estudo */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-text-light">Atividades dos Amigos</h2>
-              <button className="text-accent-purple text-sm font-bold">
-                Ver todas
-              </button>
+              <h2 className="text-xl font-bold text-text-light">Dicas de Estudo</h2>
+            </div>
+            
+            <div className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark">
+               <div className="flex items-start space-x-4">
+                 <div className="w-12 h-12 bg-accent-purple rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
+                   💡
+                 </div>
+                 <div>
+                   <h3 className="text-lg font-bold text-text-light mb-2">Técnica Pomodoro</h3>
+                   <p className="text-text-muted-dark text-sm mb-4">
+                     A técnica Pomodoro é um método de gerenciamento de tempo que sugere trabalhar em blocos de 25 minutos, seguidos por intervalos de 5 minutos. Após 4 blocos, faça uma pausa mais longa de 15-30 minutos.
+                   </p>
+                   <div className="flex flex-wrap gap-2">
+                     <span className="px-3 py-1 bg-bg-dark-tertiary rounded-full text-text-muted-dark text-xs">Produtividade</span>
+                     <span className="px-3 py-1 bg-bg-dark-tertiary rounded-full text-text-muted-dark text-xs">Foco</span>
+                     <span className="px-3 py-1 bg-bg-dark-tertiary rounded-full text-text-muted-dark text-xs">Gerenciamento de tempo</span>
+                   </div>
+                 </div>
+               </div>
+              </div>
             </div>
             
             <div className="bg-bg-dark-secondary rounded-2xl shadow-lg border border-border-dark overflow-hidden">
@@ -482,7 +511,7 @@ export default function Dashboard() {
                   key={friend.id} 
                   className="flex-shrink-0 w-32 bg-bg-dark-secondary p-3 rounded-2xl flex flex-col items-center"
                 >
-                  <div className="w-16 h-16 bg-accent-purple rounded-full flex items-center justify-center text-white font-bold text-xl mb-2 shadow-inner">
+                  <div className="w-16 h-16 bg-accent-purple rounded-full flex items-center justify-center text-white text-xl mb-2 shadow-inner">
                     {friend.avatar}
                   </div>
                   <h3 className="text-text-light font-bold text-sm text-center">{friend.name.split(' ')[0]}</h3>
