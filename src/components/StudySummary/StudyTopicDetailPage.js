@@ -1,4 +1,3 @@
-// src/components/StudySummary/StudyTopicDetailPage.js
 import React from 'react';
 import { useStudy } from '../../contexts/StudyContext';
 
@@ -20,7 +19,6 @@ export default function StudyTopicDetailPage({ topicData, onBack }) {
   }
 
   return (
-    // Main container for the study topic detail page with dark background
     <div className="min-h-[calc(100vh-160px)] p-4 md:p-6 lg:p-8 bg-bg-dark-primary text-text-light">
       <button
         onClick={onBack}
@@ -30,7 +28,6 @@ export default function StudyTopicDetailPage({ topicData, onBack }) {
         Voltar para Meus Resumos
       </button>
 
-      {/* Header section with topic title and avatar */}
       <div className="bg-bg-dark-secondary p-8 rounded-xl shadow-custom-dark-lg border border-border-dark mb-8 animate-fade-in">
         <div className="flex items-center mb-4">
           <div className="w-16 h-16 bg-accent-purple-dark rounded-full flex items-center justify-center text-3xl font-bold text-text-light flex-shrink-0 mr-6">
@@ -48,7 +45,6 @@ export default function StudyTopicDetailPage({ topicData, onBack }) {
         </p>
       </div>
 
-      {/* Key Metrics Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in delay-100">
         <div className="bg-bg-dark-tertiary p-6 rounded-lg shadow-custom-dark border border-border-dark text-center">
           <p className="text-text-muted-dark text-sm">Tempo Total de Estudo</p>
@@ -64,7 +60,6 @@ export default function StudyTopicDetailPage({ topicData, onBack }) {
         </div>
       </section>
 
-      {/* Recent Activities Section */}
       {topicData.recentActivities && topicData.recentActivities.length > 0 && (
         <section className="bg-bg-dark-secondary p-8 rounded-xl shadow-custom-dark-lg border border-border-dark mb-8 animate-fade-in delay-200">
           <h3 className="text-2xl font-bold text-text-light mb-6 font-inter">Atividades Recentes</h3>
@@ -82,7 +77,6 @@ export default function StudyTopicDetailPage({ topicData, onBack }) {
         </section>
       )}
 
-      {/* YouTube Links Section */}
       {topicData.youtubeLinks && topicData.youtubeLinks.length > 0 && (
         <section className="bg-bg-dark-secondary p-8 rounded-xl shadow-custom-dark-lg border border-border-dark animate-fade-in delay-300">
           <h3 className="text-2xl font-bold text-text-light mb-6 font-inter">Recursos no YouTube</h3>
