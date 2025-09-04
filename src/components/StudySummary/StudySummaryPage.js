@@ -1,11 +1,9 @@
-// src/components/StudySummary/StudySummaryPage.js
 import React from 'react';
 import { useStudy } from '../../contexts/StudyContext';
 
-export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelectTopic como prop
+export default function StudySummaryPage({ onSelectTopic }) { 
   const { studies, loading } = useStudy();
-  
-  // Função para formatar o tempo total em horas e minutos
+
   const formatTotalTime = (totalMinutes) => {
     if (!totalMinutes) return '0min';
     
@@ -17,8 +15,7 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
     }
     return `${minutes}min`;
   };
-  
-  // Função para formatar a data da última sessão
+
   const formatLastSession = (dateString) => {
     if (!dateString) return 'Nunca';
     
@@ -37,15 +34,13 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
       return lastSession.toLocaleDateString('pt-BR');
     }
   };
-  
-  // Função para obter a inicial do tópico para o avatar
+
   const getTopicInitial = (title) => {
     if (!title) return '?';
     return title.charAt(0).toUpperCase();
   };
 
   return (
-    // Main container for the study summary page with dark background
     <div className="min-h-[calc(100vh-160px)] p-4 md:p-6 lg:p-8 bg-bg-dark-primary">
       <h2 className="text-4xl md:text-5xl font-extrabold text-accent-purple mb-8 text-center font-inter animate-fade-in">
         Seu Resumo de Estudos
@@ -54,7 +49,6 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
         Aqui você encontra um panorama detalhado de todo o seu progresso e tempo dedicado aos estudos.
       </p>
 
-      {/* Grid for study summary cards */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in delay-200">
         {loading ? (
           <div className="col-span-full flex justify-center items-center py-12">
@@ -65,7 +59,6 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
           </div>
         ) : studies.length > 0 ? (
           studies.map((study) => {
-            // Preparar os dados para exibição
             const studyItem = {
               id: study.id,
               topic: study.title,
@@ -89,7 +82,6 @@ export default function StudySummaryPage({ onSelectTopic }) { // Recebe onSelect
                 className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark flex flex-col items-start transform transition duration-300 hover:scale-[1.02] cursor-pointer"
               >
                 <div className="flex items-center mb-4 w-full">
-                  {/* Avatar/Icon for the topic */}
                   <div className="w-12 h-12 bg-accent-purple-dark rounded-full flex items-center justify-center text-xl font-bold text-text-light flex-shrink-0 mr-4">
                     {studyItem.avatar}
                   </div>
