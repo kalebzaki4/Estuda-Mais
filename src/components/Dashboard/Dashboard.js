@@ -430,7 +430,6 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div className="flex flex-col items-end">
-                      {/* Ajuste: Substituído `sets` e `reps` por um dado mais genérico ou removido */}
                       <span className="text-primary text-xs font-bold">12 aulas</span>
                       <span className="text-text-muted-dark text-xs">5h</span>
                     </div>
@@ -604,14 +603,14 @@ export default function Dashboard() {
                 <h3 className="text-sm font-bold text-text-muted-dark mb-2">Total de Estudos</h3>
                 <div className="flex items-end justify-between">
                   <span className="text-2xl font-bold text-text-light">42h</span>
-                  <span className="text-xs text-accent-purple font-bold">+15% esta semana</span>
+                  <span className="text-xs text-primary font-bold">+15% esta semana</span>
                 </div>
               </div>
               <div className="bg-bg-dark-secondary p-4 rounded-2xl shadow-lg border border-border-dark">
                 <h3 className="text-sm font-bold text-text-muted-dark mb-2">Sequência Atual</h3>
                 <div className="flex items-end justify-between">
                   <span className="text-2xl font-bold text-text-light">7 dias</span>
-                  <span className="text-xs text-accent-purple font-bold">Recorde: 14 dias</span>
+                  <span className="text-xs text-secondary font-bold">Recorde: 14 dias</span>
                 </div>
               </div>
             </div>
@@ -620,7 +619,7 @@ export default function Dashboard() {
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold text-text-light">Suas Conquistas</h2>
-                <div className="text-accent-purple text-xs font-bold bg-accent-purple/10 px-3 py-1 rounded-full">
+                <div className="text-primary text-xs font-bold bg-primary/10 px-3 py-1 rounded-full">
                   12 Conquistas
                 </div>
               </div>
@@ -628,7 +627,7 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {/* Conquista desbloqueada 1 */}
                 <div className="p-3 rounded-2xl bg-bg-dark-secondary shadow-lg border border-border-dark flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-accent-purple rounded-full flex items-center justify-center text-2xl">
+                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-2xl">
                     🌟
                   </div>
                   <div>
@@ -638,7 +637,7 @@ export default function Dashboard() {
                 </div>
                 {/* Conquista desbloqueada 2 */}
                 <div className="p-3 rounded-2xl bg-bg-dark-secondary shadow-lg border border-border-dark flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-accent-purple rounded-full flex items-center justify-center text-2xl">
+                  <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-2xl">
                     🔥
                   </div>
                   <div>
