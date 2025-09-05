@@ -8,27 +8,40 @@ module.exports = {
     extend: {
       colors: {
         // Cores de fundo (preto/cinza escuro)
-        'bg-dark-primary': '#121212', // Fundo principal, quase preto
-        'bg-dark-secondary': '#1e1e1e', // Fundo para cards, cabeçalhos, rodapés
-        'bg-dark-tertiary': '#2a2a2a', // Fundo para inputs, hover states, elementos internos
-        'bg-dark-hover': '#3a3a3a', // Para estados de hover em fundos escuros
+        'bg-dark-primary': '#0f0f0f', // Fundo principal, preto mais profundo
+        'bg-dark-secondary': '#1a1a1a', // Fundo para cards, cabeçalhos, rodapés
+        'bg-dark-tertiary': '#262626', // Fundo para inputs, hover states, elementos internos
+        'bg-dark-hover': '#333333', // Para estados de hover em fundos escuros
 
-        // Cores de texto (branco/roxo claro)
+        // Cores de texto
         'text-light': '#ffffff', // Texto principal (branco puro)
-        'text-muted-dark': '#b0b0b0', // Texto secundário/mutado (cinza claro)
+        'text-muted-dark': '#a3a3a3', // Texto secundário/mutado (cinza claro)
+        'text-secondary': '#d4d4d4', // Texto secundário mais claro
 
-        // Cores de destaque (roxo)
-        'accent-purple': '#8a2be2', // Roxo principal
-        'accent-purple-dark': '#6a1aae', // Roxo mais escuro para botões/hover
-        'accent-purple-light': '#b366ff', // Roxo mais claro para detalhes
+        // Cores primárias modernas (azul/teal)
+        'primary': '#0ea5e9', // Azul moderno principal
+        'primary-dark': '#0284c7', // Azul mais escuro para hover
+        'primary-light': '#38bdf8', // Azul mais claro para detalhes
+        
+        // Cores secundárias (teal/verde-azulado)
+        'secondary': '#14b8a6', // Teal moderno
+        'secondary-dark': '#0f766e', // Teal mais escuro
+        'secondary-light': '#2dd4bf', // Teal mais claro
+
+        // Cores de destaque (roxo reduzido)
+        'accent': '#8b5cf6', // Roxo mais suave
+        'accent-dark': '#7c3aed', // Roxo mais escuro
+        'accent-light': '#a78bfa', // Roxo mais claro
 
         // Cores de borda
-        'border-dark': '#444444', // Borda escura
+        'border-dark': '#404040', // Borda escura mais suave
+        'border-light': '#525252', // Borda mais clara
 
-        // Cores de feedback (ajustadas para tema escuro)
-        'success-green': '#28a745', // Verde para sucesso
-        'error-red': '#dc3545',     // Vermelho para erro
-        'info-blue': '#007bff',     // Azul para informação
+        // Cores de feedback (modernas)
+        'success': '#10b981', // Verde moderno para sucesso
+        'error': '#ef4444',   // Vermelho moderno para erro
+        'warning': '#f59e0b', // Amarelo moderno para aviso
+        'info': '#3b82f6',    // Azul moderno para informação
       },
       boxShadow: {
         'custom-dark': '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.24)',

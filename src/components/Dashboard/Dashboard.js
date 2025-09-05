@@ -19,7 +19,7 @@ const friendActivities = [
 ];
 
 // Componentes Reutilizáveis
-const CircularProgress = ({ progress, size = 60, strokeWidth = 6, color = '#8a2be2' }) => {
+const CircularProgress = ({ progress, size = 60, strokeWidth = 6, color = '#0ea5e9' }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
@@ -38,7 +38,7 @@ const CircularProgress = ({ progress, size = 60, strokeWidth = 6, color = '#8a2b
           cy={size / 2}
         />
         <circle
-          className="text-accent-purple transition-all duration-1000 ease-in-out"
+          className="text-primary transition-all duration-1000 ease-in-out"
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
@@ -62,16 +62,16 @@ const ProgressBar = ({ progress, height = 8 }) => {
   return (
     <div className="w-full bg-bg-dark-tertiary rounded-full overflow-hidden" style={{ height }}>
       <div
-        className="bg-accent-purple h-full rounded-full transition-all duration-1000 ease-in-out"
+        className="bg-primary h-full rounded-full transition-all duration-1000 ease-in-out"
         style={{ width: `${progress}%` }}
       ></div>
     </div>
   );
 };
 
-const StatCard = ({ icon, label, value, color = 'bg-accent-purple' }) => {
+const StatCard = ({ icon, label, value, color = 'bg-primary' }) => {
   return (
-    <div className="bg-bg-dark-secondary p-4 rounded-2xl shadow-lg border border-border-dark flex items-center space-x-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-accent-purple/20">
+    <div className="bg-bg-dark-secondary p-4 rounded-2xl shadow-lg border border-border-dark flex items-center space-x-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-primary/20">
       <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center text-text-light text-xl shadow-inner`}>
         {icon}
       </div>
@@ -85,10 +85,10 @@ const StatCard = ({ icon, label, value, color = 'bg-accent-purple' }) => {
 
 const ExerciseCard = ({ title, subtitle, icon, progress, lastSession }) => {
   return (
-    <div className="bg-bg-dark-secondary p-5 rounded-2xl shadow-lg border border-border-dark transform transition-all duration-300 hover:scale-[1.02] hover:shadow-accent-purple/20">
+    <div className="bg-bg-dark-secondary p-5 rounded-2xl shadow-lg border border-border-dark transform transition-all duration-300 hover:scale-[1.02] hover:shadow-primary/20">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-accent-purple rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
+          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
             {icon}
           </div>
           <div>
@@ -113,7 +113,7 @@ const ExerciseCard = ({ title, subtitle, icon, progress, lastSession }) => {
 
       <div className="flex justify-between items-center">
         <span className="text-text-muted-dark text-xs">Última sessão: {lastSession}</span>
-        <button className="px-4 py-1.5 bg-accent-purple text-white text-sm font-bold rounded-lg hover:bg-accent-purple-dark transition-colors duration-200 shadow-md">
+        <button className="px-4 py-1.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-dark transition-colors duration-200 shadow-md">
           Iniciar
         </button>
       </div>
@@ -148,7 +148,7 @@ export default function Dashboard() {
     return (
       <div className="flex justify-center items-center h-screen bg-bg-dark-primary">
         <div className="flex flex-col items-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-accent-purple"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
           <p className="mt-4 text-text-muted-dark animate-pulse">Carregando seu ambiente de estudos...</p>
         </div>
       </div>
@@ -195,10 +195,10 @@ export default function Dashboard() {
   const totalSessions = studies.length;
 
   const quickStats = [
-    { label: 'Tempo Total', value: formatTotalTime(totalTimeMinutes), icon: '⏱️', color: 'bg-accent-purple' },
-    { label: 'Estudos', value: `${totalSessions} ${totalSessions === 1 ? 'estudo' : 'estudos'}`, icon: '📚', color: 'bg-accent-purple' },
-    { label: 'Streak', value: '1 dia', icon: '🔥', color: 'bg-accent-purple' },
-    { label: 'Nível', value: 'Iniciante', icon: '🏆', color: 'bg-accent-purple' },
+    { label: 'Tempo Total', value: formatTotalTime(totalTimeMinutes), icon: '⏱️', color: 'bg-primary' },
+    { label: 'Estudos', value: `${totalSessions} ${totalSessions === 1 ? 'estudo' : 'estudos'}`, icon: '📚', color: 'bg-secondary' },
+    { label: 'Streak', value: '1 dia', icon: '🔥', color: 'bg-accent' },
+    { label: 'Nível', value: 'Iniciante', icon: '🏆', color: 'bg-info' },
   ];
 
   return (
@@ -206,7 +206,7 @@ export default function Dashboard() {
       <div className="sticky top-0 z-10 bg-bg-dark-secondary shadow-lg border-b border-border-dark px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-accent-purple rounded-full flex items-center justify-center text-white font-bold shadow-inner">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold shadow-inner">
               {currentUser?.name?.charAt(0) || 'E'}
             </div>
             <div>
@@ -242,7 +242,7 @@ export default function Dashboard() {
             <button
               onClick={() => setActiveTab('overview')}
               className={`flex-1 py-3 text-center text-sm font-bold rounded-xl transition-all duration-300 ${
-                activeTab === 'overview' ? 'bg-accent-purple text-white shadow-inner' : 'text-text-muted-dark'
+                activeTab === 'overview' ? 'bg-primary text-white shadow-inner' : 'text-text-muted-dark'
               }`}
             >
               Hoje
@@ -250,7 +250,7 @@ export default function Dashboard() {
             <button
               onClick={() => setActiveTab('exercises')}
               className={`flex-1 py-3 text-center text-sm font-bold rounded-xl transition-all duration-300 ${
-                activeTab === 'exercises' ? 'bg-accent-purple text-white shadow-inner' : 'text-text-muted-dark'
+                activeTab === 'exercises' ? 'bg-primary text-white shadow-inner' : 'text-text-muted-dark'
               }`}
             >
               Estudos
@@ -258,7 +258,7 @@ export default function Dashboard() {
             <button
               onClick={() => setActiveTab('measurements')}
               className={`flex-1 py-3 text-center text-sm font-bold rounded-xl transition-all duration-300 ${
-                activeTab === 'measurements' ? 'bg-accent-purple text-white shadow-inner' : 'text-text-muted-dark'
+                activeTab === 'measurements' ? 'bg-primary text-white shadow-inner' : 'text-text-muted-dark'
               }`}
             >
               Amigos
@@ -266,7 +266,7 @@ export default function Dashboard() {
             <button
               onClick={() => setActiveTab('photos')}
               className={`flex-1 py-3 text-center text-sm font-bold rounded-xl transition-all duration-300 ${
-                activeTab === 'photos' ? 'bg-accent-purple text-white shadow-inner' : 'text-text-muted-dark'
+                activeTab === 'photos' ? 'bg-primary text-white shadow-inner' : 'text-text-muted-dark'
               }`}
             >
               Perfil
@@ -280,7 +280,7 @@ export default function Dashboard() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold text-text-light">Estudos de Hoje</h2>
-                <button className="px-3 py-1 bg-accent-purple rounded-lg text-white text-sm font-bold shadow-md">
+                <button className="px-3 py-1 bg-primary rounded-lg text-white text-sm font-bold shadow-md">
                   + Adicionar
                 </button>
               </div>
@@ -291,7 +291,7 @@ export default function Dashboard() {
                     <div key={study.id} className="bg-bg-dark-secondary p-4 rounded-2xl shadow-lg border border-border-dark">
                       <div className="flex justify-between items-center mb-3">
                         <div className="flex items-center space-x-3">
-                          <div className="w-12 h-12 bg-accent-purple rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
+                          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
                             {getTopicInitial(study.title)}
                           </div>
                           <div>
