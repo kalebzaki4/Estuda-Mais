@@ -300,7 +300,7 @@ export default function Dashboard() {
                           </div>
                         </div>
                         <div className="flex flex-col items-end">
-                          <span className="text-accent-purple text-xs font-bold">{formatTotalTime(study.totalTimeMinutes)}</span>
+                          <span className="text-primary text-xs font-bold">{formatTotalTime(study.totalTimeMinutes)}</span>
                           <span className="text-text-muted-dark text-xs">{formatLastSession(study.lastSession)}</span>
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export default function Dashboard() {
                         </div>
                         <div className="w-full bg-bg-dark-tertiary rounded-full h-1.5">
                           <div
-                            className="bg-accent-purple h-1.5 rounded-full"
+                            className="bg-primary h-1.5 rounded-full"
                             style={{ width: `${study.progress || 0}%` }}
                           ></div>
                         </div>
@@ -327,7 +327,7 @@ export default function Dashboard() {
                           </div>
                           <span className="text-text-muted-dark text-xs">{formatLastSession(study.lastSession)}</span>
                         </div>
-                        <button className="px-4 py-1.5 bg-accent-purple text-white text-xs font-bold rounded-lg shadow-md">
+                        <button className="px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-md">
                           Iniciar
                         </button>
                       </div>
@@ -340,7 +340,7 @@ export default function Dashboard() {
                     </svg>
                     <h3 className="text-xl font-bold text-text-light mb-2">Nenhum estudo encontrado</h3>
                     <p className="text-text-muted-dark mb-4">Você ainda não iniciou nenhum estudo.</p>
-                    <button className="px-4 py-2 bg-accent-purple text-white text-sm font-bold rounded-lg hover:bg-accent-purple-dark transition-colors duration-200 shadow-md">
+                    <button className="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-dark transition-colors duration-200 shadow-md">
                       Iniciar um estudo
                     </button>
                   </div>
@@ -355,7 +355,7 @@ export default function Dashboard() {
 
               <div className="bg-bg-dark-secondary p-6 rounded-xl shadow-custom-dark border border-border-dark">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-accent-purple rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
+                  <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
                     💡
                   </div>
                   <div>
@@ -380,7 +380,7 @@ export default function Dashboard() {
                   className={`p-4 flex justify-between items-center ${index !== friendActivities.length - 1 ? 'border-b border-border-dark' : ''}`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-accent-purple rounded-full flex items-center justify-center text-white font-bold shadow-inner">
+                    <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white font-bold shadow-inner">
                       {activity.avatar}
                     </div>
                     <div>
@@ -400,7 +400,7 @@ export default function Dashboard() {
           <div className="space-y-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold text-text-light">Meus Estudos</h2>
-              <button className="px-3 py-1.5 bg-accent-purple rounded-lg text-white text-sm font-bold shadow-md flex items-center space-x-1">
+              <button className="px-3 py-1.5 bg-primary rounded-lg text-white text-sm font-bold shadow-md flex items-center space-x-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
@@ -416,13 +416,13 @@ export default function Dashboard() {
                 >
                   <div className="flex justify-between items-center mb-3">
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-accent-purple rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
+                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-inner">
                         {item.icon}
                       </div>
                       <div>
                         <div className="flex items-center space-x-2">
                           <h3 className="text-lg font-bold text-text-light">{item.title}</h3>
-                          <span className="text-xs font-medium px-2 py-0.5 bg-accent-purple/20 text-accent-purple rounded-md">
+                          <span className="text-xs font-medium px-2 py-0.5 bg-primary/20 text-primary rounded-md">
                             {item.category}
                           </span>
                         </div>
@@ -431,7 +431,7 @@ export default function Dashboard() {
                     </div>
                     <div className="flex flex-col items-end">
                       {/* Ajuste: Substituído `sets` e `reps` por um dado mais genérico ou removido */}
-                      <span className="text-accent-purple text-xs font-bold">12 aulas</span>
+                      <span className="text-primary text-xs font-bold">12 aulas</span>
                       <span className="text-text-muted-dark text-xs">5h</span>
                     </div>
                   </div>
@@ -443,7 +443,7 @@ export default function Dashboard() {
                     </div>
                     <div className="w-full bg-bg-dark-tertiary rounded-full h-1.5">
                       <div
-                        className="bg-accent-purple h-1.5 rounded-full"
+                        className="bg-primary h-1.5 rounded-full"
                         style={{ width: `${item.progress}%` }}
                       ></div>
                     </div>
@@ -458,7 +458,7 @@ export default function Dashboard() {
                       </div>
                       <span className="text-text-muted-dark text-xs">{item.lastStudy}</span>
                     </div>
-                    <button className="px-4 py-1.5 bg-accent-purple text-white text-xs font-bold rounded-lg shadow-md">
+                    <button className="px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-md">
                       Iniciar
                     </button>
                   </div>
@@ -466,8 +466,8 @@ export default function Dashboard() {
               ))}
 
               {/* Card para adicionar novo tópico */}
-              <div className="bg-bg-dark-secondary p-4 rounded-2xl border border-dashed border-accent-purple/30 flex items-center justify-center h-20 cursor-pointer hover:bg-bg-dark-tertiary transition-colors duration-200">
-                <div className="flex items-center space-x-2 text-accent-purple">
+              <div className="bg-bg-dark-secondary p-4 rounded-2xl border border-dashed border-primary/30 flex items-center justify-center h-20 cursor-pointer hover:bg-bg-dark-tertiary transition-colors duration-200">
+                <div className="flex items-center space-x-2 text-primary">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                   </svg>
@@ -486,7 +486,7 @@ export default function Dashboard() {
               <input
                 type="text"
                 placeholder="Buscar amigos..."
-                className="w-full bg-bg-dark-secondary border border-border-dark text-text-light py-3 px-4 pr-10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent-purple/50"
+                className="w-full bg-bg-dark-secondary border border-border-dark text-text-light py-3 px-4 pr-10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
               <svg className="w-5 h-5 text-text-muted-dark absolute right-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -497,7 +497,7 @@ export default function Dashboard() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold text-text-light">Sugestões para Você</h2>
-                <button className="text-accent-purple text-xs font-bold">
+                <button className="text-primary text-xs font-bold">
                   Ver todos
                 </button>
               </div>
@@ -508,12 +508,12 @@ export default function Dashboard() {
                     key={friend.id}
                     className="flex-shrink-0 w-32 bg-bg-dark-secondary p-3 rounded-2xl flex flex-col items-center"
                   >
-                    <div className="w-16 h-16 bg-accent-purple rounded-full flex items-center justify-center text-white text-xl mb-2 shadow-inner">
+                    <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-xl mb-2 shadow-inner">
                       {friend.avatar}
                     </div>
                     <h3 className="text-text-light font-bold text-sm text-center">{friend.name.split(' ')[0]}</h3>
                     <p className="text-text-muted-dark text-xs text-center truncate w-full">{friend.activity.split(' ').slice(0, 3).join(' ')}</p>
-                    <button className="mt-2 w-full py-1.5 bg-accent-purple text-white text-xs font-bold rounded-lg shadow-md">
+                    <button className="mt-2 w-full py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-md">
                       Seguir
                     </button>
                   </div>
@@ -525,7 +525,7 @@ export default function Dashboard() {
             <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold text-text-light">Seus Amigos</h2>
-                <span className="text-accent-purple text-xs font-bold bg-accent-purple/10 px-3 py-1 rounded-full">
+                <span className="text-primary text-xs font-bold bg-primary/10 px-3 py-1 rounded-full">
                   {friendActivities.length} amigos
                 </span>
               </div>
@@ -537,7 +537,7 @@ export default function Dashboard() {
                     className="bg-bg-dark-secondary p-3 rounded-2xl shadow-lg border border-border-dark flex justify-between items-center"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-accent-purple rounded-full flex items-center justify-center text-white font-bold text-xl shadow-inner">
+                      <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-xl shadow-inner">
                         {friend.avatar}
                       </div>
                       <div>
@@ -551,7 +551,7 @@ export default function Dashboard() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
                       </button>
-                      <button className="w-8 h-8 bg-accent-purple rounded-full flex items-center justify-center shadow-md">
+                      <button className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-md">
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -571,28 +571,28 @@ export default function Dashboard() {
             {/* Perfil do Usuário */}
             <div className="bg-bg-dark-secondary p-5 rounded-2xl shadow-lg border border-border-dark mb-6">
               <div className="flex items-center space-x-4">
-                <div className="w-20 h-20 bg-accent-purple rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-inner">
+                <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-inner">
                   {currentUser?.name?.charAt(0) || 'JD'}
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-text-light">{currentUser?.name || 'João Doe'}</h2>
                   <p className="text-text-muted-dark text-sm">Estudante de Programação</p>
                   <div className="flex items-center space-x-2 mt-1">
-                    <div className="px-2 py-0.5 bg-accent-purple/20 rounded-md flex items-center space-x-1">
-                      <svg className="w-3 h-3 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div className="px-2 py-0.5 bg-primary/20 rounded-md flex items-center space-x-1">
+                      <svg className="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                       </svg>
-                      <span className="text-xs font-bold text-accent-purple">Nível 8</span>
+                      <span className="text-xs font-bold text-primary">Nível 8</span>
                     </div>
-                    <div className="px-2 py-0.5 bg-accent-purple/20 rounded-md flex items-center space-x-1">
-                      <svg className="w-3 h-3 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <div className="px-2 py-0.5 bg-secondary/20 rounded-md flex items-center space-x-1">
+                      <svg className="w-3 h-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                       </svg>
-                      <span className="text-xs font-bold text-accent-purple">120 pontos</span>
+                      <span className="text-xs font-bold text-secondary">120 pontos</span>
                     </div>
                   </div>
                 </div>
-                <button className="ml-auto px-3 py-1.5 bg-accent-purple rounded-lg text-white text-xs font-bold shadow-md">
+                <button className="ml-auto px-3 py-1.5 bg-primary rounded-lg text-white text-xs font-bold shadow-md">
                   Editar Perfil
                 </button>
               </div>
