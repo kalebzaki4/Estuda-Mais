@@ -18,20 +18,22 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    // Buscar usuário por ID
     public Optional<Usuario> findById(Long id) {
         return usuarioRepository.findById(id);
     }
 
+    // Salvar ou atualizar usuário
     public Usuario save(Usuario usuario) {
-        // Você pode adicionar lógicas de negócio aqui antes de salvar
-        // Ex: Criptografar a senha, validar dados, etc.
         return usuarioRepository.save(usuario);
     }
 
+    // Deletar usuário por ID
     public void deleteById(Long id) {
         usuarioRepository.deleteById(id);
     }
 
+    // Buscar usuário por email
     public Usuario findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
