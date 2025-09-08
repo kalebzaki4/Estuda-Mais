@@ -35,4 +35,9 @@ public class UsuarioController {
         usuarioService.deleteById(id);
     }
 
+    @PutMapping ("/{id}")
+    public Usuario atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return usuarioService.save(usuario);
+    }
+
 }
