@@ -40,4 +40,8 @@ public class UsuarioController {
         return usuarioService.save(usuario);
     }
 
+    public void login(@RequestBody Usuario usuario) {
+        usuarioService.login(usuario);
+    }
+
 }
