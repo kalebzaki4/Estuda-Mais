@@ -1,31 +1,47 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { Button, Input } from '../common';
+import { useForm } from '../../hooks';
 
 export default function RegisterPage({ onRegisterSuccess }) {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const { register, loading: authLoading, error } = useAuth();
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); 
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
+  
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    setFieldError
+  } = useForm({
+    initialValues: { 
+      name: '', 
+      email: '', 
+      password: '', 
+      confirmPassword: '' 
+    },
+    onSubmit: handleRegister
+  }); 
 
   const validateStep1 = () => {
-    if (!username.trim()) {
+    if (!values.name.trim()) {
       setMessage('Por favor, informe seu nome de usuário');
       setMessageType('error');
       return false;
     }
-    if (!email.trim()) {
+    if (!values.email.trim()) {
       setMessage('Por favor, informe seu e-mail');
       setMessageType('error');
       return false;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
       setMessage('Por favor, informe um e-mail válido');
       setMessageType('error');
       return false;
@@ -34,17 +50,17 @@ export default function RegisterPage({ onRegisterSuccess }) {
   };
 
   const validateStep2 = () => {
-    if (!password) {
+    if (!values.password) {
       setMessage('Por favor, informe uma senha');
       setMessageType('error');
       return false;
     }
-    if (password.length < 6) {
+    if (values.password.length < 6) {
       setMessage('A senha deve ter pelo menos 6 caracteres');
       setMessageType('error');
       return false;
     }
-    if (password !== confirmPassword) {
+    if (values.password !== values.confirmPassword) {
       setMessage('As senhas não coincidem');
       setMessageType('error');
       return false;
@@ -65,19 +81,20 @@ export default function RegisterPage({ onRegisterSuccess }) {
     setStep(1);
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    
+  async function handleRegister(formData) {
     if (!validateStep2()) return;
     
     setMessage('');
-    setLoading(true);
 
     try {
-      // Simulando um registro bem-sucedido já que o servidor não está salvando os dados
-      setTimeout(() => {
-        setMessage('Cadastro realizado com sucesso! Redirecionando para o dashboard...');
-        setMessageType('success');
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+      
+      setMessage('Cadastro realizado com sucesso! Redirecionando para o dashboard...');
+      setMessageType('success');
         
         // Simular login automático e redirecionar para o dashboard após 1.5 segundos
         setTimeout(() => {
