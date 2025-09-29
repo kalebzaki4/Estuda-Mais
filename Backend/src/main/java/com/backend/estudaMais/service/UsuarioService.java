@@ -14,6 +14,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    // Buscar todos os usuários
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
@@ -39,5 +40,6 @@ public class UsuarioService {
     }
 
     public void login(Usuario usuario) {
+        // Lógica de autenticação pode ser implementada aqui
     }
 }

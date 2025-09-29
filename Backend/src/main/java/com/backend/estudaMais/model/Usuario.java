@@ -25,13 +25,10 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = true)
-    private String senha;
-
-    @Column(nullable = false)
-    private String nome;
-
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = true)
+    private String senha;
 }
 
