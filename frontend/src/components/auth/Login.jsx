@@ -223,12 +223,12 @@ const Login = () => {
             <div className="course-icon">
               <ProgrammingIcon />
             </div>
-            <div className="course-title">ESCOLA PROGRAMAÇÃO</div>
-            <div className="course-description">Lógica de programação, .NET, Automação e Produtividade</div>
+            <div className="course-title">DESENVOLVIMENTO WEB</div>
+            <div className="course-description">Aprenda a criar aplicações web modernas do zero ao avançado</div>
             <div className="course-tags">
-              <span className="course-tag">C#</span>
-              <span className="course-tag">.NET</span>
-              <span className="course-tag">Python</span>
+              <span className="course-tag">JavaScript</span>
+              <span className="course-tag">React</span>
+              <span className="course-tag">Node.js</span>
             </div>
           </div>
 
@@ -236,12 +236,12 @@ const Login = () => {
             <div className="course-icon">
               <FrontendIcon />
             </div>
-            <div className="course-title">ESCOLA FRONT-END</div>
-            <div className="course-description">HTML e CSS, React, Vue.js</div>
+            <div className="course-title">CIÊNCIA DE DADOS</div>
+            <div className="course-description">Transforme dados em insights valiosos para tomada de decisões</div>
             <div className="course-tags">
-              <span className="course-tag">HTML</span>
-              <span className="course-tag">CSS</span>
-              <span className="course-tag">React</span>
+              <span className="course-tag">Python</span>
+              <span className="course-tag">SQL</span>
+              <span className="course-tag">Analytics</span>
             </div>
           </div>
 
@@ -249,12 +249,12 @@ const Login = () => {
             <div className="course-icon">
               <DataScienceIcon />
             </div>
-            <div className="course-title">ESCOLA DATA SCIENCE</div>
-            <div className="course-description">SQL e Banco de Dados, Engenharia de Dados, Análise de Dados</div>
+            <div className="course-title">INTELIGÊNCIA ARTIFICIAL</div>
+            <div className="course-description">Domine Machine Learning e IA para resolver problemas reais</div>
             <div className="course-tags">
-              <span className="course-tag">SQL</span>
-              <span className="course-tag">Python</span>
-              <span className="course-tag">BI</span>
+              <span className="course-tag">ML</span>
+              <span className="course-tag">TensorFlow</span>
+              <span className="course-tag">PyTorch</span>
             </div>
           </div>
 
@@ -262,11 +262,12 @@ const Login = () => {
             <div className="course-icon">
               <AIIcon />
             </div>
-            <div className="course-title">ESCOLA INTELIGÊNCIA ARTIFICIAL</div>
-            <div className="course-description">IA para Cientistas, IA para Programadores, IA para Negócios</div>
+            <div className="course-title">CLOUD & DEVOPS</div>
+            <div className="course-description">Automatize deploys e gerencie infraestrutura na nuvem</div>
             <div className="course-tags">
-              <span className="course-tag">Machine Learning</span>
-              <span className="course-tag">Deep Learning</span>
+              <span className="course-tag">AWS</span>
+              <span className="course-tag">Docker</span>
+              <span className="course-tag">CI/CD</span>
             </div>
           </div>
 
@@ -274,12 +275,12 @@ const Login = () => {
             <div className="course-icon">
               <DevOpsIcon />
             </div>
-            <div className="course-title">ESCOLA DEVOPS</div>
-            <div className="course-description">Linux, PHP/Ops, SRE</div>
+            <div className="course-title">DESIGN DIGITAL</div>
+            <div className="course-description">Crie interfaces incríveis e experiências de usuário memoráveis</div>
             <div className="course-tags">
-              <span className="course-tag">Linux</span>
-              <span className="course-tag">Docker</span>
-              <span className="course-tag">Kubernetes</span>
+              <span className="course-tag">UI/UX</span>
+              <span className="course-tag">Figma</span>
+              <span className="course-tag">Prototipagem</span>
             </div>
           </div>
 
@@ -287,12 +288,12 @@ const Login = () => {
             <div className="course-icon">
               <UXIcon />
             </div>
-            <div className="course-title">ESCOLA UX & DESIGN</div>
-            <div className="course-description">UI Design, Design Systems, UX Writing</div>
+            <div className="course-title">DESENVOLVIMENTO MOBILE</div>
+            <div className="course-description">Construa apps nativos e híbridos para iOS e Android</div>
             <div className="course-tags">
-              <span className="course-tag">Figma</span>
-              <span className="course-tag">Design</span>
-              <span className="course-tag">UX</span>
+              <span className="course-tag">React Native</span>
+              <span className="course-tag">Flutter</span>
+              <span className="course-tag">Swift</span>
             </div>
           </div>
         </div>
