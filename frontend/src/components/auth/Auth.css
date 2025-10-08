@@ -1,11 +1,10 @@
-/* Layout principal com duas colunas */
+
 .auth-container {
   display: flex;
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
 }
 
-/* Coluna de login */
 .auth-login-column {
   flex: 1;
   display: flex;
@@ -15,7 +14,6 @@
   background: rgba(15, 15, 15, 0.95);
 }
 
-/* Coluna de apresentação */
 .auth-presentation-column {
   flex: 1.5;
   background: rgba(25, 25, 25, 0.9);

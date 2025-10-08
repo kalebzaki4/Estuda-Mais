@@ -24,7 +24,6 @@ const Register = () => {
     setSuccess('');
     setLoading(true);
 
-    // Validação de senha
     if (formData.password !== formData.confirmPassword) {
       setError('As senhas não coincidem');
       setLoading(false);
@@ -52,7 +51,6 @@ const Register = () => {
 
       setSuccess('Cadastro realizado com sucesso! Redirecionando para o login...');
       
-      // Redirecionar para a página de login após 2 segundos
       setTimeout(() => {
         window.location.href = '/login';
       }, 2000);

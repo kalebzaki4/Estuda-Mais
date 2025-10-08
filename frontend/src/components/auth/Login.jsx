@@ -74,7 +74,6 @@ const InnovationIcon = () => (
   </svg>
 );
 
-// Componente de login
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
