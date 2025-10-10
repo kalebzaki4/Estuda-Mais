@@ -3,6 +3,8 @@
   display: flex;
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .auth-login-column {
@@ -12,15 +14,17 @@
   align-items: center;
   padding: 20px;
   background: rgba(15, 15, 15, 0.95);
+  min-width: 0; /* Permite que o flex item encolha */
 }
 
 .auth-presentation-column {
-  flex: 1.5;
+  flex: 1.2;
   background: rgba(25, 25, 25, 0.9);
   padding: 40px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  min-width: 0; /* Permite que o flex item encolha */
 }
 
 .auth-card {
@@ -288,14 +292,20 @@
 }
 
 /* Responsividade melhorada */
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .auth-login-column {
+    padding: 60px;
+    flex: 0 0 45%;
+  }
+  
+  .auth-presentation-column {
+    flex: 0 0 55%;
     padding: 60px;
   }
   
   .auth-card {
-    padding: 40px;
-    max-width: 450px;
+    padding: 50px;
+    max-width: 500px;
   }
   
   .auth-header h2 {
@@ -304,22 +314,76 @@
   
   .courses-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
   }
 }
 
-@media (max-width: 1199px) and (min-width: 768px) {
-  .auth-container {
-    flex-direction: row;
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .auth-login-column {
+    padding: 50px;
+    flex: 0 0 45%;
   }
   
+  .auth-presentation-column {
+    flex: 0 0 55%;
+    padding: 50px;
+  }
+  
+  .auth-card {
+    padding: 40px;
+    max-width: 450px;
+  }
+  
+  .auth-header h2 {
+    font-size: 30px;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
   .auth-login-column {
-    flex: 1;
+    flex: 0 0 45%;
     padding: 40px;
   }
   
   .auth-presentation-column {
-    flex: 1.2;
+    flex: 0 0 55%;
+    padding: 40px;
+  }
+  
+  .auth-card {
+    padding: 35px;
+    max-width: 400px;
+  }
+  
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  
+  .presentation-header h2 {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .auth-login-column {
+    flex: 0 0 50%;
     padding: 30px;
+  }
+  
+  .auth-presentation-column {
+    flex: 0 0 50%;
+    padding: 30px;
+  }
+  
+  .auth-card {
+    padding: 30px;
+    max-width: 380px;
   }
   
   .courses-grid {
@@ -328,7 +392,11 @@
   }
   
   .presentation-header h2 {
-    font-size: 28px;
+    font-size: 26px;
+  }
+  
+  .course-card {
+    padding: 15px;
   }
 }
 
@@ -342,6 +410,7 @@
     order: 1;
     padding: 20px;
     min-height: 100vh;
+    flex: none;
   }
   
   .auth-presentation-column {

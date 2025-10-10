@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../../services/authService';
 import './Auth.css';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    nome: '',
     email: '',
-    password: '',
+    senha: '',
     confirmPassword: ''
   });
   const [error, setError] = useState('');
@@ -24,38 +26,27 @@ const Register = () => {
     setSuccess('');
     setLoading(true);
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.senha !== formData.confirmPassword) {
       setError('As senhas não coincidem');
       setLoading(false);
       return;
     }
 
+    if (formData.senha.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Falha no cadastro');
-      }
-
-      setSuccess('Cadastro realizado com sucesso! Redirecionando para o login...');
+      await authService.register(formData.nome, formData.email, formData.senha);
+      setSuccess('Cadastro realizado com sucesso! Redirecionando...');
       
       setTimeout(() => {
-        window.location.href = '/login';
-      }, 2000);
+        navigate('/dashboard');
+      }, 1500);
     } catch (err) {
-      setError(err.message || 'Ocorreu um erro durante o cadastro');
+      setError(err.message || 'Erro ao criar conta. Tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -74,12 +65,12 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="name">Nome completo</label>
+            <label htmlFor="nome">Nome completo</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="nome"
+              name="nome"
+              value={formData.nome}
               onChange={handleChange}
               required
               placeholder="Seu nome completo"
@@ -100,12 +91,12 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Senha</label>
+            <label htmlFor="senha">Senha</label>
             <input
               type="password"
-              id="password"
-              name="password"
-              value={formData.password}
+              id="senha"
+              name="senha"
+              value={formData.senha}
               onChange={handleChange}
               required
               placeholder="Crie uma senha forte"

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../../services/authService';
 import './Auth.css';
 
 // Ícones para os cursos
@@ -75,9 +76,10 @@ const InnovationIcon = () => (
 );
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    senha: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -93,26 +95,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Falha na autenticação');
-      }
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      window.location.href = '/dashboard';
+      await authService.login(formData.email, formData.senha);
+      navigate('/dashboard');
     } catch (err) {
-      setError(err.message || 'Ocorreu um erro durante o login');
+      setError(err.message || 'Erro ao fazer login. Verifique suas credenciais.');
     } finally {
       setLoading(false);
     }
@@ -156,13 +142,13 @@ const Login = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Senha</label>
+              <label htmlFor="senha">Senha</label>
               <div className="input-container" style={{ position: 'relative' }}>
                 <input
                   type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
+                  id="senha"
+                  name="senha"
+                  value={formData.senha}
                   onChange={handleChange}
                   required
                   placeholder="Sua senha"
@@ -295,7 +281,7 @@ const Login = () => {
           </div>
         </div>
 
-        <button className="cta-button">Ainda não estuda com a gente? Matricule-se agora!</button>
+        <button className="cta-button">Ainda não estuda com a gente? Assine agora!</button>
       </div>
     </div>
   );
