@@ -82,16 +82,51 @@ const Login = () => {
     senha: ''
   });
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    
+    if (!formData.email.trim()) {
+      errors.email = 'E-mail é obrigatório';
+    } else if (!validateEmail(formData.email)) {
+      errors.email = 'E-mail inválido';
+    }
+    
+    if (!formData.senha.trim()) {
+      errors.senha = 'Senha é obrigatória';
+    } else if (formData.senha.length < 6) {
+      errors.senha = 'Senha deve ter pelo menos 6 caracteres';
+    }
+    
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
+    // Limpar erro do campo quando o usuário começar a digitar
+    if (fieldErrors[name]) {
+      setFieldErrors({ ...fieldErrors, [name]: '' });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -127,6 +162,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                   placeholder="Seu email"
+                  className={fieldErrors.email ? 'input-error' : ''}
                 />
                 <span style={{
                   position: 'absolute',
@@ -139,6 +175,7 @@ const Login = () => {
                   @
                 </span>
               </div>
+              {fieldErrors.email && <div className="field-error">{fieldErrors.email}</div>}
             </div>
 
             <div className="form-group">
@@ -152,6 +189,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                   placeholder="Sua senha"
+                  className={fieldErrors.senha ? 'input-error' : ''}
                 />
                 <span style={{
                   position: 'absolute',
@@ -167,6 +205,7 @@ const Login = () => {
                   </svg>
                 </span>
               </div>
+              {fieldErrors.senha && <div className="field-error">{fieldErrors.senha}</div>}
               <Link to="/forgot-password" className="auth-link">Esqueci minha senha</Link>
             </div>
 
