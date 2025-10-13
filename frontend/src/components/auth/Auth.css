@@ -179,6 +179,23 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+/* Feedback de validação por campo */
+.field-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.12) !important;
+}
+
+.input-error:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
+}
+
 .auth-link {
   display: block;
   text-align: right;

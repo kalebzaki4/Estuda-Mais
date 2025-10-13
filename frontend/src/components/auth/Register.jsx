@@ -13,30 +13,59 @@ const Register = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.nome.trim()) {
+      errors.nome = 'Nome é obrigatório';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'E-mail é obrigatório';
+    } else if (!validateEmail(formData.email)) {
+      errors.email = 'E-mail inválido';
+    }
+
+    if (!formData.senha.trim()) {
+      errors.senha = 'Senha é obrigatória';
+    } else if (formData.senha.length < 6) {
+      errors.senha = 'Senha deve ter pelo menos 6 caracteres';
+    }
+
+    if (!formData.confirmPassword.trim()) {
+      errors.confirmPassword = 'Confirmação de senha é obrigatória';
+    } else if (formData.senha !== formData.confirmPassword) {
+      errors.confirmPassword = 'As senhas não coincidem';
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (fieldErrors[name]) {
+      setFieldErrors({ ...fieldErrors, [name]: '' });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
+    if (!validateForm()) {
+      return;
+    }
     setLoading(true);
-
-    if (formData.senha !== formData.confirmPassword) {
-      setError('As senhas não coincidem');
-      setLoading(false);
-      return;
-    }
-
-    if (formData.senha.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres');
-      setLoading(false);
-      return;
-    }
 
     try {
       await authService.register(formData.nome, formData.email, formData.senha);
@@ -74,7 +103,9 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="Seu nome completo"
+              className={fieldErrors.nome ? 'input-error' : ''}
             />
+            {fieldErrors.nome && <div className="field-error">{fieldErrors.nome}</div>}
           </div>
 
           <div className="form-group">
@@ -87,7 +118,9 @@ const Register = () => {
               onChange={handleChange}
               required
               placeholder="Seu melhor email"
+              className={fieldErrors.email ? 'input-error' : ''}
             />
+            {fieldErrors.email && <div className="field-error">{fieldErrors.email}</div>}
           </div>
 
           <div className="form-group">
@@ -101,7 +134,9 @@ const Register = () => {
               required
               placeholder="Crie uma senha forte"
               minLength="6"
+              className={fieldErrors.senha ? 'input-error' : ''}
             />
+            {fieldErrors.senha && <div className="field-error">{fieldErrors.senha}</div>}
           </div>
 
           <div className="form-group">
@@ -115,7 +150,9 @@ const Register = () => {
               required
               placeholder="Digite a senha novamente"
               minLength="6"
+              className={fieldErrors.confirmPassword ? 'input-error' : ''}
             />
+            {fieldErrors.confirmPassword && <div className="field-error">{fieldErrors.confirmPassword}</div>}
           </div>
 
           <button type="submit" className="auth-button" disabled={loading}>
