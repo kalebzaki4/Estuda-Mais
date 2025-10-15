@@ -140,187 +140,58 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-login-column">
-        <div className="auth-card">
-          <div className="auth-header">
-            <h2>Já estuda com a gente?</h2>
-            <p>Faça seu login e boa aula!</p>
-          </div>
+    <div className="login-page">
+      <div className="login-card">
+        <div className="brand">
+          <div className="brand-mark" />
+          <h2>Entrar no Estuda+</h2>
+          <p>Estude melhor. Evolua mais.</p>
+        </div>
 
-          {error && <div className="auth-error">{error}</div>}
+        {error && <div className="auth-error">{error}</div>}
 
-          <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="email">E-mail</label>
-              <div className="input-container" style={{ position: 'relative' }}>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="Seu email"
-                  className={fieldErrors.email ? 'input-error' : ''}
-                />
-                <span style={{
-                  position: 'absolute',
-                  right: '15px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#a044ff',
-                  opacity: '0.7'
-                }}>
-                  @
-                </span>
-              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="Seu melhor e-mail"
+                className={fieldErrors.email ? 'input-error' : ''}
+              />
               {fieldErrors.email && <div className="field-error">{fieldErrors.email}</div>}
             </div>
 
             <div className="form-group">
               <label htmlFor="senha">Senha</label>
-              <div className="input-container" style={{ position: 'relative' }}>
-                <input
-                  type="password"
-                  id="senha"
-                  name="senha"
-                  value={formData.senha}
-                  onChange={handleChange}
-                  required
-                  placeholder="Sua senha"
-                  className={fieldErrors.senha ? 'input-error' : ''}
-                />
-                <span style={{
-                  position: 'absolute',
-                  right: '15px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#a044ff',
-                  opacity: '0.7'
-                }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                  </svg>
-                </span>
-              </div>
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                value={formData.senha}
+                onChange={handleChange}
+                required
+                placeholder="Sua senha"
+                className={fieldErrors.senha ? 'input-error' : ''}
+              />
               {fieldErrors.senha && <div className="field-error">{fieldErrors.senha}</div>}
+            </div>
+
+            <div className="form-actions">
+              <button type="submit" className="auth-button" disabled={loading}>
+                {loading ? 'Entrando...' : 'Entrar'}
+              </button>
               <Link to="/forgot-password" className="auth-link">Esqueci minha senha</Link>
             </div>
-
-            <button type="submit" className="auth-button" disabled={loading}>
-              {loading ? 'Entrando...' : 'ENTRAR'}
-            </button>
-
-            <button type="button" className="auth-social-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-                <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" />
-              </svg>
-              ENTRAR COM GOOGLE
-            </button>
-
-            <button type="button" className="auth-social-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-              ENTRAR COM GITHUB
-            </button>
           </form>
 
-          <div className="auth-footer">
-            Primeiro acesso? <Link to="/register">Crie sua conta</Link>
-          </div>
+        <div className="auth-footer">
+          Primeiro acesso? <Link to="/register">Crie sua conta</Link>
         </div>
-      </div>
-
-      <div className="auth-presentation-column">
-        <div className="presentation-header">
-          <h2>Ainda não estuda com a gente?</h2>
-          <p>São mais de mil cursos nas seguintes áreas:</p>
-        </div>
-
-        <div className="courses-grid">
-          <div className="course-card">
-            <div className="course-icon">
-              <ProgrammingIcon />
-            </div>
-            <div className="course-title">DESENVOLVIMENTO WEB</div>
-            <div className="course-description">Aprenda a criar aplicações web modernas do zero ao avançado</div>
-            <div className="course-tags">
-              <span className="course-tag">JavaScript</span>
-              <span className="course-tag">React</span>
-              <span className="course-tag">Node.js</span>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-icon">
-              <FrontendIcon />
-            </div>
-            <div className="course-title">CIÊNCIA DE DADOS</div>
-            <div className="course-description">Transforme dados em insights valiosos para tomada de decisões</div>
-            <div className="course-tags">
-              <span className="course-tag">Python</span>
-              <span className="course-tag">SQL</span>
-              <span className="course-tag">Analytics</span>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-icon">
-              <DataScienceIcon />
-            </div>
-            <div className="course-title">INTELIGÊNCIA ARTIFICIAL</div>
-            <div className="course-description">Domine Machine Learning e IA para resolver problemas reais</div>
-            <div className="course-tags">
-              <span className="course-tag">ML</span>
-              <span className="course-tag">TensorFlow</span>
-              <span className="course-tag">PyTorch</span>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-icon">
-              <AIIcon />
-            </div>
-            <div className="course-title">CLOUD & DEVOPS</div>
-            <div className="course-description">Automatize deploys e gerencie infraestrutura na nuvem</div>
-            <div className="course-tags">
-              <span className="course-tag">AWS</span>
-              <span className="course-tag">Docker</span>
-              <span className="course-tag">CI/CD</span>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-icon">
-              <DevOpsIcon />
-            </div>
-            <div className="course-title">DESIGN DIGITAL</div>
-            <div className="course-description">Crie interfaces incríveis e experiências de usuário memoráveis</div>
-            <div className="course-tags">
-              <span className="course-tag">UI/UX</span>
-              <span className="course-tag">Figma</span>
-              <span className="course-tag">Prototipagem</span>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-icon">
-              <UXIcon />
-            </div>
-            <div className="course-title">DESENVOLVIMENTO MOBILE</div>
-            <div className="course-description">Construa apps nativos e híbridos para iOS e Android</div>
-            <div className="course-tags">
-              <span className="course-tag">React Native</span>
-              <span className="course-tag">Flutter</span>
-              <span className="course-tag">Swift</span>
-            </div>
-          </div>
-        </div>
-
-        <button className="cta-button">Ainda não estuda com a gente? Assine agora!</button>
       </div>
     </div>
   );
