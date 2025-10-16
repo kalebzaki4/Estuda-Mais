@@ -1,66 +1,29 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useLocation, Navigate, Routes, Route } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import Login from './components/auth/Login.jsx'
+import Register from './components/auth/Register.jsx'
 
-// Importando componentes de autenticação
-import Login from './components/auth/Login'
-import Register from './components/auth/Register'
+const PageTransition = ({ children }) => (
+  <motion.main
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -16 }}
+    transition={{ duration: 0.35, ease: 'easeOut' }}
+  >
+    {children}
+  </motion.main>
+)
 
-// Componente de proteção de rotas
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return children;
-};
-
-// Componente de Dashboard temporário
-const Dashboard = () => {
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
-  };
-
+export default function App() {
+  const location = useLocation()
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>Dashboard do Estuda+</h1>
-      <p>Bem-vindo ao seu painel de controle!</p>
-      <button 
-        onClick={handleLogout}
-        style={{
-          background: '#f44336',
-          color: 'white',
-          border: 'none',
-          padding: '10px 15px',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Sair
-      </button>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-    </Router>
+    </AnimatePresence>
   )
 }
-
-export default App

@@ -19,7 +19,6 @@ class AuthService {
 
       const data = await response.json();
       
-      // Salva o token no localStorage
       if (data.token) {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userEmail', email);
@@ -32,7 +31,6 @@ class AuthService {
     }
   }
 
-  // Registro de novo usuário
   async register(nome, email, senha) {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
@@ -49,8 +47,6 @@ class AuthService {
       }
 
       const data = await response.json();
-      
-      // Salva o token no localStorage
       if (data.token) {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userEmail', email);
@@ -64,25 +60,21 @@ class AuthService {
     }
   }
 
-  // Logout do usuário
   logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userName');
   }
 
-  // Verifica se o usuário está autenticado
   isAuthenticated() {
     const token = localStorage.getItem('authToken');
     return !!token;
   }
 
-  // Obtém o token de autenticação
   getToken() {
     return localStorage.getItem('authToken');
   }
 
-  // Obtém informações do usuário
   getUserInfo() {
     return {
       email: localStorage.getItem('userEmail'),
@@ -90,7 +82,7 @@ class AuthService {
     };
   }
 
-  // Faz requisições autenticadas
+
   async authenticatedRequest(url, options = {}) {
     const token = this.getToken();
     
