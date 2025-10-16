@@ -1,12 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Base global e reset suave */
 html,
 body,
 #root {
-  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 html {
@@ -38,4 +38,16 @@ body {
 /* Suave brilho roxo para elementos em destaque */
 .glow-brand {
   box-shadow: 0 0 0 4px rgba(123,47,247,0.15);
+}
+
+/* Proteções globais mínimas e seguras */
+* {
+  box-sizing: border-box;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }

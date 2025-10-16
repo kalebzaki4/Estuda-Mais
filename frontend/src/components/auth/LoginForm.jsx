@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import authService from '../../services/authService.js';
-import SocialLoginButtons from './SocialLoginButtons.jsx';
+import SocialButtons from './SocialButtons.jsx';
 
-const fieldBase = 'w-full rounded-2xl bg-neutral-900/60 border border-neutral-700 px-4 py-3 text-white placeholder:text-neutral-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-surface-800';
+// Campos com largura total, padding consistente, acessibilidade e foco visível
+const fieldBase = 'block w-full max-w-full rounded-lg bg-neutral-900/60 border border-neutral-700 px-4 py-3 text-white placeholder:text-neutral-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-surface-800';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: '', senha: '' });
@@ -73,7 +74,7 @@ const LoginForm = () => {
         )}
       </div>
 
-      <motion.form onSubmit={handleSubmit} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+      <motion.form onSubmit={handleSubmit} noValidate initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
         <label htmlFor="email" className="block text-sm text-neutral-300 mb-1">E-mail</label>
         <div className="relative">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -95,13 +96,13 @@ const LoginForm = () => {
               <path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" strokeWidth="1.5" />
             </svg>
             <input id="senha" name="senha" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Sua senha" className={`${fieldBase} pl-11 pr-12`} value={formData.senha} onChange={handleChange} aria-invalid={!!fieldErrors.senha} aria-describedby={fieldErrors.senha ? 'senha-err' : undefined} />
-            <button type="button" aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} onClick={() => setShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-300 hover:text-white transition"><svg className="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">{showPassword ? (<path fill="currentColor" d="M12 5c-7 0-10 7-10 7s3 7 10 7a10.7 10.7 0 0 0 5.2-1.5l-1.7-1.7A8.7 8.7 0 0 1 12 18c-5.5 0-8-6-8-6s2.5-6 8-6c2.2 0 4 .7 5.4 1.7l1.5-1.5A11.7 11.7 0 0 0 12 5Zm0 4a3 3 0 0 0-3 3c0 .5.1 1 .3 1.4l4.1-4.1c-.4-.2-.9-.3-1.4-.3Zm0 6a3 3 0 0 0 3-3c0-.5-.1-1-.3-1.4l-4.1 4.1c.4.2.9.3 1.4.3Z" />) : (<path fill="currentColor" d="M1.5 12s3.5-7 10.5-7 10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Zm10.5-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" />)}</svg></button>
+            <button type="button" aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} onClick={() => setShowPassword((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 z-30 text-neutral-300 hover:text-white transition"><svg className="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">{showPassword ? (<path fill="currentColor" d="M12 5c-7 0-10 7-10 7s3 7 10 7a10.7 10.7 0 0 0 5.2-1.5l-1.7-1.7A8.7 8.7 0 0 1 12 18c-5.5 0-8-6-8-6s2.5-6 8-6c2.2 0 4 .7 5.4 1.7l1.5-1.5A11.7 11.7 0 0 0 12 5Zm0 4a3 3 0 0 0-3 3c0 .5.1 1 .3 1.4l4.1-4.1c-.4-.2-.9-.3-1.4-.3Zm0 6a3 3 0 0 0 3-3c0-.5-.1-1-.3-1.4l-4.1 4.1c.4.2.9.3 1.4.3Z" />) : (<path fill="currentColor" d="M1.5 12s3.5-7 10.5-7 10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Zm10.5-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" />)}</svg></button>
           </div>
           {fieldErrors.senha && <div id="senha-err" className="mt-1 text-xs text-red-400">{fieldErrors.senha}</div>}
         </div>
 
         <div className="mt-5 flex items-center justify-between">
-          <button type="submit" disabled={loading} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-400 px-5 py-3 font-semibold text-white shadow-glow hover:shadow-soft transition-all disabled:opacity-70 disabled:cursor-not-allowed">
+          <button type="submit" disabled={loading} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-500 to-brand-400 px-5 py-3 font-semibold text-white shadow-glow transition-transform hover:scale-[1.01] disabled:opacity-70 disabled:cursor-not-allowed">
             {loading && <motion.span className="h-4 w-4 rounded-full border-2 border-white/60 border-t-transparent" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }} />}
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
@@ -117,7 +118,7 @@ const LoginForm = () => {
           <div className="h-px flex-1 bg-neutral-700" />
         </div>
         <div className="mt-4">
-          <SocialLoginButtons onProviderClick={onProviderClick} />
+          <SocialButtons onProviderClick={onProviderClick} />
         </div>
       </div>
     </div>
