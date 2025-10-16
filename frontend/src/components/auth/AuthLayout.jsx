@@ -4,11 +4,16 @@ import DecorativeLeftPanel from '../DecorativeLeftPanel.jsx';
 
 const AuthLayout = ({ title, subtitle, children, footerLinks }) => {
   return (
-    // Container principal: duas colunas no desktop, overflow-x escondido para evitar scroll lateral.
-    <div className="min-h-screen grid md:grid-cols-2 grid-cols-1 overflow-x-hidden bg-neutral-900 text-white">
+    // Container principal: duas colunas, ajustando proporção 65/35 em telas grandes.
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[65%_35%] 2xl:grid-cols-[60%_40%] overflow-x-hidden bg-neutral-900 text-white">
       {/* Painel ilustrativo (apenas decorativo) */}
       <div className="relative overflow-hidden hidden md:block">
-        <DecorativeLeftPanel variant="circuit" />
+        <DecorativeLeftPanel
+          variant="mesh"
+          headline="Seu Futuro Começa Aqui"
+          subheadline="Aprenda com uma plataforma moderna, rápida e focada em resultado."
+          compactOnMobile={false}
+        />
       </div>
 
       {/* Painel do formulário */}
