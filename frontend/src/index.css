@@ -9,9 +9,7 @@ body,
   overflow-x: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 /* Suporte a fontes declaradas no tailwind.config.js */
 body {
@@ -23,9 +21,17 @@ body {
 }
 
 /* Acessibilidade: foco visível e consistente */
-:focus-visible {
-  outline: 2px solid #7b2ff7; /* brand-500 */
-  outline-offset: 2px;
+:focus-visible { outline: 2px solid #7b2ff7; outline-offset: 2px; }
+
+/* Fundo global com gradiente radial animado sutil */
+.page-radial-animated {
+  background-image: radial-gradient(900px 480px at 50% 50%, rgba(123,47,247,0.10), transparent 65%);
+  animation: pageGlow 28s ease-in-out infinite alternate;
+}
+@keyframes pageGlow {
+  0% { background-size: 100% 100%; opacity: 0.9; }
+  50% { background-size: 110% 110%; opacity: 1; }
+  100% { background-size: 100% 100%; opacity: 0.9; }
 }
 
 /* Utilitário para gradiente de fundo dinâmico */
@@ -36,18 +42,66 @@ body {
 }
 
 /* Suave brilho roxo para elementos em destaque */
-.glow-brand {
-  box-shadow: 0 0 0 4px rgba(123,47,247,0.15);
+.glow-brand { box-shadow: 0 0 0 4px rgba(123,47,247,0.15); }
+
+/* Textura sutil para o Super Card (grid finíssimo cruzado) */
+.texture-subtle {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 12px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 12px);
+  opacity: 0.06;
 }
+
+/* Iluminação ambiente: leve vazamento roxo na coluna do formulário */
+.ambient-radial { background: radial-gradient(480px 240px at 5% 50%, rgba(123,47,247,0.12), transparent 70%); }
+
+/* Glow ambiente ao redor do card */
+.card-ambient-glow {
+  border-radius: 24px;
+  filter: blur(36px);
+  background: radial-gradient(600px 300px at 10% 50%, rgba(123,47,247,0.25), transparent 70%);
+}
+
+/* Animação lenta do gradiente na coluna roxa */
+.animated-gradient { background-size: 200% 200%; animation: gradientShift 24s ease infinite; }
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+/* Entrada do card com fade-up/scale */
+.enter-fade-up { animation: fadeUp 420ms ease-out both; transform-origin: center; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* Ícone com respiração sutil */
+.breathing { animation: breathe 6s ease-in-out infinite; }
+@keyframes breathe { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+
+/* Jitter/letter-spacing discreto no hover do título */
+.hover-jitter:hover { animation: jitter 140ms ease-in-out 1; }
+@keyframes jitter {
+  0% { transform: translateX(0); }
+  33% { transform: translateX(0.6px); }
+  66% { transform: translateX(-0.6px); }
+  100% { transform: translateX(0); }
+}
+
+/* Placeholder com fade ao focar */
+input::placeholder { opacity: 1; transition: opacity 180ms ease; }
+input:focus::placeholder { opacity: 0; }
+
+/* Botões com efeito press e ripple */
+.pressable { transition: transform 120ms ease-out, box-shadow 200ms ease; }
+.pressable:active { transform: scale(0.98); }
+.ripple { position: relative; overflow: hidden; }
+.ripple::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 9999px;
+  background: rgba(255,255,255,0.25); transform: translate(-50%, -50%) scale(0); opacity: 0;
+}
+.ripple:active::after { animation: ripple 600ms ease-out; }
+@keyframes ripple { 0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(16); } }
+
+/* Ícones sociais com leve translação no hover */
+.social-btn .social-icon { transition: transform 160ms ease; }
+.social-btn:hover .social-icon { transform: translateX(-2px); }
 
 /* Proteções globais mínimas e seguras */
-* {
-  box-sizing: border-box;
-}
-
-img,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+* { box-sizing: border-box; }
+img, svg { max-width: 100%; height: auto; display: block; }
