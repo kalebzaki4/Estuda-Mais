@@ -90,7 +90,6 @@ input:focus::placeholder { opacity: 0; }
 * { box-sizing: border-box; }
 img, svg { max-width: 100%; height: auto; display: block; }
 
-/* ===== ELEMENTOS DE FUNDO DISCRETOS ===== */
 .background-elements {
   position: fixed;
   top: 0;
