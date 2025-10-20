@@ -15,7 +15,6 @@ export default function Signup() {
       <section aria-label="Cadastro" className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 enter-fade-up" style={{ backgroundColor: '#1a1a1a' }}>
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
-        {/* Coluna Roxa */}
         <div className="hidden md:flex relative items-center justify-center p-10 animated-gradient" style={{ backgroundImage: `linear-gradient(135deg, ${brandPurple}, #6a24d9 60%, #2d0a66)` }}>
           <div className="absolute inset-0 opacity-20" aria-hidden="true" style={{ background: 'radial-gradient(800px 400px at 20% 20%, rgba(255,255,255,0.15), transparent 60%)' }} />
 
@@ -28,7 +27,6 @@ export default function Signup() {
           </div>
         </div>
 
-        {/* Coluna Formulário */}
         <div className="relative p-8 sm:p-10">
           <div className="absolute inset-0 ambient-radial pointer-events-none" aria-hidden="true" />
 
