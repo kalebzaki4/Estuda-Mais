@@ -10,19 +10,15 @@ export default function Login() {
 
   return (
     <main className="page-radial-animated min-h-screen w-full grid place-items-center px-4 relative">
-      {/* Glow ambiente abaixo do card */}
       <div className="absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] card-ambient-glow" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} aria-hidden="true" />
 
-      {/* Super Card */}
       <section
         aria-label="Painel de autenticação"
         className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 enter-fade-up"
         style={{ backgroundColor: '#1a1a1a' }}
       >
-        {/* Textura sutil aplicada ao card inteiro */}
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
-        {/* Coluna Esquerda — Visual Roxo Vibrante */}
         <div
           className="hidden md:flex relative items-center justify-center p-10 animated-gradient"
           style={{ backgroundImage: `linear-gradient(135deg, ${brandPurple}, #6a24d9 60%, #2d0a66)` }}
@@ -46,14 +42,11 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Sutil glow na base do card */}
           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-16 rounded-full" aria-hidden="true"
                style={{ boxShadow: '0 40px 80px rgba(123,47,247,0.35)' }} />
         </div>
 
-        {/* Coluna Direita — Formulário Dark Mode */}
         <div className="relative p-8 sm:p-10">
-          {/* Iluminação ambiente roxa suave */}
           <div className="absolute inset-0 ambient-radial pointer-events-none" aria-hidden="true" />
 
           <header className="mb-8 relative z-10">
@@ -61,16 +54,13 @@ export default function Login() {
             <p className="mt-2 text-sm text-white/70">Bem-vindo de volta. Faça login para continuar.</p>
           </header>
 
-          {/* Social Login */}
           <div className="relative z-10 grid grid-cols-1 gap-3">
             <SocialButton icon={<SiGoogle className="social-icon text-white" aria-hidden="true" />} label="Entrar com Google" />
             <SocialButton icon={<SiGithub className="social-icon text-white" aria-hidden="true" />} label="Entrar com GitHub" />
           </div>
 
-          {/* Divisor */}
           <Divider label="Ou" />
 
-          {/* Form */}
           <form className="relative z-10 space-y-4" aria-label="Formulário de login">
             <FormField id="email" label="Email" type="email" placeholder="seu@email.com" icon={<FiMail className="text-white/90" aria-hidden="true" />} />
 
@@ -110,7 +100,6 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Acesso alternativo */}
           <p className="mt-6 text-sm text-white/70 relative z-10">
             Não tem uma conta?{' '}
             <a href="/signup" className="text-brand-300 hover:text-brand-200">Crie uma agora</a>
