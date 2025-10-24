@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService implements UserDetailsService {
+
     @Autowired
     private final UsuarioRepository usuarioRepository;
 
@@ -19,10 +20,12 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        
-
         return usuarioRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o email: " + username));
     }
+
+    // funcionalidades:
+
+
 
 }
