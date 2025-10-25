@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 const brandPurple = '#7b2ff7'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <main className="page-radial-animated min-h-screen w-full grid place-items-center px-4 relative">
@@ -92,7 +94,7 @@ export default function Login() {
           <Divider label="Ou" />
 
           {/* Form */}
-          <form className="relative z-10 space-y-4" aria-label="Formulário de login">
+          <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="relative z-10 space-y-4" aria-label="Formulário de login">
             <FormField id="email" label="Email" type="email" placeholder="seu@email.com" icon={<FiMail className="text-white/90" aria-hidden="true" />} />
 
             <div>
@@ -131,14 +133,14 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Acesso alternativo */}
-          <p className="mt-6 text-sm text-white/70 relative z-10">
-            Não tem uma conta?{' '}
-            <a href="/signup" className="text-brand-300 hover:text-brand-200">Crie uma agora</a>
-          </p>
-        </div>
-      </section>
-    </main>
+        {/* Acesso alternativo */}
+        <p className="mt-6 text-sm text-white/70 relative z-10">
+          Não tem uma conta?{' '}
+          <a href="/signup" className="text-brand-300 hover:text-brand-200">Crie uma agora</a>
+        </p>
+      </div>
+    </section>
+  </main>
   )
 }
 
@@ -154,7 +156,7 @@ function SocialButton({ icon, label }) {
     </button>
   )
 }
-
+ 
 function Divider({ label }) {
   return (
     <div className="my-6 flex items-center gap-3" aria-hidden="true">
