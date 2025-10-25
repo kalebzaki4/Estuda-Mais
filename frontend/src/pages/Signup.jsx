@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUser } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 const brandPurple = '#7b2ff7'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <main className="page-radial-animated min-h-screen w-full grid place-items-center px-4 relative">
@@ -93,7 +95,7 @@ export default function Signup() {
           <Divider label="Ou" />
 
           {/* Form */}
-          <form className="relative z-10 space-y-4" aria-label="Formulário de criação de conta">
+          <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="relative z-10 space-y-4" aria-label="Formulário de criação de conta">
             <FormField id="name" label="Nome completo" type="text" placeholder="Seu nome completo" icon={<FiUser className="text-white/90" aria-hidden="true" />} />
             <FormField id="email" label="Email" type="email" placeholder="seu@email.com" icon={<FiMail className="text-white/90" aria-hidden="true" />} />
 
