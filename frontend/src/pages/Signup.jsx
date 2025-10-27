@@ -12,7 +12,7 @@ export default function Signup() {
   const navigate = useNavigate()
 
   return (
-    <main className="page-radial-animated min-h-screen w-full grid place-items-center px-4 relative">
+    <main className="page-radial-animated page-signup min-h-screen w-full grid place-items-center px-4 relative">
       {/* Elementos de fundo discretos */}
       <div className="background-elements">
         <div className="floating-orbs">
@@ -159,7 +159,7 @@ export default function Signup() {
               </label>
             </div>
 
-            <button type="submit" className="pressable ripple w-full rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-medium py-3 transition-colors">
+            <button type="submit" className="pressable ripple w-full rounded text-white font-medium py-3 transition-all duration-300 shadow-md hover:shadow-lg btn-primary">
               Criar conta
             </button>
           </form>

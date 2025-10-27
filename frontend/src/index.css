@@ -90,6 +90,50 @@ input:focus::placeholder { opacity: 0; }
 * { box-sizing: border-box; }
 img, svg { max-width: 100%; height: auto; display: block; }
 
+/* ===== Botões primários com escopo por página ===== */
+/* Login: apenas o botão "Entrar" deve ser roxo */
+.page-login .btn-primary {
+  background-color: #7b2ff7;
+  color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.page-login .btn-primary:hover {
+  background-color: #6a24d9;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.page-login .btn-primary:disabled {
+  background-color: #a57bf9;
+  cursor: not-allowed;
+  opacity: 0.95;
+}
+
+/* Signup: apenas o botão "Criar conta" deve ser roxo */
+.page-signup .btn-primary {
+  background-color: #7b2ff7;
+  color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.page-signup .btn-primary:hover {
+  background-color: #6a24d9;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.page-signup .btn-primary:disabled {
+  background-color: #a57bf9;
+  cursor: not-allowed;
+  opacity: 0.95;
+}
+
+/* Acessibilidade: foco visível consistente em primários */
+.page-login .btn-primary:focus-visible,
+.page-signup .btn-primary:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
 .background-elements {
   position: fixed;
   top: 0;

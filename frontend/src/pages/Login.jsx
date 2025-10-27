@@ -3,16 +3,22 @@ import { SiGoogle, SiGithub } from 'react-icons/si'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
+import { isValidEmail, getPasswordIssues } from '../utils/validators'
+import { AUTH_LOGIN_ENDPOINT, makeLoginPayload, loginRequestConfig } from '../config/apiEndpoints'
 
 const brandPurple = '#7b2ff7'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [touched, setTouched] = useState({ email: false, password: false })
+  const [errors, setErrors] = useState({ email: '', password: '', general: '' })
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   return (
-    <main className="page-radial-animated min-h-screen w-full grid place-items-center px-4 relative">
-      {/* Elementos de fundo discretos */}
+    <main className="page-radial-animated page-login min-h-screen w-full grid place-items-center px-4 relative">
       <div className="background-elements">
         <div className="floating-orbs">
           <div className="floating-orb"></div>
@@ -33,19 +39,15 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Glow ambiente abaixo do card */}
       <div className="absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] card-ambient-glow" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} aria-hidden="true" />
 
-      {/* Super Card */}
       <section
         aria-label="Painel de autenticação"
         className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 enter-fade-up"
         style={{ backgroundColor: '#1a1a1a' }}
       >
-        {/* Textura sutil aplicada ao card inteiro */}
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
-        {/* Coluna Esquerda — Visual Roxo Vibrante */}
         <div
           className="hidden md:flex relative items-center justify-center p-10 animated-gradient"
           style={{ backgroundImage: `linear-gradient(135deg, ${brandPurple}, #6a24d9 60%, #2d0a66)` }}
@@ -94,8 +96,60 @@ export default function Login() {
           <Divider label="Ou" />
 
           {/* Form */}
-          <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="relative z-10 space-y-4" aria-label="Formulário de login">
-            <FormField id="email" label="Email" type="email" placeholder="seu@email.com" icon={<FiMail className="text-white/90" aria-hidden="true" />} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              setTouched({ email: true, password: true })
+              const newErrors = { email: '', password: '', general: '' }
+              if (!isValidEmail(email)) {
+                newErrors.email = 'Insira um email válido.'
+              }
+              const pwdIssues = getPasswordIssues(password)
+              const blockingIssues = pwdIssues.filter(msg => !msg.startsWith('Recomendado:'))
+              if (blockingIssues.length > 0) {
+                newErrors.password = blockingIssues[0]
+              }
+              setErrors(newErrors)
+              if (newErrors.email || newErrors.password) {
+                return
+              }
+              setLoading(true)
+              const payload = makeLoginPayload({ email, password })
+              // Prepare request (do not execute)
+              const request = { endpoint: AUTH_LOGIN_ENDPOINT, config: loginRequestConfig, payload }
+              console.debug('Login request prepared:', request)
+              // Dev bypass: navegar para o dashboard
+              navigate('/dashboard')
+              setLoading(false)
+            }}
+            className="relative z-10 space-y-4"
+            aria-label="Formulário de login"
+          >
+            <div>
+              <label htmlFor="email" className="sr-only">Email</label>
+              <div className="relative">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  aria-required="true"
+                  aria-invalid={touched.email && !!errors.email}
+                  aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => setTouched(t => ({ ...t, email: true }))}
+                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.email && errors.email ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
+                />
+                <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <FiMail className="text-white/90" aria-hidden="true" />
+                </span>
+              </div>
+              {touched.email && errors.email ? (
+                <p id="email-error" role="alert" className="mt-2 text-sm text-red-400">{errors.email}</p>
+              ) : null}
+            </div>
 
             <div>
               <label htmlFor="password" className="sr-only">Senha</label>
@@ -106,8 +160,13 @@ export default function Login() {
                   type={showPassword ? 'text' : 'password'}
                   required
                   aria-required="true"
+                  aria-invalid={touched.password && !!errors.password}
+                  aria-describedby={touched.password && errors.password ? 'password-error' : undefined}
                   placeholder="Sua senha"
-                  className="input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border border-white/10 focus:border-brand-500 focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onBlur={() => setTouched(t => ({ ...t, password: true }))}
+                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.password && errors.password ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
                 />
                 <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/90" aria-hidden="true" />
                 <button
@@ -119,17 +178,27 @@ export default function Login() {
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
               </div>
+              {touched.password && errors.password ? (
+                <p id="password-error" role="alert" className="mt-2 text-sm text-red-400">{errors.password}</p>
+              ) : null}
               <div className="mt-2 flex items-center justify-between text-sm">
                 <label className="inline-flex items-center gap-2 text-white/80">
                   <input type="checkbox" className="h-4 w-4 rounded border-white/20 bg-[#282828]" />
                   Lembrar-me
                 </label>
-                <a href="#" className="text-brand-300 hover:text-brand-200">Esqueceu a senha?</a>
+                <a href="#" className="text-brand-300 hover:text-brand-200">Esqueci minha senha</a>
               </div>
             </div>
 
-            <button type="submit" className="pressable ripple w-full rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-medium py-3 transition-colors">
-              Entrar
+            <button
+              type="submit"
+              disabled={loading}
+              className={`pressable ripple w-full rounded text-white font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg btn-primary`}
+            >
+              {loading ? (
+                <span className="inline-block w-5 h-5 border-2 border-white/60 border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+              ) : null}
+              <span>{loading ? 'Entrando...' : 'Entrar'}</span>
             </button>
           </form>
 
