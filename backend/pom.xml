@@ -14,7 +14,7 @@
     <name>backend</name>
     <description>Backend do projeto Estuda + !</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <auth0.jwt.version>4.4.0</auth0.jwt.version> <!-- Definindo a versão do JWT de auth0 -->
     </properties>
 

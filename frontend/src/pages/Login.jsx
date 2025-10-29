@@ -5,6 +5,7 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
 import { AUTH_LOGIN_ENDPOINT, makeLoginPayload, loginRequestConfig } from '../config/apiEndpoints'
+import axios from 'axios'
 
 const brandPurple = '#7b2ff7'
 
@@ -97,7 +98,7 @@ export default function Login() {
 
           {/* Form */}
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault()
               setTouched({ email: true, password: true })
               const newErrors = { email: '', password: '', general: '' }
@@ -115,12 +116,22 @@ export default function Login() {
               }
               setLoading(true)
               const payload = makeLoginPayload({ email, password })
-              // Prepare request (do not execute)
-              const request = { endpoint: AUTH_LOGIN_ENDPOINT, config: loginRequestConfig, payload }
-              console.debug('Login request prepared:', request)
-              // Dev bypass: navegar para o dashboard
-              navigate('/dashboard')
-              setLoading(false)
+              console.log("Sending login request with payload:", payload);
+              console.log("Attempting axios.post to AUTH_LOGIN_ENDPOINT");
+              
+              try {
+                const response = await axios.post(AUTH_LOGIN_ENDPOINT, payload, loginRequestConfig);
+                console.log("Login successful:", response.data);
+                // Assuming the backend returns a token or user info on successful login
+                // You might want to store the token in localStorage or a context/state management system
+                navigate("/dashboard");
+              } catch (error) {
+                console.error("Login error:", error);
+                console.error("Login error details:", error.response);
+                setErrors({ ...newErrors, general: error.response?.data?.message || "Erro ao fazer login. Tente novamente." });
+              } finally {
+                setLoading(false);
+              }
             }}
             className="relative z-10 space-y-4"
             aria-label="Formulário de login"
@@ -232,30 +243,6 @@ function Divider({ label }) {
       <div className="h-px w-full bg-white/10" />
       <span className="text-white/60 text-xs uppercase tracking-wider">{label}</span>
       <div className="h-px w-full bg-white/10" />
-    </div>
-  )
-}
-
-function FormField({ id, label, type = 'text', placeholder, icon }) {
-  return (
-    <div>
-      <label htmlFor={id} className="sr-only">{label}</label>
-      <div className="relative">
-        <input
-          id={id}
-          name={id}
-          type={type}
-          required
-          aria-required="true"
-          placeholder={placeholder}
-          className="input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border border-white/10 focus:border-brand-500 focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12"
-        />
-        {icon ? (
-          <span className="absolute left-4 top-1/2 -translate-y-1/2">
-            {icon}
-          </span>
-        ) : null}
-      </div>
     </div>
   )
 }

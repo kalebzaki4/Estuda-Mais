@@ -22,3 +22,7 @@ export function isValidPassword(password) {
     (msg) => !msg.startsWith("Recomendado:")
   ).length === 0;
 }
+
+export function validateName(name) {
+  return name && name.trim().length >= 3;
+}
