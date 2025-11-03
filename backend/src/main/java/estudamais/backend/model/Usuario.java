@@ -1,79 +1,87 @@
 package estudamais.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@AllArgsConstructor
-@Setter
-@NoArgsConstructor
-@Builder
-
-public class Usuario implements UserDetails{
-
+public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
+    @Column(name = "nome_usuario", length = 100, nullable = false)
     private String nome;
 
+    @Column(name = "email_usuario", length = 150, nullable = false, unique = true)
     private String email;
 
+    @Column (name = "senha_usuario", length = 255, nullable = false)
     private String senha;
 
+    @Column (name = "ativo", nullable = false)
+    private boolean enabled;
+
+    @Column (name = "ultimo_login")
     private String lastLogin;
 
-    public Usuario(@NotBlank String nome, @NotBlank @Email String email, String encryptedPassword) {
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SessaoEstudo> sessoesDeEstudo = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-        this.senha = encryptedPassword;
-        this.lastLogin = null; // Initialize lastLogin
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    public String getSenha() {
+        return senha;
     }
 
-    @Override
-    public String getPassword() {
-        return this.senha;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public List<SessaoEstudo> getSessoesDeEstudo() {
+        return sessoesDeEstudo;
+    }
+
+    public void setSessoesDeEstudo(List<SessaoEstudo> sessoesDeEstudo) {
+        this.sessoesDeEstudo = sessoesDeEstudo;
     }
 }

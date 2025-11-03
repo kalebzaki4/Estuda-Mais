@@ -1,7 +1,5 @@
 package estudamais.backend.config;
 
-import estudamais.backend.service.JwtTokenService;
-import estudamais.backend.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

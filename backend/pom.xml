@@ -44,6 +44,12 @@
             <version>${auth0.jwt.version}</version>
         </dependency>
 
+        <!-- Spring Boot OAuth2 Client para autenticação social -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
         <!-- Banco de Dados em Memória (H2) -->
         <dependency>
             <groupId>com.h2database</groupId>

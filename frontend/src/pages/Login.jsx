@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
 import { AUTH_LOGIN_ENDPOINT, makeLoginPayload, loginRequestConfig } from '../config/apiEndpoints'
 import axios from 'axios'
@@ -17,6 +17,23 @@ export default function Login() {
   const [errors, setErrors] = useState({ email: '', password: '', general: '' })
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const oauthError = urlParams.get('error');
+    if (oauthError) {
+      let errorMessage = "Erro de autenticação OAuth. Tente novamente.";
+      if (oauthError === "oauth_failed") {
+        errorMessage = "Falha na autenticação OAuth. Por favor, tente novamente.";
+      } else if (oauthError === "email_already_registered") {
+        errorMessage = "Este e-mail já está registrado com outro provedor. Por favor, use o login social correspondente ou faça login com e-mail/senha.";
+      } else if (oauthError === "email_not_found") {
+        errorMessage = "E-mail não encontrado. Por favor, registre-se ou tente outro provedor.";
+      }
+      setErrors(prevErrors => ({ ...prevErrors, general: errorMessage }));
+    }
+  }, [location]);
 
   return (
     <main className="page-radial-animated page-login min-h-screen w-full grid place-items-center px-4 relative">
@@ -85,12 +102,17 @@ export default function Login() {
           <header className="mb-8 relative z-10">
             <h1 className="text-3xl font-semibold text-white">Entrar</h1>
             <p className="mt-2 text-sm text-white/70">Bem-vindo de volta. Faça login para continuar.</p>
+            {errors.general && (
+              <div className="mt-4 p-3 bg-red-800 text-white text-sm rounded-lg" role="alert">
+                {errors.general}
+              </div>
+            )}
           </header>
 
           {/* Social Login */}
           <div className="relative z-10 grid grid-cols-1 gap-3">
-            <SocialButton icon={<SiGoogle className="social-icon text-white" aria-hidden="true" />} label="Entrar com Google" />
-            <SocialButton icon={<SiGithub className="social-icon text-white" aria-hidden="true" />} label="Entrar com GitHub" />
+            <SocialButton icon={<SiGoogle className="social-icon text-white" aria-hidden="true" />} label="Entrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
+            <SocialButton icon={<SiGithub className="social-icon text-white" aria-hidden="true" />} label="Entrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
           </div>
 
           {/* Divisor */}
@@ -224,12 +246,13 @@ export default function Login() {
   )
 }
 
-function SocialButton({ icon, label }) {
+function SocialButton({ icon, label, onClick }) {
   return (
     <button
       type="button"
       className="social-btn w-full flex items-center gap-3 rounded-xl bg-[#282828] text-white px-4 py-3 border border-white/10 hover:border-white/20 hover:shadow-soft transition-[colors,box-shadow] duration-300"
       aria-label={label}
+      onClick={onClick}
     >
       <span className="inline-flex items-center justify-center w-6 h-6">{icon}</span>
       <span className="text-sm font-medium">{label}</span>
