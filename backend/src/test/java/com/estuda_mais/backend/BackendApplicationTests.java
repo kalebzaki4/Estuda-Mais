@@ -1,4 +1,4 @@
-package estudamais.backend;
+package com.estuda_mais.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
