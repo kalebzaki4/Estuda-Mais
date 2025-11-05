@@ -33,6 +33,7 @@ public class Usuario implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
+    // metodos
     @Override
     public String getPassword() { return this.senha; }
 
@@ -51,7 +52,7 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 
-    // --- Getters e Setters ---
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
