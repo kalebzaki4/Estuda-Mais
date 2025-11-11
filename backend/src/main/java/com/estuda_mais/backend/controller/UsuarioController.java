@@ -1,18 +1,33 @@
 package com.estuda_mais.backend.controller;
 
-import com.estuda_mais.backend.model.Usuario; // 💡 Importação do seu Model
+import com.estuda_mais.backend.model.Usuario;
+import com.estuda_mais.backend.model.UserRole;
+import com.estuda_mais.backend.model.LoginRequest;
+import com.estuda_mais.backend.model.RegisterRequest;
+import com.estuda_mais.backend.security.JwtTokenProvider;
 import com.estuda_mais.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException; // Adicionado import para AuthenticationException
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/auth")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     // GET TESTE
     @GetMapping("/")
@@ -20,18 +35,44 @@ public class UsuarioController {
         return "Listagem de usuários - OK!";
     }
 
-    // POST
-    @PostMapping("/cadastrar")
+    // POST REGISTER
+    @PostMapping("/register")
     public ResponseEntity<String> cadastrarUsuario(
-            @RequestBody Usuario usuario
+            @RequestBody RegisterRequest registerRequest
     ) {
-        if (usuarioService.emailExiste(usuario.getEmail())) {
+        if (usuarioService.emailExiste(registerRequest.getEmail())) {
             return new ResponseEntity<>("Erro: Email já cadastrado.", HttpStatus.CONFLICT); // 409
         }
 
+        Usuario usuario = new Usuario();
+        usuario.setNome(registerRequest.getNome());
+        usuario.setEmail(registerRequest.getEmail());
+        usuario.setSenha(registerRequest.getSenha()); // A senha será criptografada no service
+        usuario.setRole(UserRole.ALUNO); // Definindo a role padrão como ALUNO
+
         usuarioService.cadastrarUsuario(usuario);
 
-        return new ResponseEntity<>("Usuário '" + usuario.getNome() + "' cadastrado com sucesso!", HttpStatus.CREATED); // 201
+        return new ResponseEntity<>("Usuário '" + usuario.getEmail() + "' cadastrado com sucesso!", HttpStatus.CREATED); // 201
+    }
+
+    // POST LOGIN
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUsuario(@RequestBody LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(),
+                            loginRequest.getSenha()
+                    )
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String jwt = tokenProvider.generateToken(authentication);
+            return ResponseEntity.ok(jwt);
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>("Credenciais inválidas.", HttpStatus.UNAUTHORIZED);
+        }
     }
 
     // GET
