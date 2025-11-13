@@ -1,6 +1,5 @@
 <# : batch portion
 @REM ----------------------------------------------------------------------------
-@SET JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.16.8-hotspot
 @REM Licensed to the Apache Software Foundation (ASF) under one
 @REM or more contributor license agreements.  See the NOTICE file
 @REM distributed with this work for additional information
