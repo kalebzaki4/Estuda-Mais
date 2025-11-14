@@ -39,6 +39,29 @@ export default {
       fontFamily: {
         sans: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideInUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        bounceIn: {
+          '0%, 20%, 40%, 60%, 80%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
+        },
+      },
+      animation: {
+        'fade-in': 'fadeIn 1s ease-out forwards',
+        'slide-in-up': 'slideInUp 0.6s ease-out forwards',
+        'bounce-in': 'bounceIn 1s infinite',
+      },
     },
   },
   plugins: [],

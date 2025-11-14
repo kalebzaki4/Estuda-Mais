@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import { SiGoogle, SiGithub } from 'react-icons/si'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
-import { useNavigate, Link } from 'react-router-dom'
-import { isValidEmail, getPasswordIssues, isValidPassword, validateName } from '../utils/validators'
-import { AUTH_REGISTER_ENDPOINT } from '../config/apiEndpoints'
+import { SiGoogle, SiGithub } from 'react-icons/si'
 import axios from 'axios'
+import { makeRegisterPayload } from '../config/apiEndpoints'
 
-const brandPurple = '#7b2ff7'
+// const brandPurple = '#7b2ff7'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
@@ -16,47 +15,107 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [touched, setTouched] = useState({ name: false, email: false, password: false, confirmPassword: false })
-  const [errors, setErrors] = useState({ name: '', email: '', password: '', confirmPassword: '', general: '' })
+  // const [showPassword, setShowPassword] = useState(false)
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+  const [passwordStrength, setPasswordStrength] = useState(0)
+  const [termsAccepted, setTermsAccepted] = useState(false)
 
-  const handleSignup = async (e) => {
-    e.preventDefault()
-    setTouched({ name: true, email: true, password: true, confirmPassword: true })
-    const newErrors = { name: '', email: '', password: '', confirmPassword: '', general: '' }
+  useEffect(() => {
+    validateForm()
+  }, [name, email, password, confirmPassword, termsAccepted])
 
-    if (!validateName(name)) {
-      newErrors.name = 'Nome é obrigatório e deve ter pelo menos 3 caracteres.'
+  useEffect(() => {
+    calculatePasswordStrength(password)
+  }, [password])
+
+  const calculatePasswordStrength = (pwd) => {
+    let strength = 0
+    if (pwd.length > 5) strength += 20
+    if (pwd.length > 8) strength += 20
+    if (/[A-Z]/.test(pwd)) strength += 20
+    if (/[a-z]/.test(pwd)) strength += 20
+    if (/[0-9]/.test(pwd)) strength += 20
+    if (/[^A-Za-z0-9]/.test(pwd)) strength += 20
+    setPasswordStrength(Math.min(strength, 100))
+  }
+
+  const getPasswordStrengthText = (strength) => {
+    if (strength < 40) return 'Fraca'
+    if (strength < 70) return 'Média'
+    return 'Forte'
+  }
+
+  const getPasswordStrengthColor = (strength) => {
+    if (strength < 40) return '#ef4444' // Red
+    if (strength < 70) return '#f59e0b' // Orange
+    return '#22c55e' // Green
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    if (!name) {
+      newErrors.name = 'Nome é obrigatório.'
+    } else if (name.length < 4) {
+      newErrors.name = 'Nome deve ter pelo menos 4 caracteres.'
+    } else if (!/^[a-zA-Z0-9_]+$/.test(name)) {
+      newErrors.name = 'Nome não deve conter caracteres especiais.'
     }
-    if (!isValidEmail(email)) {
-      newErrors.email = 'Insira um email válido.'
+
+    if (!email) {
+      newErrors.email = 'Email é obrigatório.'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      newErrors.email = 'Email inválido.'
     }
-    if (!isValidPassword(password)) {
-      const pwdIssues = getPasswordIssues(password)
-      newErrors.password = pwdIssues.filter(msg => !msg.startsWith('Recomendado:'))[0] || 'Senha inválida.'
+
+    if (!password) {
+      newErrors.password = 'Senha é obrigatória.'
+    } else if (password.length < 8) {
+      newErrors.password = 'Senha deve ter pelo menos 8 caracteres.'
+    } else if (!/[A-Z]/.test(password)) {
+      newErrors.password = 'Senha deve conter pelo menos 1 letra maiúscula.'
+    } else if (!/[0-9]/.test(password)) {
+      newErrors.password = 'Senha deve conter pelo menos 1 número.'
+    } else if (!/[^A-Za-z0-9]/.test(password)) {
+      newErrors.password = 'Senha deve conter pelo menos 1 caractere especial.'
     }
-    if (password !== confirmPassword) {
+
+    if (!confirmPassword) {
+      newErrors.confirmPassword = 'Confirmação de senha é obrigatória.'
+    } else if (password !== confirmPassword) {
       newErrors.confirmPassword = 'As senhas não coincidem.'
     }
 
+    if (!termsAccepted) {
+      newErrors.terms = 'Você deve aceitar os termos de serviço.'
+    }
+
     setErrors(newErrors)
-    if (Object.values(newErrors).some(error => error !== '')) {
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true })
+
+    if (!validateForm()) {
       return
     }
 
     setLoading(true)
     try {
-      const response = await axios.post(AUTH_REGISTER_ENDPOINT, {
-        nome: name,
-        email,
-        senha: password,
-      })
-      console.log('Registration successful:', response.data)
-      navigate('/login') // Redirect to login after successful registration
+      const payload = makeRegisterPayload({ name, email, password })
+      const response = await axios.post('/auth/register', payload)
+      console.log('Signup successful:', response.data)
+      // Assuming the backend returns a token and user info on successful registration
+      localStorage.setItem('jwtToken', response.data.token) // Adjust based on actual backend response
+      localStorage.setItem('userData', JSON.stringify(response.data.user)) // Adjust based on actual backend response
+      navigate('/dashboard')
     } catch (error) {
-      console.error('Registration error:', error)
-      setErrors({ ...newErrors, general: error.response?.data?.message || 'Erro ao cadastrar. Tente novamente.' })
+      console.error('Signup error:', error)
+      setErrors(prev => ({ ...prev, general: error.response?.data?.message || 'Erro ao cadastrar. Tente novamente.' }))
     } finally {
       setLoading(false)
     }
@@ -88,14 +147,13 @@ export default function Signup() {
 
       <section
         aria-label="Painel de autenticação"
-        className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 enter-fade-up"
-        style={{ backgroundColor: '#1a1a1a' }}
+        className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 animate-fade-in"
       >
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
         <div
           className="hidden md:flex relative items-center justify-center p-10 animated-gradient"
-          style={{ backgroundImage: `linear-gradient(135deg, ${brandPurple}, #6a24d9 60%, #2d0a66)` }}
+          style={{ backgroundImage: `linear-gradient(135deg, #7b2ff7, #6a24d9 60%, #2d0a66)` }}
         >
           <div className="absolute inset-0 opacity-20" aria-hidden="true"
                style={{ background: 'radial-gradient(800px 400px at 20% 20%, rgba(255,255,255,0.15), transparent 60%)' }} />
@@ -105,12 +163,12 @@ export default function Signup() {
               <LuBookOpen size={48} className="text-white" aria-hidden="true" />
             </div>
 
-            <h2 className="text-white text-3xl font-semibold hover-jitter">Conhecimento que inspira</h2>
-            <p className="text-white/85 max-w-md">
+            <h2 className="text-white text-3xl font-semibold animate-slide-in-up">Conhecimento que inspira</h2>
+            <p className="text-white/85 max-w-md animate-slide-in-up delay-100">
               Aprenda continuamente com conteúdos selecionados e avance na sua jornada.
             </p>
 
-            <div className="mt-6 flex items-center gap-3 text-white/80">
+            <div className="mt-6 flex items-center gap-3 text-white/80 animate-slide-in-up delay-200">
               <LuShieldCheck aria-hidden="true" />
               <span>Segurança e privacidade garantidas</span>
             </div>
@@ -122,17 +180,22 @@ export default function Signup() {
         </div>
 
         {/* Coluna Direita — Formulário Dark Mode */}
-        <div className="relative p-8 sm:p-10">
+        <div className="relative p-8 sm:p-10 animate-slide-in-up">
           {/* Iluminação ambiente roxa suave */}
           <div className="absolute inset-0 ambient-radial pointer-events-none" aria-hidden="true" />
 
           <header className="mb-8 relative z-10">
             <h1 className="text-3xl font-semibold text-white">Criar Conta</h1>
             <p className="mt-2 text-sm text-white/70">Crie sua conta para começar a aprender.</p>
+            {errors.general && (
+              <div className="mt-4 p-3 bg-red-800 text-white text-sm rounded-lg shadow-soft" role="alert">
+                {errors.general}
+              </div>
+            )}
           </header>
 
           {/* Social Login */}
-          <div className="relative z-10 grid grid-cols-1 gap-3">
+          <div className="relative z-10 grid grid-cols-1 gap-3 animate-slide-in-up delay-200">
             <SocialButton icon={<SiGoogle className="social-icon text-white" aria-hidden="true" />} label="Cadastrar com Google" />
             <SocialButton icon={<SiGithub className="social-icon text-white" aria-hidden="true" />} label="Cadastrar com GitHub" />
           </div>
@@ -142,7 +205,7 @@ export default function Signup() {
 
           {/* Form */}
           <form
-            onSubmit={handleSignup}
+            onSubmit={handleSubmit}
             className="relative z-10 space-y-4"
             aria-label="Formulário de cadastro"
           >
@@ -161,7 +224,7 @@ export default function Signup() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, name: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.name && errors.name ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
+                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.name && errors.name ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
                 />
                 <span className="absolute left-4 top-1/2 -translate-y-1/2">
                   <LuBookOpen className="text-white/90" aria-hidden="true" />
@@ -187,7 +250,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, email: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.email && errors.email ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
+                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.email && errors.email ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
                 />
                 <span className="absolute left-4 top-1/2 -translate-y-1/2">
                   <FiMail className="text-white/90" aria-hidden="true" />
@@ -213,7 +276,7 @@ export default function Signup() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, password: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.password && errors.password ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
+                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.password && errors.password ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
                 />
                 <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/90" aria-hidden="true" />
                 <button
@@ -245,7 +308,7 @@ export default function Signup() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, confirmPassword: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-[#282828] text-white placeholder:text-white/60 border ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
+                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
                 />
                 <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/90" aria-hidden="true" />
                 <button
@@ -262,14 +325,40 @@ export default function Signup() {
               ) : null}
             </div>
 
+            {/* Password Strength Indicator */}
+            <div className="relative z-10 animate-slide-in-up delay-300">
+              <div className="h-2 w-full rounded-full bg-surface-900 overflow-hidden">
+                <div
+                  className="h-full transition-all duration-500 ease-out"
+                  style={{ width: `${passwordStrength}%`, backgroundColor: getPasswordStrengthColor(passwordStrength) }}
+                />
+              </div>
+              <p className="mt-2 text-sm text-white/70">Força da senha: {getPasswordStrengthText(passwordStrength)}</p>
+            </div>
+
+            {/* Terms of Service Checkbox */}
+            <div className="relative z-10 flex items-start gap-3 animate-slide-in-up delay-400">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="mt-1 rounded-md border-white/20 bg-surface-900 text-brand-500 focus:ring-brand-500"
+              />
+              <label htmlFor="terms" className="text-sm text-white/70">
+                Eu concordo com os <a href="#" className="text-brand-300 hover:text-brand-200">Termos de Serviço</a> e <a href="#" className="text-brand-300 hover:text-brand-200">Política de Privacidade</a>.
+              </label>
+            </div>
+
             {errors.general && (
               <p role="alert" className="mt-2 text-sm text-red-400">{errors.general}</p>
             )}
 
             <button
               type="submit"
-              disabled={loading}
-              className={`pressable ripple w-full rounded text-white font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg btn-primary`}
+              disabled={loading || !termsAccepted}
+              className={`pressable ripple w-full rounded-xl text-white font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:shadow-lg btn-primary bg-brand-500 hover:bg-brand-600`}
             >
               {loading ? (
                 <span className="inline-block w-5 h-5 border-2 border-white/60 border-t-transparent rounded-full animate-spin" aria-hidden="true" />
@@ -278,7 +367,7 @@ export default function Signup() {
             </button>
           </form>
 
-          <p className="mt-6 text-sm text-white/70 relative z-10">
+          <p className="mt-6 text-sm text-white/70 relative z-10 animate-fade-in delay-300">
             Já tem uma conta?{' '}
             <a href="/login" className="text-brand-300 hover:text-brand-200">Faça login aqui</a>
           </p>
@@ -292,7 +381,7 @@ function SocialButton({ icon, label }) {
   return (
     <button
       type="button"
-      className="social-btn w-full flex items-center gap-3 rounded-xl bg-[#282828] text-white px-4 py-3 border border-white/10 hover:border-white/20 hover:shadow-soft transition-[colors,box-shadow] duration-300"
+      className="social-btn w-full flex items-center gap-3 rounded-xl bg-surface-900 text-white px-4 py-3 border border-white/10 hover:border-white/20 hover:shadow-soft transition-[colors,box-shadow] duration-300 animate-slide-in-up"
       aria-label={label}
     >
       <span className="inline-flex items-center justify-center w-6 h-6">{icon}</span>
@@ -303,7 +392,7 @@ function SocialButton({ icon, label }) {
 
 function Divider({ label }) {
   return (
-    <div className="my-6 flex items-center gap-3" aria-hidden="true">
+    <div className="my-6 flex items-center gap-3 animate-fade-in delay-200" aria-hidden="true">
       <div className="h-px w-full bg-white/10" />
       <span className="text-white/60 text-xs uppercase tracking-wider">{label}</span>
       <div className="h-px w-full bg-white/10" />

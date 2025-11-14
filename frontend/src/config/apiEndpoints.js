@@ -4,7 +4,7 @@ export const AUTH_REGISTER_ENDPOINT = "/auth/register";
 export function makeLoginPayload({ email, password }) {
   return {
     email: String(email || "").trim(),
-    senha: String(password || ""),
+    password: String(password || ""),
   };
 }
 
@@ -26,7 +26,6 @@ export const registerRequestConfig = {
   headers: { "Content-Type": "application/json" },
 };
 
-// Monitoring Endpoints
 export const MONITORING_PLATFORM_USAGE_ENDPOINT = "/monitoramento/uso-plataforma";
 export const MONITORING_BACKEND_PERFORMANCE_ENDPOINT = "/monitoramento/desempenho-backend";
 export const MONITORING_RESOURCE_MONITORING_ENDPOINT = "/monitoramento/monitoramento-recursos";

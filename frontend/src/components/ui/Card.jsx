@@ -3,7 +3,7 @@ import React from 'react';
 const Card = ({ children, className = '', ...props }) => {
   return (
     <div
-      className={`relative rounded-3xl shadow-soft overflow-hidden bg-surface-800 ${className}`}
+      className={`relative rounded-xl shadow-soft overflow-hidden bg-surface-800 ${className}`}
       style={{ backgroundColor: '#1a1a1a' }}
       {...props}
     >

@@ -7,16 +7,19 @@ export default function OAuth2RedirectHandler() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
+    const user = urlParams.get('user');
 
     if (token) {
-      localStorage.setItem('jwtToken', token); // Armazena o token JWT
-      navigate('/dashboard'); // Redireciona para o dashboard
+      localStorage.setItem('jwtToken', token); 
+      if (user) {
+        localStorage.setItem('userData', user);
+      }
+      navigate('/dashboard'); 
     } else {
       const error = urlParams.get('error');
       if (error) {
         navigate(`/login?error=${error}`);
       } else {
-        // Lidar com o caso em que nenhum token é recebido (erro ou cancelamento)
         navigate('/login?error=oauth_failed');
       }
     }

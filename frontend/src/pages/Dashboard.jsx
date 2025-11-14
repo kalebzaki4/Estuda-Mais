@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LuBookOpen, LuShieldCheck } from 'react-icons/lu';
+import { useNavigate, Link } from 'react-router-dom';
+import { LuBookOpen, LuShieldCheck, LuHouse, LuArrowLeft } from 'react-icons/lu';
 import Card from '../components/ui/Card';
 import TabNavigation from '../components/ui/TabNavigation';
 import axios from 'axios';
@@ -36,7 +36,6 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Simulação de dados do usuário (ainda não temos um endpoint real para isso)
         setUserData({
           name: 'Usuário Teste',
           email: 'teste@estudamais.com',
@@ -109,6 +108,16 @@ export default function Dashboard() {
         className="relative w-full max-w-6xl rounded-3xl shadow-soft overflow-hidden bg-surface-800 enter-fade-up"
         style={{ backgroundColor: '#1a1a1a' }}
       >
+        {/* Botão voltar */}
+        <div className="absolute top-4 left-4 z-20">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-sm"
+          >
+            <LuArrowLeft size={16} />
+            <span>Voltar</span>
+          </Link>
+        </div>
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
         <div
