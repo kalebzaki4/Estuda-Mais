@@ -1,23 +1,10 @@
 import { Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useAuth } from '../../contexts/AuthContext.jsx'
 
 export default function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const { user, loading } = useAuth()
 
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
-    const userData = localStorage.getItem('userData')
-    
-    if (token && userData) {
-      setIsAuthenticated(true)
-    } else {
-      setIsAuthenticated(false)
-    }
-    setIsLoading(false)
-  }, [])
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen w-full grid place-items-center bg-[#0a0a0a] text-white">
         <div className="text-center">
@@ -28,7 +15,7 @@ export default function ProtectedRoute({ children }) {
     )
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />
   }
 

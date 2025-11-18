@@ -4,12 +4,12 @@ import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
-import { AUTH_LOGIN_ENDPOINT, makeLoginPayload, loginRequestConfig } from '../config/apiEndpoints'
-import axios from 'axios'
+import { useAuth } from '../contexts/AuthContext.jsx'
 
 // const brandPurple = '#7b2ff7' // Removido, usando cores do tailwind.config.js
 
 export default function Login() {
+  const { login } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

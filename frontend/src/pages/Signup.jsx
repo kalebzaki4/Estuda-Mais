@@ -3,25 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
-import axios from 'axios'
-import { makeRegisterPayload } from '../config/apiEndpoints'
+import { useAuth } from '../contexts/AuthContext.jsx'
 
 // const brandPurple = '#7b2ff7'
 
 export default function Signup() {
+  const { register } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  // const [showPassword, setShowPassword] = useState(false)
-  // const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [termsAccepted, setTermsAccepted] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     validateForm()

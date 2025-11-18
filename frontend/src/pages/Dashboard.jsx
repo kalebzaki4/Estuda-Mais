@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { LuBookOpen, LuShieldCheck, LuHouse, LuArrowLeft } from 'react-icons/lu';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import Card from '../components/ui/Card';
 import TabNavigation from '../components/ui/TabNavigation';
 import axios from 'axios';
@@ -13,6 +14,7 @@ import {
 const brandPurple = '#7b2ff7';
 
 export default function Dashboard() {
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('user-data');
   const [userData, setUserData] = useState(null);

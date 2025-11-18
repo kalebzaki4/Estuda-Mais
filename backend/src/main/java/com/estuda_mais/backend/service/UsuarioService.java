@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Collections;
+import java.util.UUID;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -31,9 +32,8 @@ public class UsuarioService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 usuario.getEmail(),
-                usuario.getSenha(),
-                usuario.getAtivo(),
-                true, true, true,
+                usuario.getPasswordHash(),
+                true, true, true, true,
                 Collections.emptyList()
         );
     }
@@ -43,9 +43,8 @@ public class UsuarioService implements UserDetailsService {
             throw new RuntimeException("Email já cadastrado.");
         }
 
-        String senhaCriptografada = passwordEncoder.encode(novoUsuario.getSenha());
-        novoUsuario.setSenha(senhaCriptografada);
-        novoUsuario.setAtivo(true);
+        String senhaCriptografada = passwordEncoder.encode(novoUsuario.getPasswordHash());
+        novoUsuario.setPasswordHash(senhaCriptografada);
 
         return usuarioRepository.save(novoUsuario);
     }
@@ -54,7 +53,7 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByEmail(email);
     }
 
-    public Optional<Usuario> findById(Long id) {
+    public Optional<Usuario> findById(UUID id) {
         return usuarioRepository.findById(id);
     }
 }
