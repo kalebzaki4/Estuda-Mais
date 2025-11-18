@@ -13,15 +13,12 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Rota inicial */}
           <Route path="/" element={<Layout><Home /></Layout>} />
           
-          {/* Rotas de autenticação sem layout */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           
-          {/* Rotas protegidas com layout */}
           <Route 
             path="/dashboard" 
             element={
@@ -31,7 +28,6 @@ export default function App() {
             } 
           />
           
-          {/* Rota de captura para 404 */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
