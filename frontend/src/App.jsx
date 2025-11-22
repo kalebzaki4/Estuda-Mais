@@ -11,7 +11,7 @@ import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler.jsx'
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter future={{ v7_relativeSplatPath: true }}>
+      <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Routes>
           <Route path="/" element={<Layout><Home /></Layout>} />
           
