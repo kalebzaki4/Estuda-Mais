@@ -3,9 +3,33 @@ import { useNavigate } from 'react-router-dom'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
-import { useAuth } from '../contexts/AuthContext.jsx'
+import { useAuth } from '../contexts/AuthContextCore.js'
 
 // const brandPurple = '#7b2ff7'
+
+class SignupErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  componentDidCatch() {}
+  render() {
+    if (this.state.hasError) {
+      return (
+        <main className="min-h-screen w-full grid place-items-center bg-[#0a0a0a] text-white">
+          <div>
+            <h1 className="text-2xl font-semibold">Ocorreu um erro</h1>
+            <p className="mt-2 text-white/70">Tente recarregar a página.</p>
+          </div>
+        </main>
+      )
+    }
+    return this.props.children
+  }
+}
 
 export default function Signup() {
   const { register } = useAuth()
@@ -95,6 +119,14 @@ export default function Signup() {
     return Object.keys(newErrors).length === 0
   }
 
+  const makeRegisterPayload = ({ name, email, password }) => {
+    return {
+      name: String(name || '').trim(),
+      email: String(email || '').trim(),
+      password: String(password || ''),
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true })
@@ -104,23 +136,26 @@ export default function Signup() {
     }
 
     setLoading(true)
+    setErrors(prev => ({ ...prev, general: undefined }))
     try {
       const payload = makeRegisterPayload({ name, email, password })
-      const response = await axios.post('/auth/register', payload)
-      console.log('Signup successful:', response.data)
-      // Assuming the backend returns a token and user info on successful registration
-      localStorage.setItem('jwtToken', response.data.token) // Adjust based on actual backend response
-      localStorage.setItem('userData', JSON.stringify(response.data.user)) // Adjust based on actual backend response
-      navigate('/dashboard')
+      const result = await register(payload.name, payload.email, payload.password)
+
+      if (result && result.success) {
+        navigate('/dashboard')
+      } else {
+        const message = result?.error || 'Erro ao cadastrar. Tente novamente.'
+        setErrors(prev => ({ ...prev, general: message }))
+      }
     } catch (error) {
-      console.error('Signup error:', error)
-      setErrors(prev => ({ ...prev, general: error.response?.data?.message || 'Erro ao cadastrar. Tente novamente.' }))
+      setErrors(prev => ({ ...prev, general: 'Erro ao cadastrar. Tente novamente.' }))
     } finally {
       setLoading(false)
     }
   }
 
   return (
+    <SignupErrorBoundary>
     <main className="page-radial-animated page-login min-h-screen w-full grid place-items-center px-4 relative">
       <div className="background-elements">
         <div className="floating-orbs">
@@ -358,6 +393,7 @@ export default function Signup() {
               type="submit"
               disabled={loading || !termsAccepted}
               className={`pressable ripple w-full rounded-xl text-white font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:shadow-lg btn-primary bg-brand-500 hover:bg-brand-600`}
+              data-testid="submit-signup"
             >
               {loading ? (
                 <span className="inline-block w-5 h-5 border-2 border-white/60 border-t-transparent rounded-full animate-spin" aria-hidden="true" />
@@ -373,6 +409,7 @@ export default function Signup() {
         </div>
       </section>
     </main>
+    </SignupErrorBoundary>
   )
 }
 

@@ -4,7 +4,7 @@ import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
-import { useAuth } from '../contexts/AuthContext.jsx'
+import { useAuth } from '../contexts/AuthContextCore.js'
 
 // const brandPurple = '#7b2ff7' // Removido, usando cores do tailwind.config.js
 
@@ -136,23 +136,16 @@ export default function Login() {
                 return
               }
               setLoading(true)
-              const payload = makeLoginPayload({ email, password })
-              console.log("Sending login request with payload:", payload);
-              console.log("Attempting axios.post to AUTH_LOGIN_ENDPOINT");
               
-              try {
-                const response = await axios.post(AUTH_LOGIN_ENDPOINT, payload, loginRequestConfig);
-                console.log("Login successful:", response.data);
-                // Assuming the backend returns a token or user info on successful login
-                // You might want to store the token in localStorage or a context/state management system
-                navigate("/dashboard");
-              } catch (error) {
-                console.error("Login error:", error);
-                console.error("Login error details:", error.response);
-                setErrors({ ...newErrors, general: error.response?.data?.message || "Erro ao fazer login. Tente novamente." });
-              } finally {
-                setLoading(false);
+              const result = await login(email, password)
+              
+              if (result.success) {
+                navigate("/dashboard")
+              } else {
+                setErrors({ ...newErrors, general: result.error || "Erro ao fazer login. Tente novamente." })
               }
+              
+              setLoading(false)
             }}
             className="relative z-10 space-y-4"
             aria-label="Formulário de login"
