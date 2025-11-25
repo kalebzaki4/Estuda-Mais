@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import styles from '../styles/Home.module.css'
 import { LuBookOpen, LuShieldCheck, LuTrendingUp, LuUsers, LuTrophy, LuStar } from 'react-icons/lu'
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className={`max-w-7xl mx-auto text-center ${styles.heroContainer}`}>
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-brand-500/20 backdrop-blur-sm mb-6">
               <LuBookOpen size={40} className="text-brand-300" />
@@ -18,7 +19,7 @@ export default function Home() {
               A plataforma de aprendizado contínuo que transforma sua jornada educacional. 
               Acesse conteúdos personalizados, acompanhe seu progresso e alcance seus objetivos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className={`flex flex-col sm:flex-row gap-4 justify-center ${styles.ctaGroup}`}>
               <Link
                 to="/signup"
                 className="px-8 py-3 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-colors font-medium"
@@ -55,8 +56,8 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center text-white mb-12">
             Por que escolher o Estuda+?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-in-up">
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg group">
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-slide-in-up ${styles.featureGrid}`}>
+            <div className={`p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg group ${styles.featureCard}`}>
               <div className="w-12 h-12 rounded-lg bg-brand-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <LuTrendingUp size={24} className="text-brand-300" />
               </div>

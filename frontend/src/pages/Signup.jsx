@@ -4,6 +4,7 @@ import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { useAuth } from '../contexts/AuthContextCore.js'
+import styles from '../styles/Signup.module.css'
 
 // const brandPurple = '#7b2ff7'
 
@@ -164,20 +165,20 @@ export default function Signup() {
           <div className="floating-orb"></div>
           <div className="floating-orb"></div>
         </div>
-        <div className="particles">
-          <div className="particle" style={{ left: '10%', animationDelay: '0s' }}></div>
-          <div className="particle" style={{ left: '20%', animationDelay: '2s' }}></div>
-          <div className="particle" style={{ left: '30%', animationDelay: '4s' }}></div>
-          <div className="particle" style={{ left: '40%', animationDelay: '6s' }}></div>
-          <div className="particle" style={{ left: '50%', animationDelay: '8s' }}></div>
-          <div className="particle" style={{ left: '60%', animationDelay: '10s' }}></div>
-          <div className="particle" style={{ left: '70%', animationDelay: '12s' }}></div>
-          <div className="particle" style={{ left: '80%', animationDelay: '14s' }}></div>
-          <div className="particle" style={{ left: '90%', animationDelay: '16s' }}></div>
+          <div className="particles">
+          <div className={`particle ${styles.particle1}`}></div>
+          <div className={`particle ${styles.particle2}`}></div>
+          <div className={`particle ${styles.particle3}`}></div>
+          <div className={`particle ${styles.particle4}`}></div>
+          <div className={`particle ${styles.particle5}`}></div>
+          <div className={`particle ${styles.particle6}`}></div>
+          <div className={`particle ${styles.particle7}`}></div>
+          <div className={`particle ${styles.particle8}`}></div>
+          <div className={`particle ${styles.particle9}`}></div>
         </div>
       </div>
 
-      <div className="absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] card-ambient-glow" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} aria-hidden="true" />
+      <div className={`absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] card-ambient-glow ${styles.cardAmbientGlow}`} aria-hidden="true" />
 
       <section
         aria-label="Painel de autenticação"
@@ -186,11 +187,9 @@ export default function Signup() {
         <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
 
         <div
-          className="hidden md:flex relative items-center justify-center p-10 animated-gradient"
-          style={{ backgroundImage: `linear-gradient(135deg, #7b2ff7, #6a24d9 60%, #2d0a66)` }}
+          className={`hidden md:flex relative items-center justify-center p-10 animated-gradient ${styles.animatedGradient}`}
         >
-          <div className="absolute inset-0 opacity-20" aria-hidden="true"
-               style={{ background: 'radial-gradient(800px 400px at 20% 20%, rgba(255,255,255,0.15), transparent 60%)' }} />
+          <div className={`absolute inset-0 opacity-20 ${styles.panelOverlay}`} aria-hidden="true" />
 
           <div className="relative z-10 flex flex-col items-center text-center gap-6">
             <div className="w-24 h-24 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-glow breathing">
@@ -209,8 +208,7 @@ export default function Signup() {
           </div>
 
           {/* Sutil glow na base do card */}
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-16 rounded-full" aria-hidden="true"
-               style={{ boxShadow: '0 40px 80px rgba(123,47,247,0.35)' }} />
+          <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-16 rounded-full ${styles.shadowHalo}`} aria-hidden="true" />
         </div>
 
         {/* Coluna Direita — Formulário Dark Mode */}
@@ -362,10 +360,10 @@ export default function Signup() {
             {/* Password Strength Indicator */}
             <div className="relative z-10 animate-slide-in-up delay-300">
               <div className="h-2 w-full rounded-full bg-surface-900 overflow-hidden">
-                <div
-                  className="h-full transition-all duration-500 ease-out"
-                  style={{ width: `${passwordStrength}%`, backgroundColor: getPasswordStrengthColor(passwordStrength) }}
-                />
+                <div className="h-full transition-all duration-500 ease-out">
+                  {/* replace inline width with a class bucket */}
+                  <div className={passwordStrength < 40 ? styles.strengthFillLow : passwordStrength < 70 ? styles.strengthFillMedium : styles.strengthFillHigh} />
+                </div>
               </div>
               <p className="mt-2 text-sm text-white/70">Força da senha: {getPasswordStrengthText(passwordStrength)}</p>
             </div>

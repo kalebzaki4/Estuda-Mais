@@ -1,0 +1,5 @@
+:root { --brand-300: #7b2ff7; }
+.heroContainer { max-width: 75rem; margin-left: auto; margin-right: auto; text-align: center; }
+.featureGrid { /* placeholder so import is safe when toggling classes */ }
+.ctaGroup { display:flex; gap:1rem; justify-content:center; }
+.featureCard { padding:1.5rem; border-radius:1rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }

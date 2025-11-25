@@ -1,0 +1,104 @@
+:root {
+  --color-dark: #0a0a0a;
+  --color-light: #ffffff;
+  --color-purple: #7b2ff7;
+  --color-black: #000000;
+}
+
+.loginPage {
+  position: relative;
+  isolation: isolate;
+}
+
+.loginAmbientGlow {
+  position: absolute;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 24px;
+  pointer-events: none;
+  background: radial-gradient(800px 300px at 50% 50%, rgba(123, 47, 247, 0.14), transparent 70%);
+  filter: blur(48px);
+}
+
+.loginPanel {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+.panelOverlayLight {
+  background: radial-gradient(600px 300px at 50% 0%, rgba(0,0,0,0.06), transparent 70%);
+}
+
+.rightPanelOverlay {
+  background: radial-gradient(600px 300px at 80% 20%, rgba(123,47,247,0.12), transparent 70%);
+}
+
+.shadowHalo {
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 70%);
+  filter: blur(12px);
+}
+
+.errorMessageLight {
+  background-color: var(--color-light);
+  color: var(--color-black);
+  border: 1px solid rgba(0,0,0,0.12);
+}
+
+.inputLight {
+  background-color: var(--color-light);
+  color: var(--color-black);
+  border: 1px solid rgba(0,0,0,0.18);
+}
+.inputLight:focus {
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+}
+
+.inputLightError {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+.placeholderLight::placeholder {
+  color: rgba(0,0,0,0.45);
+}
+
+.submitButton {
+  background-color: var(--color-light);
+  color: var(--color-black);
+  border: 1px solid rgba(0,0,0,0.18);
+}
+.submitButton:hover {
+  background-color: #f6f6f6;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.submitButton:disabled {
+  opacity: 0.85;
+}
+
+.socialButton {
+  background-color: var(--color-light);
+  color: var(--color-black);
+  border: 1px solid rgba(0,0,0,0.16);
+}
+.socialButton:hover {
+  background-color: #f8f8f8;
+}
+
+.floatingOrbLight {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
+  filter: blur(1px);
+}
+
+.particle1 { top: 12%; left: 18%; }
+.particle2 { top: 24%; left: 72%; }
+.particle3 { top: 42%; left: 28%; }
+.particle4 { top: 58%; left: 64%; }
+.particle5 { top: 70%; left: 36%; }
+.particle6 { top: 32%; left: 86%; }
+.particle7 { top: 78%; left: 20%; }
+.particle8 { top: 16%; left: 88%; }
+.particle9 { top: 84%; left: 72%; }

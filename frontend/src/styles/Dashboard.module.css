@@ -1,0 +1,133 @@
+:root {
+  --color-dark: #121212;
+  --color-light: #FFFFFF;
+  --color-purple: #9333ea;
+  --color-gray: #333333;
+  --color-text: #E0E0E0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-dark);
+  color: var(--color-text);
+}
+
+.card {
+  background-color: var(--color-gray);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+.header {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  background-color: var(--color-dark);
+  border-bottom: 1px solid var(--color-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+.header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-purple);
+}
+.header nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+.header nav a:hover { color: var(--color-purple); }
+
+.sidebar {
+  grid-column: 1;
+  grid-row: 2;
+  background-color: var(--color-dark);
+  padding: 20px 0;
+  border-right: 1px solid var(--color-gray);
+}
+.sidebar h3 {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin: 0 20px 15px;
+  border-bottom: 1px solid var(--color-gray);
+  padding-bottom: 5px;
+}
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar ul li a { display: block; padding: 10px 20px; color: var(--color-text); text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+.sidebar ul li a:hover { background-color: var(--color-gray); color: var(--color-light); }
+.sidebar ul li a.active { background-color: var(--color-purple); color: var(--color-light); }
+
+.mainContent { grid-column: 2; grid-row: 2; padding: 30px; overflow-y: auto; }
+
+.welcomeCard {
+  background-color: var(--color-gray);
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+.welcomeCard h1 { color: var(--color-light); margin-top: 0; }
+.welcomeCard p { color: var(--color-text); }
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.statBox {
+  background-color: var(--color-gray);
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 5px solid var(--color-purple);
+}
+.statBox h2 { color: var(--color-purple); font-size: 2.5rem; margin: 0 0 5px; }
+.statBox p { margin: 0; font-size: 0.9rem; }
+
+.btn {
+  background-color: var(--color-purple);
+  color: var(--color-light);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.98); }
+
+.recentActivity h2 { color: var(--color-light); border-bottom: 1px solid var(--color-gray); padding-bottom: 10px; margin-bottom: 15px; }
+.recentActivity ul { list-style: none; padding: 0; }
+.recentActivity li { background-color: var(--color-gray); padding: 10px 15px; margin-bottom: 10px; border-radius: 4px; color: var(--color-text); display: flex; justify-content: space-between; align-items: center; }
+
+/* helpers for JS inline-style replacements */
+.actionRow { margin-top: 12px; display: flex; gap: 8px; }
+.mt12 { margin-top: 12px; }
+.mt8 { margin-top: 8px; }
+.strong { font-weight: 600; }
+.wrapRow { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { padding: 6px 10px; border-radius: 12px; background: #2a2a2a; color: #fff; }
+.tagActive { background: var(--color-purple); }
+.flexBetween { display: flex; justify-content: space-between; }
+
+/* onboarding modal */
+.modalBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999; }
+.modalBox { width: 100%; max-width: 800px; border-radius: 16px; background: #202020; border: 1px solid #444; }
+.modalInner { padding: 24px; }
+.topicButtons { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.topicToggle { padding: 6px 10px; border-radius: 12px; background: #2a2a2a; color: #fff; border: none; cursor: pointer; }
+.topicToggleActive { background: var(--color-purple); }
+.gridTwoCols { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

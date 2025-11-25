@@ -1,0 +1,4 @@
+.container { display: grid; place-items: center; min-height: 100vh; }
+.box { text-align: center; padding: 1.5rem; border-radius: 8px; background: rgba(255,255,255,0.03); }
+.title { font-size: 1.25rem; font-weight: 600; }
+.subtitle { margin-top: 0.5rem; color: rgba(255,255,255,0.7); }
