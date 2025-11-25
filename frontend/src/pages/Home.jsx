@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from '../styles/Home.module.css'
+import HighlightsCarousel from '../components/ui/HighlightsCarousel.jsx'
 import { LuBookOpen, LuShieldCheck, LuTrendingUp, LuUsers, LuTrophy, LuStar } from 'react-icons/lu'
 
 export default function Home() {
@@ -43,9 +44,11 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center text-white mb-12 animate-slide-in-up">
             Destaques do Estuda+
           </h2>
-          <div className="relative w-full overflow-hidden rounded-2xl shadow-soft border border-white/10 h-64 flex items-center justify-center text-white/70 text-xl">
-            {/* Placeholder for Carousel */}
-            <p>Carrossel de Destaques em breve!</p>
+          <div className="relative w-full overflow-hidden rounded-2xl shadow-soft border border-white/10 h-96">
+            {/* Highlights carousel component */}
+            <div id="home-highlights" className="p-3 md:p-6">
+              <HighlightsCarousel />
+            </div>
           </div>
         </div>
       </section>

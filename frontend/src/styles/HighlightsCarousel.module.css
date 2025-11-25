@@ -1,0 +1,35 @@
+:root{--accent: #7b2ff7;}
+.root{display:block}
+.frame{background:linear-gradient(18px, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:6px; padding:12px; position:relative;}
+.track{display:flex; gap:0; transition:transform 520ms cubic-bezier(.22,.9,.16,1); will-change:transform;}
+.slide{box-sizing:border-box; padding:0 16px}
+.card{display:flex; gap:18px; align-items:stretch; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:18px; border:1px solid rgba(255,255,255,0.04); min-height:140px;}
+.cardLeft{display:flex; align-items:center; padding-right:8px}
+.iconBox{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(123,47,247,0.18), rgba(123,47,247,0.06)); color:var(--accent); box-shadow:0 8px 28px rgba(123,47,247,0.06);}
+.cardBody{flex:1;display:flex;flex-direction:column}
+.cardTitle{font-weight:700;color:#fff;font-size:1.05rem;margin:0}
+.cardLead{color:rgba(255,255,255,0.75);margin-top:8px;margin-bottom:8px;font-size:0.95rem}
+.bullets{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.bullets li{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.7);font-size:0.9rem}
+.bullets li::before{content:'';display:inline-block;width:8px;height:8px;background:linear-gradient(90deg,var(--accent),#6a24d9);border-radius:999px;opacity:0.9}
+.cardCtaWrap{margin-top:auto}
+.cardCta:hover{transform:translateY(-2px)}
+
+.prev,.next{position:absolute;top:50%;transform:translateY(-50%);background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.45));border-radius:999px;border:1px solid rgba(255,255,255,0.04);width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:white;box-shadow:0 12px 30px rgba(0,0,0,0.5);z-index:40}
+.prev{left:12px}
+.next{right:12px}
+
+.dots{position:absolute;left:50%;transform:translateX(-50%);bottom:-30px;display:flex;gap:8px}
+.dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.06)}
+.dotActive{background:linear-gradient(90deg,var(--accent),#6a24d9);box-shadow:0 6px 18px rgba(123,47,247,0.22)}
+
+@media (max-width:767px){.card{padding:14px}.iconBox{width:56px;height:56px}.cardLead{font-size:0.9rem}}
+@media (min-width:768px){.slide{padding:0 12px}}
+@media (min-width:1280px){.slide{padding:0 20px}}
+
+.frame::before,
+.frame::after {
+	content: '';
+	position: absolute;
+	top: 0; bottom: 0; width: 64px; pointer-events: none; z-index: 30;
+}
