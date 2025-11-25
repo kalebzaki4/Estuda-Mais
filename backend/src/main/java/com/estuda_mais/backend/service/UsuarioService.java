@@ -2,58 +2,54 @@ package com.estuda_mais.backend.service;
 
 import com.estuda_mais.backend.model.Usuario;
 import com.estuda_mais.backend.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Collections;
-import java.util.UUID;
-
 @Service
-public class UsuarioService implements UserDetailsService {
+@RequiredArgsConstructor
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
+    // criar conta
+    public Usuario criarConta(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com email: " + email));
-
-        return new org.springframework.security.core.userdetails.User(
-                usuario.getEmail(),
-                usuario.getPasswordHash(),
-                true, true, true, true,
-                Collections.emptyList()
-        );
-    }
-
-    public Usuario register(Usuario novoUsuario) {
-        if (usuarioRepository.findByEmail(novoUsuario.getEmail()).isPresent()) {
-            throw new RuntimeException("Email já cadastrado.");
-        }
-
-        String senhaCriptografada = passwordEncoder.encode(novoUsuario.getPasswordHash());
-        novoUsuario.setPasswordHash(senhaCriptografada);
-
-        return usuarioRepository.save(novoUsuario);
-    }
-
-    public Optional<Usuario> findByEmail(String email) {
+    // buscar por email
+    public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 
-    public Optional<Usuario> findById(UUID id) {
-        return usuarioRepository.findById(id);
+    // buscar por id
+    public Usuario buscarPorId(String id) {
+        return usuarioRepository.findById(id).orElse(null);
     }
+
+    // atualizar usuario
+    public Usuario atualizarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    // deletar usuario
+    public void deletarUsuario(String id) {
+        usuarioRepository.deleteById(id);
+    }
+
+    // listar todos os usuarios
+    public java.util.List<Usuario> listarTodosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    // contar usuarios
+    public long contarUsuarios() {
+        return usuarioRepository.count();
+    }
+
+    // verificar se email existe
+    public boolean emailExiste(String email) {
+        return usuarioRepository.findByEmail(email) != null;
+    }
+
 }

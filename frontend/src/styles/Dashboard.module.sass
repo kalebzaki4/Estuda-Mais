@@ -1,0 +1,140 @@
+$color-dark: #121212
+$color-light: #FFFFFF
+$color-purple: #9333ea
+$color-gray: #333333
+$color-text: #E0E0E0
+
+body
+  margin: 0
+  padding: 0
+  font-family: 'Inter', sans-serif
+  background-color: $color-dark
+  color: $color-text
+
+=card
+  background-color: $color-gray
+  padding: 20px
+  border-radius: 8px
+
+.dashboardContainer
+  display: grid
+  grid-template-columns: 250px 1fr
+  grid-template-rows: auto 1fr
+  min-height: 100vh
+
+.header
+  grid-column: 1 / 3
+  grid-row: 1
+  background-color: $color-dark
+  border-bottom: 1px solid $color-gray
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 10px 30px
+  .logo
+    font-size: 1.5rem
+    font-weight: bold
+    color: $color-purple
+  nav a
+    color: $color-text
+    text-decoration: none
+    margin-left: 20px
+    transition: color 0.3s
+    &:hover
+      color: $color-purple
+
+.sidebar
+  grid-column: 1
+  grid-row: 2
+  background-color: $color-dark
+  padding: 20px 0
+  border-right: 1px solid $color-gray
+  h3
+    text-transform: uppercase
+    font-size: 0.9rem
+    color: $color-text
+    margin: 0 20px 15px
+    border-bottom: 1px solid $color-gray
+    padding-bottom: 5px
+  ul
+    list-style: none
+    padding: 0
+    margin: 0
+    li a
+      display: block
+      padding: 10px 20px
+      color: $color-text
+      text-decoration: none
+      transition: background-color 0.2s, color 0.2s
+      &:hover
+        background-color: $color-gray
+        color: $color-light
+    li a.active
+      background-color: $color-purple
+      color: $color-light
+
+.mainContent
+  grid-column: 2
+  grid-row: 2
+  padding: 30px
+  overflow-y: auto
+
+.welcomeCard
+  +card
+  padding: 30px
+  margin-bottom: 30px
+  h1
+    color: $color-light
+    margin-top: 0
+  p
+    color: $color-text
+
+.statsGrid
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+  gap: 20px
+  margin-bottom: 30px
+
+.statBox
+  +card
+  padding: 20px
+  border-left: 5px solid $color-purple
+  h2
+    color: $color-purple
+    font-size: 2.5rem
+    margin: 0 0 5px
+  p
+    margin: 0
+    font-size: 0.9rem
+
+.btn
+  background-color: $color-purple
+  color: $color-light
+  border: none
+  border-radius: 8px
+  padding: 8px 14px
+  cursor: pointer
+  transition: opacity 0.2s ease, transform 0.1s ease
+  &:hover
+    opacity: 0.9
+  &:active
+    transform: scale(0.98)
+
+.recentActivity
+  h2
+    color: $color-light
+    border-bottom: 1px solid $color-gray
+    padding-bottom: 10px
+    margin-bottom: 15px
+  ul
+    list-style: none
+    padding: 0
+  li
+    background-color: $color-gray
+    padding: 10px 15px
+    margin-bottom: 10px
+    border-radius: 4px
+    color: $color-text
+    display: flex
+    justify-content: space-between
+    align-items: center
