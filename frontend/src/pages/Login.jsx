@@ -35,76 +35,74 @@ export default function Login() {
   }, [location]);
 
   return (
-    <main className={`page-login ${styles.loginPage} min-h-screen w-full grid place-items-center px-4 relative`}>
-      <div className="background-elements">
-        <div className="floating-orbs">
-          <div className={`floating-orb ${styles.floatingOrbLight}`}></div>
-          <div className={`floating-orb ${styles.floatingOrbLight}`}></div>
-          <div className={`floating-orb ${styles.floatingOrbLight}`}></div>
-          <div className={`floating-orb ${styles.floatingOrbLight}`}></div>
+    <main className={`page-login ${styles.loginPage} ${styles.pageRoot}`}>
+      <div className={styles.backgroundElements}>
+        <div className={styles.floatingOrbs}>
+          <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
+          <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
+          <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
+          <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
         </div>
-        <div className="particles">
-          <div className={`particle particleWhite ${styles.particle1}`}></div>
-          <div className={`particle particleWhite ${styles.particle2}`}></div>
-          <div className={`particle particleWhite ${styles.particle3}`}></div>
-          <div className={`particle particleWhite ${styles.particle4}`}></div>
-          <div className={`particle particleWhite ${styles.particle5}`}></div>
-          <div className={`particle particleWhite ${styles.particle6}`}></div>
-          <div className={`particle particleWhite ${styles.particle7}`}></div>
-          <div className={`particle particleWhite ${styles.particle8}`}></div>
-          <div className={`particle particleWhite ${styles.particle9}`}></div>
+        <div className={styles.particles}>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle1}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle2}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle3}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle4}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle5}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle6}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle7}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle8}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle9}`}></div>
         </div>
       </div>
 
-      <div className={`absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] ${styles.loginAmbientGlow}`} aria-hidden="true" />
+      <div className={styles.loginAmbientGlow} aria-hidden="true" />
 
       <section
         aria-label="Painel de autenticação"
-        className={`relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden ${styles.loginPanel} animate-fade-in`}
+        className={`${styles.loginPanelRoot} ${styles.loginPanel} animate-fade-in`}
       >
-        <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
+        <div className={styles.textureSubtle} aria-hidden="true" />
 
-        <div
-          className="hidden md:flex relative items-center justify-center p-10 bg-white"
-        >
-          <div className={`absolute inset-0 opacity-20 ${styles.panelOverlayLight}`} aria-hidden="true" />
+        <div className={styles.leftPanel}>
+          <div className={`${styles.panelOverlayWrap} ${styles.panelOverlayLight}`} aria-hidden="true" />
 
-          <div className="relative z-10 flex flex-col items-center text-center gap-6">
-            <div className="w-24 h-24 rounded-2xl bg-white flex items-center justify-center shadow-soft">
-              <LuBookOpen size={48} className="text-black" aria-hidden="true" />
+          <div className={styles.leftPanelContent}>
+            <div className={styles.heroIcon}>
+              <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
             </div>
 
-            <h2 className="text-black text-3xl font-semibold animate-slide-in-up">Conhecimento que inspira</h2>
-            <p className="text-black max-w-md animate-slide-in-up delay-100">
+            <h2 className={styles.heroTitle}>Conhecimento que inspira</h2>
+            <p className={styles.heroLead}>
               Aprenda continuamente com conteúdos selecionados e avance na sua jornada.
             </p>
 
-            <div className="mt-6 flex items-center gap-3 text-black animate-slide-in-up delay-200">
+            <div className={styles.heroInfo}>
               <LuShieldCheck aria-hidden="true" />
               <span>Segurança e privacidade garantidas</span>
             </div>
           </div>
 
-          <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-16 rounded-full ${styles.shadowHalo}`} aria-hidden="true" />
+          <div className={`${styles.haloWrap} ${styles.shadowHalo}`} aria-hidden="true" />
         </div>
 
-        <div className="relative p-8 sm:p-10 animate-slide-in-up">
-          <div className={`absolute inset-0 pointer-events-none ${styles.rightPanelOverlay}`} aria-hidden="true" />
+        <div className={`${styles.rightPanel} animate-slide-in-up`}>
+          <div className={`${styles.rightPanelOverlayWrap} ${styles.rightPanelOverlay}`} aria-hidden="true" />
 
-          <header className="mb-8 relative z-10">
-            <h1 className="text-3xl font-semibold text-white">Entrar</h1>
-            <p className="mt-2 text-sm text-white">Bem-vindo de volta. Faça login para continuar.</p>
+          <header className={`${styles.header} ${styles.relativeZ10}`}>
+            <h1 className={styles.title}>Entrar</h1>
+            <p className={styles.subtitle}>Bem-vindo de volta. Faça login para continuar.</p>
             {errors.general && (
-              <div className={`mt-4 p-3 text-sm rounded-lg shadow-soft ${styles.errorMessageLight}`} role="alert">
+              <div className={`${styles.errorMessageLight} ${styles.errorAlert}`} role="alert">
                 {errors.general}
               </div>
             )}
           </header>
 
           {/* Social Login */}
-          <div className="relative z-10 grid grid-cols-1 gap-3 animate-slide-in-up delay-200">
-            <SocialButton icon={<SiGoogle className="social-icon text-black" aria-hidden="true" />} label="Entrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
-            <SocialButton icon={<SiGithub className="social-icon text-black" aria-hidden="true" />} label="Entrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
+          <div className={`${styles.relativeZ10} ${styles.socialGrid} animate-slide-in-up delay-200`}>
+            <SocialButton icon={<SiGoogle className={styles.socialIcon} aria-hidden="true" />} label="Entrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
+            <SocialButton icon={<SiGithub className={styles.socialIcon} aria-hidden="true" />} label="Entrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
           </div>
 
           {/* Divisor */}
@@ -140,12 +138,12 @@ export default function Login() {
               
               setLoading(false)
             }}
-            className="relative z-10 space-y-4"
+            className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`}
             aria-label="Formulário de login"
           >
             <div>
               <label htmlFor="email" className="sr-only">Email</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="email"
                   name="email"
@@ -158,20 +156,20 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, email: true }))}
-                  className={`input-focus-glow w-full rounded-xl ${styles.inputLight} ${touched.email && errors.email ? styles.inputLightError : ''} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 ${styles.placeholderLight}`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.email && errors.email ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <span className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <FiMail className="text-black" aria-hidden="true" />
+                <span className={styles.inputIcon}>
+                  <FiMail className={styles.iconBlack} aria-hidden="true" />
                 </span>
               </div>
               {touched.email && errors.email ? (
-                <p id="email-error" role="alert" className="mt-2 text-sm text-black bg-white px-3 py-2 rounded">{errors.email}</p>
+                <p id="email-error" role="alert" className={styles.fieldError}>{errors.email}</p>
               ) : null}
             </div>
 
             <div>
               <label htmlFor="password" className="sr-only">Senha</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="password"
                   name="password"
@@ -184,45 +182,45 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, password: true }))}
-                  className={`input-focus-glow w-full rounded-xl ${styles.inputLight} ${touched.password && errors.password ? styles.inputLightError : ''} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12 ${styles.placeholderLight}`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.password && errors.password ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-black" aria-hidden="true" />
+                <FiLock className={styles.inputIcon} aria-hidden="true" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-black hover:text-black transition-colors"
+                  className={styles.inputAction}
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
               </div>
               {touched.password && errors.password ? (
-                <p id="password-error" role="alert" className="mt-2 text-sm text-black bg-white px-3 py-2 rounded">{errors.password}</p>
+                <p id="password-error" role="alert" className={styles.fieldError}>{errors.password}</p>
               ) : null}
-              <div className="mt-2 flex items-center justify-between text-sm">
-                <label className="inline-flex items-center gap-2 text-white">
-                  <input type="checkbox" className="h-4 w-4 rounded border-white bg-white accent-black" />
+              <div className={styles.rowBetween}>
+                <label className={`inline-flex ${styles.rememberLabel}`}>
+                  <input type="checkbox" />
                   Lembrar-me
                 </label>
-                <a href="#" className="text-white underline">Esqueci minha senha</a>
+                <a href="#" className={styles.link}>Esqueci minha senha</a>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`pressable ripple w-full rounded-xl font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:shadow-lg ${styles.submitButton}`}
+              className={`${styles.submitButton} ${styles.submitFull}`}
             >
               {loading ? (
-                <span className="inline-block w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                <span className={styles.submitSpinner} aria-hidden="true" />
               ) : null}
               <span>{loading ? 'Entrando...' : 'Entrar'}</span>
             </button>
           </form>
 
-        <p className="mt-6 text-sm text-white relative z-10 animate-fade-in delay-300">
+        <p className={`${styles.footerText} ${styles.relativeZ10}`}>
           Não tem uma conta?{' '}
-          <a href="/signup" className="text-white underline">Crie uma agora</a>
+          <a href="/signup" className={styles.link}>Crie uma agora</a>
         </p>
       </div>
     </section>
@@ -234,22 +232,22 @@ function SocialButton({ icon, label, onClick }) {
   return (
     <button
       type="button"
-      className={`social-btn ${styles.socialButton} w-full flex items-center gap-3 rounded-xl px-4 py-3 transition-[colors,box-shadow] duration-300 animate-slide-in-up`}
+      className={`${styles.socialButton} ${styles.socialBtn}`}
       aria-label={label}
       onClick={onClick}
     >
-      <span className="inline-flex items-center justify-center w-6 h-6">{icon}</span>
-      <span className="text-sm font-medium">{label}</span>
+      <span className={styles.socialIcon}>{icon}</span>
+      <span className={styles.socialLabel}>{label}</span>
     </button>
   )
 }
  
 function Divider({ label }) {
   return (
-    <div className="my-6 flex items-center gap-3 animate-fade-in delay-200" aria-hidden="true">
-      <div className="h-px w-full bg-white" />
-      <span className="text-white text-xs uppercase tracking-wider">{label}</span>
-      <div className="h-px w-full bg-white" />
+    <div className={styles.dividerWrap} aria-hidden="true">
+      <div className={styles.dividerLine} />
+      <span className={styles.dividerLabel}>{label}</span>
+      <div className={styles.dividerLine} />
     </div>
   )
 }
