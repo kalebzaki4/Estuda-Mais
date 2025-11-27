@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
 import { useAuth } from '../contexts/AuthContextCore.js'
 import styles from '../styles/Login.module.css'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Login() {
   const { login } = useAuth()
@@ -35,8 +36,13 @@ export default function Login() {
   }, [location]);
 
   return (
-    <main className={`page-login ${styles.loginPage} ${styles.pageRoot}`}>
-      <div className={styles.backgroundElements}>
+    <motion.main
+      className={`page-login ${styles.loginPage} ${styles.pageRoot}`}
+      initial={{ opacity: 0, y: -50, rotateX: 15 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      exit={{ opacity: 0, y: -50, rotateX: 15 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+    >      <div className={styles.backgroundElements}>
         <div className={styles.floatingOrbs}>
           <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
           <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
@@ -99,16 +105,13 @@ export default function Login() {
             )}
           </header>
 
-          {/* Social Login */}
           <div className={`${styles.relativeZ10} ${styles.socialGrid} animate-slide-in-up delay-200`}>
             <SocialButton icon={<SiGoogle className={styles.socialIcon} aria-hidden="true" />} label="Entrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
             <SocialButton icon={<SiGithub className={styles.socialIcon} aria-hidden="true" />} label="Entrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
           </div>
 
-          {/* Divisor */}
           <Divider label="Ou" />
 
-          {/* Form */}
           <form
             onSubmit={async (e) => {
               e.preventDefault()
@@ -169,7 +172,13 @@ export default function Login() {
 
             <div>
               <label htmlFor="password" className="sr-only">Senha</label>
-              <div className={styles.inputWrapper}>
+              <motion.div
+                key={showPassword ? "password-visible" : "password-hidden"}
+                initial={{ x: 0 }}
+                animate={{ x: [0, -2, 2, -2, 2, 0] }}
+                transition={{ duration: 0.3 }}
+                className={styles.inputWrapper}
+              >
                 <input
                   id="password"
                   name="password"
@@ -184,16 +193,38 @@ export default function Login() {
                   onBlur={() => setTouched(t => ({ ...t, password: true }))}
                   className={`${styles.inputBase} ${styles.inputLight} ${touched.password && errors.password ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <FiLock className={styles.inputIcon} aria-hidden="true" />
+                <FiLock className={`${styles.inputIcon} ${styles.iconBlack}`} aria-hidden="true" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                   className={styles.inputAction}
                 >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                  <AnimatePresence mode="wait" initial={false}>
+                    {showPassword ? (
+                      <motion.span
+                        key="eye-off"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEyeOff className={styles.iconBlack} />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="eye-on"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEye className={styles.iconBlack} />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </button>
-              </div>
+              </motion.div>
               {touched.password && errors.password ? (
                 <p id="password-error" role="alert" className={styles.fieldError}>{errors.password}</p>
               ) : null}
@@ -224,7 +255,7 @@ export default function Login() {
         </p>
       </div>
     </section>
-  </main>
+  </motion.main>
   )
 }
 
