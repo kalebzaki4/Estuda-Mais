@@ -1,36 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { useAuth } from '../contexts/AuthContextCore.js'
-import styles from '../styles/Signup.module.css'
-
-// const brandPurple = '#7b2ff7'
-
-class SignupErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { hasError: false }
-  }
-  static getDerivedStateFromError() {
-    return { hasError: true }
-  }
-  componentDidCatch() {}
-  render() {
-    if (this.state.hasError) {
-      return (
-        <main className="min-h-screen w-full grid place-items-center bg-[#0a0a0a] text-white">
-          <div>
-            <h1 className="text-2xl font-semibold">Ocorreu um erro</h1>
-            <p className="mt-2 text-white/70">Tente recarregar a página.</p>
-          </div>
-        </main>
-      )
-    }
-    return this.props.children
-  }
-}
+import styles from '../styles/Login.module.css'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Signup() {
   const { register } = useAuth()
@@ -156,94 +131,91 @@ export default function Signup() {
   }
 
   return (
-    <SignupErrorBoundary>
-    <main className="page-radial-animated page-login min-h-screen w-full grid place-items-center px-4 relative">
-      <div className="background-elements">
-        <div className="floating-orbs">
-          <div className="floating-orb"></div>
-          <div className="floating-orb"></div>
-          <div className="floating-orb"></div>
-          <div className="floating-orb"></div>
+    <motion.main
+      className={`page-login ${styles.loginPage} ${styles.pageRoot}`}
+      initial={{ opacity: 0, y: -50, rotateX: 15 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      exit={{ opacity: 0, y: -50, rotateX: 15 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+    >
+      <div className={styles.backgroundElements}>
+        <div className={styles.floatingOrbs}>
+          <div className={styles.floatingOrb}></div>
+          <div className={styles.floatingOrb}></div>
+          <div className={styles.floatingOrb}></div>
+          <div className={styles.floatingOrb}></div>
         </div>
-          <div className="particles">
-          <div className={`particle ${styles.particle1}`}></div>
-          <div className={`particle ${styles.particle2}`}></div>
-          <div className={`particle ${styles.particle3}`}></div>
-          <div className={`particle ${styles.particle4}`}></div>
-          <div className={`particle ${styles.particle5}`}></div>
-          <div className={`particle ${styles.particle6}`}></div>
-          <div className={`particle ${styles.particle7}`}></div>
-          <div className={`particle ${styles.particle8}`}></div>
-          <div className={`particle ${styles.particle9}`}></div>
+        <div className={styles.particles}>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle1}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle2}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle3}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle4}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle5}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle6}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle7}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle8}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle9}`}></div>
         </div>
       </div>
 
-      <div className={`absolute -z-0 w-[min(92vw,80rem)] h-[min(38vw,28rem)] card-ambient-glow ${styles.cardAmbientGlow}`} aria-hidden="true" />
+      <div className={styles.loginAmbientGlow} aria-hidden="true" />
 
       <section
         aria-label="Painel de autenticação"
-        className="relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-soft overflow-hidden bg-surface-800 animate-fade-in"
+        className={`${styles.loginPanelRoot} ${styles.loginPanel} animate-fade-in`}
       >
-        <div className="pointer-events-none absolute inset-0 texture-subtle" aria-hidden="true" />
+        <div className={styles.textureSubtle} aria-hidden="true" />
 
-        <div
-          className={`hidden md:flex relative items-center justify-center p-10 animated-gradient ${styles.animatedGradient}`}
-        >
-          <div className={`absolute inset-0 opacity-20 ${styles.panelOverlay}`} aria-hidden="true" />
+        <div className={styles.leftPanel}>
+          <div className={styles.panelOverlayWrap} aria-hidden="true" />
 
-          <div className="relative z-10 flex flex-col items-center text-center gap-6">
-            <div className="w-24 h-24 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-glow breathing">
-              <LuBookOpen size={48} className="text-white" aria-hidden="true" />
+          <div className={styles.leftPanelContent}>
+            <div className={styles.heroIcon}>
+              <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
             </div>
 
-            <h2 className="text-white text-3xl font-semibold animate-slide-in-up">Conhecimento que inspira</h2>
-            <p className="text-white/85 max-w-md animate-slide-in-up delay-100">
+            <h2 className={styles.heroTitle}>Conhecimento que inspira</h2>
+            <p className={styles.heroLead}>
               Aprenda continuamente com conteúdos selecionados e avance na sua jornada.
             </p>
 
-            <div className="mt-6 flex items-center gap-3 text-white/80 animate-slide-in-up delay-200">
+            <div className={styles.heroInfo}>
               <LuShieldCheck aria-hidden="true" />
               <span>Segurança e privacidade garantidas</span>
             </div>
           </div>
 
-          {/* Sutil glow na base do card */}
-          <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-16 rounded-full ${styles.shadowHalo}`} aria-hidden="true" />
+          <div className={`${styles.haloWrap} ${styles.shadowHalo}`} aria-hidden="true" />
         </div>
 
-        {/* Coluna Direita — Formulário Dark Mode */}
-        <div className="relative p-8 sm:p-10 animate-slide-in-up">
-          {/* Iluminação ambiente roxa suave */}
-          <div className="absolute inset-0 ambient-radial pointer-events-none" aria-hidden="true" />
+        <div className={`${styles.rightPanel} animate-slide-in-up`}>
+          <div className={`${styles.rightPanelOverlayWrap} ${styles.rightPanelOverlay}`} aria-hidden="true" />
 
-          <header className="mb-8 relative z-10">
-            <h1 className="text-3xl font-semibold text-white">Criar Conta</h1>
-            <p className="mt-2 text-sm text-white/70">Crie sua conta para começar a aprender.</p>
+          <header className={`${styles.header} ${styles.relativeZ10}`}>
+            <h1 className={styles.title}>Criar Conta</h1>
+            <p className={styles.subtitle}>Bem-vindo! Crie sua conta para continuar.</p>
             {errors.general && (
-              <div className="mt-4 p-3 bg-red-800 text-white text-sm rounded-lg shadow-soft" role="alert">
+              <div className={`${styles.errorMessageLight} ${styles.errorAlert}`} role="alert">
                 {errors.general}
               </div>
             )}
           </header>
 
-          {/* Social Login */}
-          <div className="relative z-10 grid grid-cols-1 gap-3 animate-slide-in-up delay-200">
-            <SocialButton icon={<SiGoogle className="social-icon text-white" aria-hidden="true" />} label="Cadastrar com Google" />
-            <SocialButton icon={<SiGithub className="social-icon text-white" aria-hidden="true" />} label="Cadastrar com GitHub" />
+          <div className={`${styles.relativeZ10} ${styles.socialGrid} animate-slide-in-up delay-200`}>
+            <SocialButton icon={<SiGoogle className={styles.socialIcon} aria-hidden="true" />} label="Cadastrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
+            <SocialButton icon={<SiGithub className={styles.socialIcon} aria-hidden="true" />} label="Cadastrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
           </div>
 
-          {/* Divisor */}
           <Divider label="Ou" />
 
-          {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="relative z-10 space-y-4"
+            className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`}
             aria-label="Formulário de cadastro"
           >
             <div>
               <label htmlFor="name" className="sr-only">Nome</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="name"
                   name="name"
@@ -256,20 +228,20 @@ export default function Signup() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, name: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.name && errors.name ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.name && errors.name ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <span className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <LuBookOpen className="text-white/90" aria-hidden="true" />
+                <span className={styles.inputIcon}>
+                  <LuBookOpen className={styles.iconBlack} aria-hidden="true" />
                 </span>
               </div>
               {touched.name && errors.name ? (
-                <p id="name-error" role="alert" className="mt-2 text-sm text-red-400">{errors.name}</p>
+                <p id="name-error" role="alert" className={styles.fieldError}>{errors.name}</p>
               ) : null}
             </div>
 
             <div>
               <label htmlFor="email" className="sr-only">Email</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="email"
                   name="email"
@@ -282,20 +254,20 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, email: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.email && errors.email ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.email && errors.email ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <span className="absolute left-4 top-1/2 -translate-y-1/2">
-                  <FiMail className="text-white/90" aria-hidden="true" />
+                <span className={styles.inputIcon}>
+                  <FiMail className={styles.iconBlack} aria-hidden="true" />
                 </span>
               </div>
               {touched.email && errors.email ? (
-                <p id="email-error" role="alert" className="mt-2 text-sm text-red-400">{errors.email}</p>
+                <p id="email-error" role="alert" className={styles.fieldError}>{errors.email}</p>
               ) : null}
             </div>
 
             <div>
               <label htmlFor="password" className="sr-only">Senha</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="password"
                   name="password"
@@ -308,26 +280,48 @@ export default function Signup() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, password: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.password && errors.password ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.password && errors.password ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/90" aria-hidden="true" />
+                <FiLock className={`${styles.inputIcon} ${styles.iconBlack}`} aria-hidden="true" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/90 hover:text-white transition-colors"
+                  className={styles.inputAction}
                 >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                  <AnimatePresence mode="wait" initial={false}>
+                    {showPassword ? (
+                      <motion.span
+                        key="eye-off"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEyeOff className={styles.iconBlack} />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="eye-on"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEye className={styles.iconBlack} />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </button>
               </div>
               {touched.password && errors.password ? (
-                <p id="password-error" role="alert" className="mt-2 text-sm text-red-400">{errors.password}</p>
+                <p id="password-error" role="alert" className={styles.fieldError}>{errors.password}</p>
               ) : null}
             </div>
 
             <div>
               <label htmlFor="confirm-password" className="sr-only">Confirmar Senha</label>
-              <div className="relative">
+              <div className={styles.inputWrapper}>
                 <input
                   id="confirm-password"
                   name="confirm-password"
@@ -340,96 +334,105 @@ export default function Signup() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   onBlur={() => setTouched(t => ({ ...t, confirmPassword: true }))}
-                  className={`input-focus-glow w-full rounded-xl bg-surface-900 text-white placeholder:text-white/60 border ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-brand-500'} focus:outline-none transition-[border,opacity] duration-300 px-4 py-3 pl-12 pr-12`}
+                  className={`${styles.inputBase} ${styles.inputLight} ${touched.confirmPassword && errors.confirmPassword ? styles.inputLightError : ''} ${styles.placeholderLight}`}
                 />
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/90" aria-hidden="true" />
+                <FiLock className={`${styles.inputIcon} ${styles.iconBlack}`} aria-hidden="true" />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(v => !v)}
                   aria-label={showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/90 hover:text-white transition-colors"
+                  className={styles.inputAction}
                 >
-                  {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+                  <AnimatePresence mode="wait" initial={false}>
+                    {showConfirmPassword ? (
+                      <motion.span
+                        key="eye-off-confirm"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEyeOff className={styles.iconBlack} />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="eye-on-confirm"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <FiEye className={styles.iconBlack} />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </button>
               </div>
               {touched.confirmPassword && errors.confirmPassword ? (
-                <p id="confirm-password-error" role="alert" className="mt-2 text-sm text-red-400">{errors.confirmPassword}</p>
+                <p id="confirm-password-error" role="alert" className={styles.fieldError}>{errors.confirmPassword}</p>
               ) : null}
             </div>
 
-            {/* Password Strength Indicator */}
-            <div className="relative z-10 animate-slide-in-up delay-300">
-              <div className="h-2 w-full rounded-full bg-surface-900 overflow-hidden">
-                <div className="h-full transition-all duration-500 ease-out">
-                  {/* replace inline width with a class bucket */}
-                  <div className={passwordStrength < 40 ? styles.strengthFillLow : passwordStrength < 70 ? styles.strengthFillMedium : styles.strengthFillHigh} />
-                </div>
-              </div>
-              <p className="mt-2 text-sm text-white/70">Força da senha: {getPasswordStrengthText(passwordStrength)}</p>
-            </div>
-
-            {/* Terms of Service Checkbox */}
-            <div className="relative z-10 flex items-start gap-3 animate-slide-in-up delay-400">
-              <input
-                type="checkbox"
-                id="terms"
-                name="terms"
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="mt-1 rounded-md border-white/20 bg-surface-900 text-brand-500 focus:ring-brand-500"
-              />
-              <label htmlFor="terms" className="text-sm text-white/70">
-                Eu concordo com os <a href="#" className="text-brand-300 hover:text-brand-200">Termos de Serviço</a> e <a href="#" className="text-brand-300 hover:text-brand-200">Política de Privacidade</a>.
+            <div className={styles.rowBetween}>
+              <label className={`inline-flex ${styles.rememberLabel}`} htmlFor="terms">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="terms"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                />
+                Eu concordo com os <a href="#" className={styles.link}>Termos de Serviço</a>.
               </label>
             </div>
 
             {errors.general && (
-              <p role="alert" className="mt-2 text-sm text-red-400">{errors.general}</p>
+              <p role="alert" className={styles.fieldError}>{errors.general}</p>
             )}
 
             <button
               type="submit"
               disabled={loading || !termsAccepted}
-              className={`pressable ripple w-full rounded-xl text-white font-medium py-3 transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:shadow-lg btn-primary bg-brand-500 hover:bg-brand-600`}
+              className={`${styles.submitButton} ${styles.submitFull}`}
               data-testid="submit-signup"
             >
               {loading ? (
-                <span className="inline-block w-5 h-5 border-2 border-white/60 border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                <span className={styles.submitSpinner} aria-hidden="true" />
               ) : null}
               <span>{loading ? 'Cadastrando...' : 'Cadastrar'}</span>
             </button>
           </form>
 
-          <p className="mt-6 text-sm text-white/70 relative z-10 animate-fade-in delay-300">
+          <p className={`${styles.footerText} ${styles.relativeZ10}`}>
             Já tem uma conta?{' '}
-            <a href="/login" className="text-brand-300 hover:text-brand-200">Faça login aqui</a>
+            <a href="/login" className={styles.link}>Entrar</a>
           </p>
         </div>
       </section>
-    </main>
-    </SignupErrorBoundary>
+    </motion.main>
   )
 }
 
-function SocialButton({ icon, label }) {
+function SocialButton({ icon, label, onClick }) {
   return (
     <button
       type="button"
-      className="social-btn w-full flex items-center gap-3 rounded-xl bg-surface-900 text-white px-4 py-3 border border-white/10 hover:border-white/20 hover:shadow-soft transition-[colors,box-shadow] duration-300 animate-slide-in-up"
+      className={`${styles.socialButton} ${styles.socialBtn}`}
       aria-label={label}
+      onClick={onClick}
     >
-      <span className="inline-flex items-center justify-center w-6 h-6">{icon}</span>
-      <span className="text-sm font-medium">{label}</span>
+      <span className={styles.socialIcon}>{icon}</span>
+      <span className={styles.socialLabel}>{label}</span>
     </button>
   )
 }
 
 function Divider({ label }) {
   return (
-    <div className="my-6 flex items-center gap-3 animate-fade-in delay-200" aria-hidden="true">
-      <div className="h-px w-full bg-white/10" />
-      <span className="text-white/60 text-xs uppercase tracking-wider">{label}</span>
-      <div className="h-px w-full bg-white/10" />
+    <div className={styles.dividerWrap} aria-hidden="true">
+      <div className={styles.dividerLine} />
+      <span className={styles.dividerLabel}>{label}</span>
+      <div className={styles.dividerLine} />
     </div>
   )
 }
