@@ -24,6 +24,12 @@ export default function Dashboard() {
       return m ? parseInt(m, 10) || 0 : 0
     } catch { return 0 }
   })
+  const [studyHistory, setStudyHistory] = useState(() => {
+    try { const raw = localStorage.getItem('studyHistory'); return raw ? JSON.parse(raw) : {} } catch { return {} }
+  })
+  const [topicProgress, setTopicProgress] = useState(() => {
+    try { const raw = localStorage.getItem('topicProgress'); return raw ? JSON.parse(raw) : {} } catch { return {} }
+  })
   const freeDailyLimit = 60
 
   useEffect(() => {
@@ -41,6 +47,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     try { localStorage.setItem('studyMinutesToday', String(studyMinutesToday)) } catch { void 0 }
+    setStudyHistory(prev => {
+      const today = new Date().toDateString()
+      const next = { ...prev, [today]: studyMinutesToday }
+      try { localStorage.setItem('studyHistory', JSON.stringify(next)) } catch { void 0 }
+      return next
+    })
   }, [studyMinutesToday])
 
   const [mode, setMode] = useState('work')
@@ -137,6 +149,56 @@ export default function Dashboard() {
     return `${m}:${sec}`
   }
 
+  const lastNDays = (n) => {
+    const days = []
+    for (let i = n - 1; i >= 0; i--) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      days.push(d)
+    }
+    return days
+  }
+
+  const heatmapData = useMemo(() => {
+    return lastNDays(30).map(d => {
+      const key = d.toDateString()
+      const minutes = studyHistory[key] || 0
+      const level = minutes >= 60 ? 3 : minutes >= 30 ? 2 : minutes > 0 ? 1 : 0
+      return { date: key, minutes, level }
+    })
+  }, [studyHistory])
+
+  const weeklyStreak = useMemo(() => {
+    let streak = 0
+    for (let i = 0; i < 7; i++) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      const key = d.toDateString()
+      const minutes = studyHistory[key] || 0
+      if (minutes > 0) streak++
+      else break
+    }
+    return streak
+  }, [studyHistory])
+
+  const nextLesson = useMemo(() => {
+    const t = topics[0]
+    if (!t) return null
+    const steps = contentByTopic(t)
+    const idx = Math.min(topicProgress[t] || 0, steps.length - 1)
+    return { topic: t, step: steps[idx], idx, total: steps.length }
+  }, [topics, topicProgress])
+
+  const completeNextLesson = () => {
+    if (!nextLesson) return
+    const t = nextLesson.topic
+    const nextIdx = Math.min(nextLesson.idx + 1, nextLesson.total)
+    const updated = { ...topicProgress, [t]: nextIdx }
+    setTopicProgress(updated)
+    try { localStorage.setItem('topicProgress', JSON.stringify(updated)) } catch { void 0 }
+    setPoints(points + 25)
+  }
+
   return (
     <div className={styles.dashboardContainer}>
       <header className={styles.header}>
@@ -162,7 +224,69 @@ export default function Dashboard() {
       <main className={styles.mainContent}>
         <div className={styles.welcomeCard}>
           <h1>Olá{user?.name ? `, ${user.name}` : ''}</h1>
-          <p>Pontos: {points} • Minutos hoje: {studyMinutesToday}/{freeDailyLimit} {premium ? '(Premium)' : '(Grátis)'}</p>
+          <p>Pontos: {points} • Minutos hoje: {studyMinutesToday}/{freeDailyLimit} {premium ? '(Premium)' : '(Grátis)'} </p>
+        </div>
+
+        <div className={styles.statsGrid}>
+          <div className={styles.statBox}>
+            <h2>Hoje</h2>
+            <p>Meta diária</p>
+            <div className={styles.progressWrap}>
+              <div className={styles.progressBar}>
+                <div className={styles.progressFill} style={{ width: `${Math.min(100, Math.round(100 * (studyMinutesToday / freeDailyLimit)))}%` }} />
+              </div>
+              <div className={styles.progressText}>{studyMinutesToday}/{freeDailyLimit} min {premium ? '(Premium)' : '(Grátis)'}{studyMinutesToday >= freeDailyLimit ? ' • Meta concluída' : ''}</div>
+            </div>
+            {studyMinutesToday >= freeDailyLimit && (<div className={styles.badge}>Meta do dia concluída</div>)}
+          </div>
+
+          <div className={styles.statBox}>
+            <h2>Ações rápidas</h2>
+            <div className={styles.quickActions}>
+              <button className={styles.quickBtn} onClick={() => { setActiveTab('pomodoro'); setMode('work'); setSecondsRemaining(workMinutes * 60); setIsRunning(true) }}>Estudar {workMinutes}min</button>
+              <button className={styles.quickBtn} onClick={() => setActiveTab('roadmaps')}>Abrir roadmaps</button>
+              <button className={styles.quickBtn} onClick={() => setOnboardingOpen(true)}>Escolher tópicos</button>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.statsGrid}>
+          <div className={styles.statBox}>
+            <h2>Streak</h2>
+            <p>{weeklyStreak} dias</p>
+            <div className={styles.streakRow}>
+              {lastNDays(7).map((d, i) => {
+                const key = d.toDateString()
+                const minutes = studyHistory[key] || 0
+                const on = minutes > 0
+                return <span key={i} className={`${styles.streakDot} ${on ? styles.streakDotOn : ''}`} />
+              })}
+            </div>
+          </div>
+
+          <div className={styles.statBox}>
+            <h2>Heatmap</h2>
+            <div className={styles.heatmapGrid}>
+              {heatmapData.map((d, i) => (
+                <span key={i} className={`${styles.heatDay} ${styles['heat' + d.level]}`} />
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.statBox}>
+            <h2>Próxima lição</h2>
+            {nextLesson ? (
+              <div className={styles.mt8}>
+                <p className={styles.strong}>{nextLesson.topic}</p>
+                <p>{nextLesson.step} ({nextLesson.idx + 1}/{nextLesson.total})</p>
+                <div className={styles.actionRow}>
+                  <button className={styles.btn} onClick={completeNextLesson}>Concluir</button>
+                </div>
+              </div>
+            ) : (
+              <p>Escolha tópicos para começar</p>
+            )}
+          </div>
         </div>
 
         {activeTab === 'novo' && (
