@@ -76,7 +76,7 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
     clearInterval(timerRef.current)
     const maxStart = Math.max(0, total - slidesToShow)
     timerRef.current = setInterval(() => {
-      setIndex(i => (i >= maxStart ? 0 : i + 1))
+      setIndex(i => Math.min(maxStart, i + 1))
     }, interval)
     return () => clearInterval(timerRef.current)
   }, [autoPlay, interval, total, slidesToShow])
@@ -112,7 +112,7 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
         if (!autoPlay) return
         clearInterval(timerRef.current)
         const maxStart = Math.max(0, total - slidesToShow)
-        timerRef.current = setInterval(() => setIndex(i => (i >= maxStart ? 0 : i + 1)), interval)
+        timerRef.current = setInterval(() => setIndex(i => Math.min(maxStart, i + 1)), interval)
       }}
     >
       <div className={`relative ${styles.frame}`}>
