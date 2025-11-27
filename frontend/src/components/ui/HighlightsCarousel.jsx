@@ -88,15 +88,15 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
   }, [slidesToShow, total])
 
   const maxStart = Math.max(0, total - slidesToShow)
-  const prev = () => setIndex(i => Math.max(0, i - 1))
-  const next = () => setIndex(i => Math.min(maxStart, i + 1))
+  const prev = () => setIndex(i => (i <= 0 ? maxStart : i - 1))
+  const next = () => setIndex(i => (i >= maxStart ? 0 : i + 1))
 
   function onKey(e) {
     if (e.key === 'ArrowLeft') prev()
     if (e.key === 'ArrowRight') next()
   }
 
-  const transform = total ? index * (100 / total) : 0
+  const transform = slidesToShow ? index * (96 / slidesToShow) : 0
 
   return (
     <div

@@ -1,5 +1,4 @@
 :root {
-	/* adopt dashboard palette */
 	--color-dark: #121212;
 	--color-light: #FFFFFF;
 	--color-purple: #9333ea;
@@ -29,16 +28,10 @@
 	background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
 }
 
-.panelOverlayLight {
-	background: radial-gradient(600px 300px at 50% 0%, rgba(0,0,0,0.06), transparent 70%);
-}
-
-/* floating decorative elements */
 .backgroundElements { position: absolute; inset: 0; z-index: 0; pointer-events: none }
 .floatingOrbs { position: absolute; inset: 0; z-index: 0; }
 .floatingOrb { width: 80px; height: 80px; border-radius: 999px; background: linear-gradient(135deg, rgba(147,51,234,0.12), rgba(147,51,234,0.03)); filter: blur(28px); opacity: .9 }
 
-/* particles */
 .particles { position: absolute; inset: 0; z-index: 0 }
 .particle { position: absolute; width: 12px; height: 12px; border-radius: 50%; opacity: .9; transform: translate(-50%, -50%); background: rgba(255,255,255,0.09); box-shadow:0 6px 18px rgba(0,0,0,0.3) }
 .particleWhite { background: rgba(255,255,255,0.12) }
@@ -70,10 +63,8 @@
 
 @media (min-width: 768px) { .leftPanel { display: flex } }
 
-/* halo wrapper for the bottom decoration inside the left panel */
 .haloWrap { position: absolute; bottom: -2rem; left: 50%; transform: translateX(-50%); width: 85%; height: 4rem; border-radius: 9999px }
 
-/* right-side panel container */
 .rightPanel { position: relative; padding: 2rem; background: #0D0D0D; }
 @media (min-width: 640px) { .rightPanel { padding: 2.5rem } }
 
@@ -81,31 +72,28 @@
 .spaceY4 > * + * { margin-top: 1rem }
 
 .leftPanelContent { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem }
-.heroIcon { width: 6rem; height: 6rem; border-radius: 0.75rem; background: var(--color-light); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(0,0,0,0.45) }
+.heroIcon { width: 6rem; height: 6rem; border-radius: 0.75rem; background: var(--color-light); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(255, 255, 255, 0.288) }
 .heroTitle { color: var(--color-text); font-size: 1.75rem; font-weight: 600 }
 .heroLead { color: var(--color-text); max-width: 36rem }
 .heroInfo { margin-top: 1.5rem; display:flex; align-items:center; gap:0.75rem; color:var(--color-text) }
 
 .panelOverlayWrap { position:absolute; inset:0; opacity:0.2 }
 
-/* right panel overlay wrapper */
 .rightPanelOverlayWrap { position:absolute; inset:0; pointer-events:none }
 
 .header { margin-bottom: 2rem }
 
-.iconBlack { color: var(--color-text) }
+.iconBlack { color: black }
 .title { font-size: 1.875rem; font-weight: 600; color: #fff }
 .subtitle { margin-top: 0.5rem; font-size: 0.875rem; color: #fff }
 .errorAlert { margin-top: 1rem; padding: 0.75rem; font-size: 0.9rem; border-radius: 0.75rem; box-shadow: 0 8px 30px rgba(0,0,0,.3) }
 .socialLabel { font-size: 0.875rem; font-weight: 500 }
 
-/* social button grid */
 .socialGrid { display: grid; grid-template-columns: 1fr; gap: 0.75rem }
 .socialBtn { width:100%; display:flex; align-items:center; gap:0.75rem; border-radius: 0.75rem; padding: 0.75rem 1rem; transition: background-color .15s, box-shadow .15s }
 .socialBtn:focus { outline: none }
 .socialIcon { width: 1.25rem; height: 1.25rem; display: inline-flex; align-items:center; justify-content:center }
 
-/* form container */
 .form { position: relative; z-index: 10 }
 .inputWrapper { position: relative }
 .inputBase { width: 100%; border-radius: 0.75rem; padding: 0.75rem 1rem; padding-left: 3rem; padding-right: 3rem; transition: border .18s, opacity .18s }
@@ -124,7 +112,6 @@
 
 .footerText { margin-top:1.5rem; font-size:0.875rem; color: var(--color-text) }
 
-/* divider */
 .dividerWrap { margin: 1.5rem 0; display:flex; align-items:center; gap:0.75rem }
 .dividerLine { height:1px; width:100%; background: var(--color-gray) }
 .dividerLabel { color: var(--color-text); font-size:0.75rem; text-transform:uppercase; letter-spacing: 0.05em }
@@ -156,27 +143,46 @@
 	color: rgba(0,0,0,0.45);
 }
 
+.inputDark { background-color: #1a1a1a; color: var(--color-text); border: 1px solid rgba(255,255,255,0.14) }
+.inputDark:focus { border-color: var(--color-purple); box-shadow: 0 0 0 3px rgba(147,51,234,0.25) }
+.inputDarkError { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) }
+.placeholderDark::placeholder { color: rgba(255,255,255,0.6) }
+
 .submitButton {
 	background-color: var(--color-light);
-	color: var(--color-text);
-	border: 1px solid rgba(0,0,0,0.18);
+	color: black;
+	border: 1px solid #9233ea57;
+	transition: background-color .15s, box-shadow .15s, color .15s;
 }
 .submitButton:hover {
-	background-color: #f6f6f6;
+	background-color: #9333EA;
 	box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+	color: white;
 }
 .submitButton:disabled {
 	opacity: 0.85;
 }
 
+.submitButtonDark { background-color: #9333EA; color: #ffffff; border: 1px solid rgba(147,51,234,0.55); transition: background-color .15s, box-shadow .15s, color .15s }
+.submitButtonDark:hover { background-color: #7c2bd6; box-shadow: 0 8px 24px rgba(0,0,0,0.25) }
+.submitButtonDark:disabled { opacity: 0.85 }
+
 .socialButton {
 	background-color: var(--color-light);
-	color: var(--color-text);
+	color: rgb(0, 0, 0);
 	border: 1px solid rgba(0,0,0,0.16);
 }
 .socialButton:hover {
 	background-color: var(--color-purple);
+	color: #ffffff;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.18);
 }
+
+.socialButtonDark { background-color: #1a1a1a; color: var(--color-text); border: 1px solid rgba(255,255,255,0.14) }
+.socialButtonDark:hover { background-color: var(--color-purple); color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.25) }
+
+.fieldErrorDark { margin-top: 0.5rem; font-size: 0.875rem; color: #ef4444 }
+.iconWhite { color: #ffffff }
 
 .particle1 { top: 12%; left: 18%; }
 .particle2 { top: 24%; left: 72%; }
