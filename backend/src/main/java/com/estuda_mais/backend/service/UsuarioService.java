@@ -3,7 +3,6 @@ package com.estuda_mais.backend.service;
 import com.estuda_mais.backend.model.Usuario;
 import com.estuda_mais.backend.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
