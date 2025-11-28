@@ -75,6 +75,17 @@
 	background: rgba(255, 255, 255, 0.041);
 }
 
+@keyframes snowfall {
+	0% { transform: translate(-50%, -120vh); opacity: 0; }
+	10% { opacity: 0.9; }
+	100% { transform: translate(-50%, 120vh); opacity: 0; }
+}
+
+.particleSnow {
+	animation: snowfall var(--snow-dur, 9s) linear infinite;
+	will-change: transform, opacity;
+}
+
 .rightPanelOverlay {
 	background: radial-gradient(600px 300px at 80% 20%, rgba(147,51,234,0.12), transparent 70%);
 }
