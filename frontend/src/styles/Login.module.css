@@ -6,6 +6,8 @@
 	--color-text: #E0E0E0;
 }
 
+/* ---------------------- LOGIN PAGE ---------------------- */
+
 .loginPage {
 	background-color: #0A0A0A;
 	position: relative;
@@ -28,13 +30,50 @@
 	background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
 }
 
-.backgroundElements { position: absolute; inset: 0; z-index: 0; pointer-events: none }
-.floatingOrbs { position: absolute; inset: 0; z-index: 0; }
-.floatingOrb { width: 80px; height: 80px; border-radius: 999px; background: linear-gradient(135deg, rgba(147,51,234,0.12), rgba(147,51,234,0.03)); filter: blur(28px); opacity: .9 }
+/* ---------------------- BACKGROUND ELEMENTS ---------------------- */
 
-.particles { position: absolute; inset: 0; z-index: 0 }
-.particle { position: absolute; width: 12px; height: 12px; border-radius: 50%; opacity: .9; transform: translate(-50%, -50%); background: rgba(255,255,255,0.09); box-shadow:0 6px 18px rgba(0,0,0,0.3) }
-.particleWhite { background: rgba(255, 255, 255, 0.041) }
+.backgroundElements {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.floatingOrbs {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+.floatingOrb {
+	width: 80px;
+	height: 80px;
+	border-radius: 999px;
+	background: linear-gradient(135deg, rgba(147,51,234,0.12), rgba(147,51,234,0.03));
+	filter: blur(28px);
+	opacity: .9;
+}
+
+.particles {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+.particle {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	opacity: .9;
+	transform: translate(-50%, -50%);
+	background: rgba(255,255,255,0.09);
+	box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.particleWhite {
+	background: rgba(255, 255, 255, 0.041);
+}
 
 .rightPanelOverlay {
 	background: radial-gradient(600px 300px at 80% 20%, rgba(147,51,234,0.12), transparent 70%);
@@ -45,77 +84,349 @@
 	filter: blur(12px);
 }
 
-.loginAmbientGlow { position: absolute; z-index: -1; left: 50%; transform: translateX(-50%); width: min(92vw, 80rem); height: min(38vw, 28rem); border-radius: 0.5rem; background: radial-gradient(ellipse at center, rgba(147,51,234,0.12), transparent 55%); filter: blur(28px); }
+.loginAmbientGlow {
+	position: absolute;
+	z-index: -1;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(92vw, 80rem);
+	height: min(38vw, 28rem);
+	border-radius: 0.5rem;
+	background: radial-gradient(ellipse at center, rgba(147,51,234,0.12), transparent 55%);
+	filter: blur(28px);
+}
 
-.textureSubtle { pointer-events: none; position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px); background-size: 16px 16px; opacity: 0.55 }
+.textureSubtle {
+	pointer-events: none;
+	position: absolute;
+	inset: 0;
+	background-image: radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
+	background-size: 16px 16px;
+	opacity: 0.55;
+}
 
-.loginPanelRoot { position: relative; width: 100%; max-width: 72rem; display: grid; grid-template-columns: 1fr; border-radius: 1.5rem; box-shadow: var(--shadow-soft, 0 12px 40px rgba(0,0,0,0.5)); overflow: hidden }
-@media (min-width: 768px) { .loginPanelRoot { grid-template-columns: 1fr 1fr } }
+/* ---------------------- LOGIN PANEL ROOT ---------------------- */
 
-.leftPanel { 
-	display: none; align-items: 
-	center; 
+.loginPanelRoot {
+	position: relative;
+	width: 100%;
+	max-width: 72rem;
+	display: grid;
+	grid-template-columns: 1fr;
+	border-radius: 1.5rem;
+	box-shadow: var(--shadow-soft, 0 12px 40px rgba(0,0,0,0.5));
+	overflow: hidden;
+}
+
+@media (min-width: 768px) {
+	.loginPanelRoot {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* ---------------------- LEFT PANEL ---------------------- */
+
+.leftPanel {
+	display: none;
+	align-items: center;
 	justify-content: center;
 	padding: 2.5rem;
 	background: #0D0D0D;
-	position: relative 
+	position: relative;
 }
 
-@media (min-width: 768px) { .leftPanel { display: flex } }
+@media (min-width: 768px) {
+	.leftPanel {
+		display: flex;
+	}
+}
 
-.haloWrap { position: absolute; bottom: -2rem; left: 50%; transform: translateX(-50%); width: 85%; height: 4rem; border-radius: 9999px }
+.haloWrap {
+	position: absolute;
+	bottom: -2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 85%;
+	height: 4rem;
+	border-radius: 9999px;
+}
 
-.rightPanel { position: relative; padding: 2rem; background: #0D0D0D; }
-@media (min-width: 640px) { .rightPanel { padding: 2.5rem } }
+/* ---------------------- RIGHT PANEL ---------------------- */
 
-.relativeZ10 { position: relative; z-index: 10 }
-.spaceY4 > * + * { margin-top: 1rem }
+.rightPanel {
+	position: relative;
+	padding: 2rem;
+	background: #0D0D0D;
+}
 
-.leftPanelContent { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem }
-.heroIcon { width: 6rem; height: 6rem; border-radius: 0.75rem; background: var(--color-light); display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(255, 255, 255, 0.288) }
-.heroTitle { color: var(--color-text); font-size: 1.75rem; font-weight: 600 }
-.heroLead { color: var(--color-text); max-width: 36rem }
-.heroInfo { margin-top: 1.5rem; display:flex; align-items:center; gap:0.75rem; color:var(--color-text) }
+@media (min-width: 640px) {
+	.rightPanel {
+		padding: 2.5rem;
+	}
+}
 
-.panelOverlayWrap { position:absolute; inset:0; opacity:0.2 }
+.relativeZ10 {
+	position: relative;
+	z-index: 10;
+}
 
-.rightPanelOverlayWrap { position:absolute; inset:0; pointer-events:none }
+.spaceY4 > * + * {
+	margin-top: 1rem;
+}
 
-.header { margin-bottom: 2rem }
+/* ---------------------- LEFT PANEL CONTENT ---------------------- */
 
-.iconBlack { color: black }
-.title { font-size: 1.875rem; font-weight: 600; color: #fff }
-.subtitle { margin-top: 0.5rem; font-size: 0.875rem; color: #fff }
-.errorAlert { margin-top: 1rem; padding: 0.75rem; font-size: 0.9rem; border-radius: 0.75rem; box-shadow: 0 8px 30px rgba(0,0,0,.3) }
-.socialLabel { font-size: 0.875rem; font-weight: 500 }
+.leftPanelContent {
+	position: relative;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 1.5rem;
+}
 
-.socialGrid { display: grid; grid-template-columns: 1fr; gap: 0.75rem }
-.socialBtn { width:100%; display:flex; align-items:center; gap:0.75rem; border-radius: 0.75rem; padding: 0.75rem 1rem; transition: background-color .15s, box-shadow .15s }
-.socialBtn:focus { outline: none }
-.socialIcon { width: 1.25rem; height: 1.25rem; display: inline-flex; align-items:center; justify-content:center }
+.heroIcon {
+	width: 6rem;
+	height: 6rem;
+	border-radius: 0.75rem;
+	background: var(--color-light);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 12px 30px rgba(255, 255, 255, 0.288);
+}
 
-.form { position: relative; z-index: 10 }
-.inputWrapper { position: relative }
-.inputBase { width: 100%; border-radius: 0.75rem; padding: 0.75rem 1rem; padding-left: 3rem; padding-right: 3rem; transition: border .18s, opacity .18s }
-.inputIcon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); display:flex; align-items:center }
-.inputAction { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); border: none; background: transparent }
-.fieldError { margin-top: 0.5rem; font-size: 0.875rem; background: #ffffff; padding: 0.5rem; border-radius: 0.5rem }
+.heroTitle {
+	color: white;
+	font-size: 1.75rem;
+	font-weight: 600;
+}
 
-.rowBetween { margin-top: 0.5rem; display:flex; align-items:center; justify-content:space-between }
-.rememberLabel input { margin-right: 0.5rem }
-.rememberLabel { display:inline-flex; align-items:center; gap:0.5rem; color: var(--color-text) }
-.link { color: var(--color-text); text-decoration: underline }
+.heroLead {
+	color: rgb(255, 255, 255);
+	max-width: 36rem;
+}
 
-.submitFull { width: 100%; border-radius: 0.75rem; font-weight: 500; padding: 0.75rem 0; display:flex; align-items:center; justify-content:center; gap:0.5rem }
-.submitSpinner { display:inline-block; width:1.25rem; height:1.25rem; border: 2px solid rgba(0,0,0,0.9); border-top-color: transparent; border-radius:999px; animation: spin 0.8s linear infinite }
-@keyframes spin { to { transform: rotate(360deg) }}
+.heroInfo {
+	margin-top: 1.5rem;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--color-text);
+}
 
-.footerText { margin-top:1.5rem; font-size:0.875rem; color: var(--color-text) }
+/* ---------------------- PANEL OVERLAYS ---------------------- */
 
-.dividerWrap { margin: 1.5rem 0; display:flex; align-items:center; gap:0.75rem }
-.dividerLine { height:1px; width:100%; background: var(--color-gray) }
-.dividerLabel { color: var(--color-text); font-size:0.75rem; text-transform:uppercase; letter-spacing: 0.05em }
+.panelOverlayWrap {
+	position: absolute;
+	inset: 0;
+	opacity: 0.2;
+}
 
+.rightPanelOverlayWrap {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+/* ---------------------- HEADER ---------------------- */
+
+.header {
+	margin-bottom: 2rem;
+}
+
+.iconBlack {
+	color: rgb(0, 0, 0);
+}
+
+.title {
+	font-size: 1.875rem;
+	font-weight: 600;
+	color: #fff;
+}
+
+.subtitle {
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	color: #fff;
+}
+
+/* ---------------------- ERROR ALERT ---------------------- */
+
+.errorAlert {
+	margin-top: 1rem;
+	padding: 0.75rem;
+	font-size: 0.9rem;
+	border-radius: 0.75rem;
+	box-shadow: 0 8px 30px rgba(0,0,0,.3);
+}
+
+/* ---------------------- SOCIAL ---------------------- */
+
+.socialLabel {
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.socialGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.75rem;
+}
+
+.socialBtn {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	border-radius: 0.75rem;
+	padding: 0.75rem 1rem;
+	transition: background-color .15s, box-shadow .15s;
+}
+
+.socialBtn:focus {
+	outline: none;
+}
+
+.socialIcon {
+	width: 1.25rem;
+	height: 1.25rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* ---------------------- FORM ---------------------- */
+
+.form {
+	position: relative;
+	z-index: 10;
+}
+
+.inputWrapper {
+	position: relative;
+}
+
+.inputBase {
+	width: 100%;
+	border-radius: 0.75rem;
+	padding: 0.75rem 1rem;
+	padding-left: 3rem;
+	padding-right: 3rem;
+	transition: border .18s, opacity .18s;
+}
+
+.inputIcon {
+	position: absolute;
+	left: 1rem;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+	color: rgb(255, 255, 255);
+}
+
+.inputAction {
+	position: absolute;
+	right: 1rem;
+	top: 50%;
+	transform: translateY(-50%);
+	border: none;
+	background: transparent;
+}
+
+.fieldError {
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	background: #702121;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+}
+
+/* ---------------------- ROWS ---------------------- */
+
+.rowBetween {
+	margin-top: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.rememberLabel input {
+	margin-right: 0.5rem;
+}
+
+.rememberLabel {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--color-text);
+}
+
+.link {
+	color: var(--color-text);
+	text-decoration: underline;
+}
+
+/* ---------------------- SUBMIT BUTTON ---------------------- */
+
+.submitFull {
+	width: 100%;
+	border-radius: 0.75rem;
+	font-weight: 500;
+	padding: 0.75rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.submitSpinner {
+	display: inline-block;
+	width: 1.25rem;
+	height: 1.25rem;
+	border: 2px solid rgba(0,0,0,0.9);
+	border-top-color: transparent;
+	border-radius: 999px;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.footerText {
+	margin-top: 1.5rem;
+	font-size: 0.875rem;
+	color: var(--color-text);
+}
+
+/* ---------------------- DIVIDER ---------------------- */
+
+.dividerWrap {
+	margin: 1.5rem 0;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.dividerLine {
+	height: 1px;
+	width: 100%;
+	background: var(--color-gray);
+}
+
+.dividerLabel {
+	color: var(--color-text);
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* ---------------------- LIGHT & DARK INPUTS ---------------------- */
 
 .errorMessageLight {
 	background-color: var(--color-light);
@@ -124,54 +435,96 @@
 }
 
 .inputLight {
-    background-color: #0E0E0E;
-    color: #ffffff;
-    border: 1px solid #ffffff57;
+	background-color: #0E0E0E;
+	color: #ffffff;
+	border: 1px solid #ffffff57;
 }
+
 .inputLight:focus {
-    border-color: #9333EA;
-    box-shadow: 0 0 0 3px rgba(147,51,234,0.25);
+	border-color: #9333EA;
+	box-shadow: 0 0 0 3px rgba(147,51,234,0.25);
 }
 
 .inputLightError {
-	border-color: #ef4444;
-	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+	border-color: #ef4444 !important;
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+	background-color: #0E0E0E !important;
+	color: #fff !important;
 }
 
 .placeholderLight::placeholder {
-    color: rgba(255,255,255,0.6);
+	color: rgba(255,255,255,0.6);
 }
 
-.inputDark { background-color: #1a1a1a; color: var(--color-text); border: 1px solid rgba(255,255,255,0.14) }
-.inputDark:focus { border-color: var(--color-purple); box-shadow: 0 0 0 3px rgba(147,51,234,0.25) }
-.inputDarkError { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) }
-.placeholderDark::placeholder { color: rgba(255,255,255,0.6) }
+.inputDark {
+	background-color: #1a1a1a;
+	color: var(--color-text);
+	border: 1px solid rgba(255,255,255,0.14);
+}
+
+.inputDark:focus {
+	border-color: var(--color-purple);
+	box-shadow: 0 0 0 3px rgba(147,51,234,0.25);
+}
+
+.inputDarkError {
+	border-color: #ef4444 !important;
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+	background-color: #0E0E0E !important;
+	color: #fff !important;
+}
+
+.placeholderDark::placeholder {
+	color: rgba(255,255,255,0.6);
+}
+
+/* Corrige placeholder no erro */
+.inputLightError::placeholder,
+.inputDarkError::placeholder {
+	color: rgba(255,255,255,0.6) !important;
+}
+
+/* ---------------------- BUTTONS ---------------------- */
 
 .submitButton {
 	background-color: #0E0E0E;
-	color: rgb(255, 255, 255);
+	color: #ffffff;
 	border: 1px solid #ffffff57;
 	transition: background-color .15s, box-shadow .15s, color .15s;
 }
+
 .submitButton:hover {
 	background-color: #9333EA;
 	box-shadow: 0 8px 24px rgba(0,0,0,0.18);
 	color: white;
 }
+
 .submitButton:disabled {
 	opacity: 0.85;
 }
 
-.submitButtonDark { background-color: #9333EA; color: #ffffff; border: 1px solid rgba(147,51,234,0.55); transition: background-color .15s, box-shadow .15s, color .15s }
-.submitButtonDark:hover { background-color: #7c2bd6; box-shadow: 0 8px 24px rgba(0,0,0,0.25) }
-.submitButtonDark:disabled { opacity: 0.85 }
+.submitButtonDark {
+	background-color: #9333EA;
+	color: #ffffff;
+	border: 1px solid rgba(147,51,234,0.55);
+	transition: background-color .15s, box-shadow .15s, color .15s;
+}
+
+.submitButtonDark:hover {
+	background-color: #7c2bd6;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.submitButtonDark:disabled {
+	opacity: 0.85;
+}
 
 .socialButton {
 	background-color: #0E0E0E;
-	color: rgb(255, 255, 255);
+	color: #ffffff;
 	border: 1px solid rgba(255, 255, 255, 0.16);
-
 }
+
 .socialButton:hover {
 	background-color: var(--color-purple);
 	color: #ffffff;
@@ -179,11 +532,29 @@
 	border: 1px solid #9333ea;
 }
 
-.socialButtonDark { background-color: #1a1a1a; color: var(--color-text); border: 1px solid rgba(255,255,255,0.14) }
-.socialButtonDark:hover { background-color: var(--color-purple); color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.25) }
+.socialButtonDark {
+	background-color: #1a1a1a;
+	color: var(--color-text);
+	border: 1px solid rgba(255,255,255,0.14);
+}
 
-.fieldErrorDark { margin-top: 0.5rem; font-size: 0.875rem; color: #ef4444 }
-.iconWhite { color: #ffffff }
+.socialButtonDark:hover {
+	background-color: var(--color-purple);
+	color: #ffffff;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.fieldErrorDark {
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	color: #ef4444;
+}
+
+.iconWhite {
+	color: #ffffff;
+}
+
+/* ---------------------- PARTICLES POSITIONS ---------------------- */
 
 .particle1 { top: 12%; left: 18%; }
 .particle2 { top: 24%; left: 72%; }
@@ -194,3 +565,19 @@
 .particle7 { top: 78%; left: 20%; }
 .particle8 { top: 16%; left: 88%; }
 .particle9 { top: 84%; left: 72%; }
+
+/* --------------------------------------------------------------- */
+/* ---------------------- ÍCONES BRANCOS ------------------------- */
+/* --------------------------------------------------------------- */
+
+.inputIcon svg,
+.inputIcon i,
+.inputIcon path {
+	color: #fff !important;
+}
+
+.inputAction svg,
+.inputAction i,
+.inputAction path {
+	color: #fff !important;
+}
