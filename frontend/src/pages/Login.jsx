@@ -19,6 +19,19 @@ export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const container = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut', when: 'beforeChildren', staggerChildren: 0.05, delayChildren: 0.05 } },
+    exit: { opacity: 0 }
+  }
+  const panelVariant = {
+    initial: { y: 20, opacity: 0, scale: 0.985, filter: 'blur(8px)' },
+    animate: { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 380, damping: 24 } },
+    exit: { y: -16, opacity: 0, scale: 0.99, transition: { duration: 0.28, ease: 'easeIn' } }
+  }
+  const leftVariant = { initial: { x: -16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26 } } }
+  const rightVariant = { initial: { x: 16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26, delay: 0.03 } } }
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const oauthError = urlParams.get('error');
@@ -38,11 +51,12 @@ export default function Login() {
   return (
     <motion.main
       className={`page-login ${styles.loginPage} ${styles.pageRoot}`}
-      initial={{ opacity: 0, y: -50, rotateX: 15 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      exit={{ opacity: 0, y: -50, rotateX: 15 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-    >      <div className={styles.backgroundElements}>
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={container}
+    >
+      <div className={styles.backgroundElements}>
         <div className={styles.floatingOrbs}>
           <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
           <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
@@ -64,13 +78,14 @@ export default function Login() {
 
       <div className={styles.loginAmbientGlow} aria-hidden="true" />
 
-      <section
+      <motion.section
         aria-label="Painel de autenticação"
-        className={`${styles.loginPanelRoot} ${styles.loginPanel} animate-fade-in`}
+        className={`${styles.loginPanelRoot} ${styles.loginPanel}`}
+        variants={panelVariant}
       >
         <div className={styles.textureSubtle} aria-hidden="true" />
 
-        <div className={styles.leftPanel}>
+        <motion.div className={styles.leftPanel} variants={leftVariant}>
           <div className={`${styles.panelOverlayWrap} ${styles.panelOverlayLight}`} aria-hidden="true" />
 
           <div className={styles.leftPanelContent}>
@@ -90,9 +105,9 @@ export default function Login() {
           </div>
 
           <div className={`${styles.haloWrap} ${styles.shadowHalo}`} aria-hidden="true" />
-        </div>
+        </motion.div>
 
-        <div className={`${styles.rightPanel} animate-slide-in-up`}>
+        <motion.div className={`${styles.rightPanel}`} variants={rightVariant}>
           <div className={`${styles.rightPanelOverlayWrap} ${styles.rightPanelOverlay}`} aria-hidden="true" />
 
           <header className={`${styles.header} ${styles.relativeZ10}`}>
@@ -253,9 +268,9 @@ export default function Login() {
           Não tem uma conta?{' '}
           <a href="/signup" className={styles.link}>Crie uma agora</a>
         </p>
-      </div>
-    </section>
-  </motion.main>
+        </motion.div>
+      </motion.section>
+      </motion.main>
   )
 }
 
