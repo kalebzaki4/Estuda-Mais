@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues } from '../utils/validators'
 import { useAuth } from '../contexts/AuthContextCore.js'
 import styles from '../styles/Login.module.css'
-import { motion, AnimatePresence } from 'framer-motion'
+import * as FM from 'framer-motion'
 
 export default function Login() {
   const { login } = useAuth()
@@ -18,6 +18,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const Motion = FM.motion
+  const AnimatePresence = FM.AnimatePresence
 
   const container = {
     initial: { opacity: 0 },
@@ -31,6 +33,7 @@ export default function Login() {
   }
   const leftVariant = { initial: { x: -16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26 } } }
   const rightVariant = { initial: { x: 16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26, delay: 0.03 } } }
+  const childVariant = { initial: { opacity: 0, y: 14, scale: 0.985 }, animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: 'easeOut' } } }
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -49,7 +52,7 @@ export default function Login() {
   }, [location]);
 
   return (
-    <motion.main
+    <Motion.main
       className={`page-login ${styles.loginPage} ${styles.pageRoot}`}
       initial="initial"
       animate="animate"
@@ -64,28 +67,28 @@ export default function Login() {
           <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
         </div>
         <div className={styles.particles}>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle1}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle2}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle3}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle4}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle5}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle6}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle7}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle8}`}></div>
-          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particle9}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle1}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle2}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle3}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle4}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle5}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle6}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle7}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle8}`}></div>
+          <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle9}`}></div>
         </div>
       </div>
 
       <div className={styles.loginAmbientGlow} aria-hidden="true" />
 
-      <motion.section
+      <Motion.section
         aria-label="Painel de autenticação"
         className={`${styles.loginPanelRoot} ${styles.loginPanel}`}
         variants={panelVariant}
       >
         <div className={styles.textureSubtle} aria-hidden="true" />
 
-        <motion.div className={styles.leftPanel} variants={leftVariant}>
+        <Motion.div className={styles.leftPanel} variants={leftVariant}>
           <div className={`${styles.panelOverlayWrap} ${styles.panelOverlayLight}`} aria-hidden="true" />
 
           <div className={styles.leftPanelContent}>
@@ -105,12 +108,12 @@ export default function Login() {
           </div>
 
           <div className={`${styles.haloWrap} ${styles.shadowHalo}`} aria-hidden="true" />
-        </motion.div>
+        </Motion.div>
 
-        <motion.div className={`${styles.rightPanel}`} variants={rightVariant}>
+        <Motion.div className={`${styles.rightPanel}`} variants={rightVariant}>
           <div className={`${styles.rightPanelOverlayWrap} ${styles.rightPanelOverlay}`} aria-hidden="true" />
 
-          <header className={`${styles.header} ${styles.relativeZ10}`}>
+          <Motion.header className={`${styles.header} ${styles.relativeZ10}`} variants={childVariant}>
             <h1 className={styles.title}>Entrar</h1>
             <p className={styles.subtitle}>Bem-vindo de volta. Faça login para continuar.</p>
             {errors.general && (
@@ -118,16 +121,16 @@ export default function Login() {
                 {errors.general}
               </div>
             )}
-          </header>
+          </Motion.header>
 
-          <div className={`${styles.relativeZ10} ${styles.socialGrid} animate-slide-in-up delay-200`}>
+          <Motion.div className={`${styles.relativeZ10} ${styles.socialGrid}`} variants={childVariant}>
             <SocialButton icon={<SiGoogle className={styles.socialIcon} aria-hidden="true" />} label="Entrar com Google" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/google'} />
             <SocialButton icon={<SiGithub className={styles.socialIcon} aria-hidden="true" />} label="Entrar com GitHub" onClick={() => window.location.href = 'http://localhost:8080/oauth2/authorization/github'} />
-          </div>
+          </Motion.div>
 
-          <Divider label="Ou" />
+          <Motion.div variants={childVariant}><Divider label="Ou" /></Motion.div>
 
-          <form
+          <Motion.form
             onSubmit={async (e) => {
               e.preventDefault()
               setTouched({ email: true, password: true })
@@ -158,6 +161,7 @@ export default function Login() {
             }}
             className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`}
             aria-label="Formulário de login"
+            variants={childVariant}
           >
             <div>
               <label htmlFor="email" className="sr-only">Email</label>
@@ -187,7 +191,7 @@ export default function Login() {
 
             <div>
               <label htmlFor="password" className="sr-only">Senha</label>
-              <motion.div
+              <Motion.div
                 key={showPassword ? "password-visible" : "password-hidden"}
                 initial={{ x: 0 }}
                 animate={{ x: [0, -2, 2, -2, 2, 0] }}
@@ -217,7 +221,7 @@ export default function Login() {
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     {showPassword ? (
-                      <motion.span
+                      <Motion.span
                         key="eye-off"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -225,9 +229,9 @@ export default function Login() {
                         transition={{ duration: 0.15 }}
                       >
                         <FiEyeOff className={styles.iconBlack} />
-                      </motion.span>
+                      </Motion.span>
                     ) : (
-                      <motion.span
+                      <Motion.span
                         key="eye-on"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -235,11 +239,11 @@ export default function Login() {
                         transition={{ duration: 0.15 }}
                       >
                         <FiEye className={styles.iconBlack} />
-                      </motion.span>
+                      </Motion.span>
                     )}
                   </AnimatePresence>
                 </button>
-              </motion.div>
+              </Motion.div>
               {touched.password && errors.password ? (
                 <p id="password-error" role="alert" className={styles.fieldError}>{errors.password}</p>
               ) : null}
@@ -262,15 +266,15 @@ export default function Login() {
               ) : null}
               <span>{loading ? 'Entrando...' : 'Entrar'}</span>
             </button>
-          </form>
+          </Motion.form>
 
-        <p className={`${styles.footerText} ${styles.relativeZ10}`}>
+        <Motion.p className={`${styles.footerText} ${styles.relativeZ10}`} variants={childVariant}>
           Não tem uma conta?{' '}
           <a href="/signup" className={styles.link}>Crie uma agora</a>
-        </p>
-        </motion.div>
-      </motion.section>
-      </motion.main>
+        </Motion.p>
+        </Motion.div>
+      </Motion.section>
+      </Motion.main>
   )
 }
 

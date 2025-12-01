@@ -17,18 +17,14 @@ const AuthProvider = ({ children }) => {
       setError(null);
 
       if (authService.isAuthenticated()) {
-        const userData = authService.getUserData();
-        if (userData) {
-          setUser(userData);
-        } else {
-          // Try to get current user from server
+
+        // Try to get current user from server
           const result = await authService.getCurrentUser();
           if (result.success) {
             setUser(result.data);
           } else {
             authService.clearAuthData();
           }
-        }
       }
     } catch (err) {
       console.error('Error checking auth status:', err);
@@ -46,7 +42,7 @@ const AuthProvider = ({ children }) => {
       const result = await authService.login(email, password);
 
       if (result.success) {
-        setUser(result.data.data);
+        setUser(result.data);
         return { success: true };
       } else {
         setError(result.error);
@@ -69,7 +65,7 @@ const AuthProvider = ({ children }) => {
       const result = await authService.register(name, email, password);
 
       if (result.success) {
-        setUser(result.data.data);
+        setUser(result.data);
         return { success: true };
       } else {
         setError(result.error);

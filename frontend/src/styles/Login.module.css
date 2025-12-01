@@ -12,6 +12,7 @@
 	background-color: #0A0A0A;
 	position: relative;
 	isolation: isolate;
+	overflow: hidden;
 }
 
 .pageRoot {
@@ -576,6 +577,16 @@
 .particle7 { top: 78%; left: 20%; }
 .particle8 { top: 16%; left: 88%; }
 .particle9 { top: 84%; left: 72%; }
+
+.particle1.particleSnow { --snow-dur: 9s; animation-delay: 0s; }
+.particle2.particleSnow { --snow-dur: 11s; animation-delay: 0.6s; }
+.particle3.particleSnow { --snow-dur: 8s; animation-delay: 0.3s; }
+.particle4.particleSnow { --snow-dur: 12s; animation-delay: 0.9s; }
+.particle5.particleSnow { --snow-dur: 10s; animation-delay: 0.2s; }
+.particle6.particleSnow { --snow-dur: 7s; animation-delay: 0.7s; }
+.particle7.particleSnow { --snow-dur: 13s; animation-delay: 0.1s; }
+.particle8.particleSnow { --snow-dur: 9.5s; animation-delay: 0.4s; }
+.particle9.particleSnow { --snow-dur: 11.5s; animation-delay: 0.8s; }
 
 /* --------------------------------------------------------------- */
 /* ---------------------- ÍCONES BRANCOS ------------------------- */

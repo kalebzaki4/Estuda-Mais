@@ -10,7 +10,6 @@ import {
 } from '../config/apiEndpoints.js'
 
 const storageTokenKey = 'jwtToken'
-const storageUserKey = 'userData'
 
 async function request(url, opts = {}) {
   const res = await fetch(url, opts)
@@ -24,34 +23,19 @@ const authService = {
     return !!localStorage.getItem(storageTokenKey)
   },
 
-  getUserData() {
-    try {
-      const raw = localStorage.getItem(storageUserKey)
-      return raw ? JSON.parse(raw) : null
-    } catch (e) {
-      return null
-    }
-  },
-
-  setAuthData(token, userData) {
+  setAuthData(token) {
     if (token) localStorage.setItem(storageTokenKey, token)
-    if (userData) localStorage.setItem(storageUserKey, JSON.stringify(userData))
   },
 
   clearAuthData() {
     localStorage.removeItem(storageTokenKey)
-    localStorage.removeItem(storageUserKey)
   },
 
   async getCurrentUser() {
     try {
       const headers = getAuthHeaders()
       const res = await request(`${API_BASE_URL}${AUTH_ME_ENDPOINT}`, { method: 'GET', headers })
-      if (res.success && res.data) {
-        // server may return user object directly or wrapped in { data: ... }
-        const payload = res.data.data || res.data
-        if (payload) localStorage.setItem(storageUserKey, JSON.stringify(payload))
-      }
+      // No longer storing user data in localStorage here
       return res
     } catch (e) {
       return { success: false, error: e.message || String(e) }
@@ -63,13 +47,10 @@ const authService = {
       const body = JSON.stringify({ email, password })
       const res = await request(`${API_BASE_URL}${AUTH_LOGIN_ENDPOINT}`, { ...loginRequestConfig, body })
       if (res.success && res.data) {
-        // try common shapes: { token, data: user } or { data: { token, data: user } }
         const bodyData = res.data.data || res.data
         const token = res.data.token || (bodyData && bodyData.token) || null
-        const user = (bodyData && bodyData.data) || (bodyData && bodyData.user) || null
 
         if (token) localStorage.setItem(storageTokenKey, token)
-        if (user) localStorage.setItem(storageUserKey, JSON.stringify(user))
       }
       return res
     } catch (e) {
@@ -84,10 +65,8 @@ const authService = {
       if (res.success && res.data) {
         const bodyData = res.data.data || res.data
         const token = res.data.token || (bodyData && bodyData.token) || null
-        const user = (bodyData && bodyData.data) || (bodyData && bodyData.user) || null
 
         if (token) localStorage.setItem(storageTokenKey, token)
-        if (user) localStorage.setItem(storageUserKey, JSON.stringify(user))
       }
       return res
     } catch (e) {
