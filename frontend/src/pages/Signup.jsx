@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
-import { useAuth } from '../contexts/AuthContextCore.js'
+import { useAuth } from '../contexts/AuthContextCore.jsx'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContextCore.js'
+import { useAuth } from '../contexts/AuthContextCore.jsx'
 import styles from '../styles/Dashboard.module.css'
 
 export default function Dashboard() {

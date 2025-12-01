@@ -13,11 +13,10 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    // segredo para assinar e validar os tokens
     @Value("${api.security.token.secret}")
     private String secret;
 
-    // 1️⃣ GERAR TOKEN para o usuário que fez login
+    // Gerar token JWT
     public String generateToken(Usuario usuario) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -28,7 +27,7 @@ public class TokenService {
                 .sign(algorithm);
     }
 
-    // 2️⃣ PEGAR LOGIN dentro do token (para validar requisições depois)
+    // Validar token e retornar o username
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -38,13 +37,15 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
+
         } catch (Exception e) {
             return null;
         }
     }
 
-    // 3️⃣ GERAR DATA DE EXPIRAÇÃO (2 horas)
     private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now()
+                .plusHours(2)
+                .toInstant(ZoneOffset.of("-03:00"));
     }
 }
