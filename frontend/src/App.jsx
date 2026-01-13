@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from "./contexts/AuthContextCore.jsx";
 import Layout from './components/layout/Layout.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
@@ -11,7 +11,8 @@ import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler.jsx'
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+      {/* HashRouter é a melhor prática para GitHub Pages para evitar erros 404 de rotas */}
+      <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Routes>
           <Route path="/" element={<Layout><Home /></Layout>} />
           
@@ -30,7 +31,7 @@ export default function App() {
           
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
   )
 }

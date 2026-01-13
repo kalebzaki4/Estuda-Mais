@@ -1,85 +1,71 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import authService from "../services/authService";
-
-const AuthContext = createContext(null);
+import { createContext, useContext, useState } from 'react';
+export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
-  // Carregar usuário REAL do backend (/me)
-  useEffect(() => {
-    async function loadUser() {
-      const hasToken = authService.isAuthenticated();
-      if (!hasToken) {
-        setLoading(false);
-        return;
-      }
+    const register = async (name, email, password) => {
+        try {
+            const response = await fetch('http://localhost:8080/usuarios/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    nome: name, 
+                    email: email, 
+                    senha: password 
+                }),
+            });
 
-      const response = await authService.getCurrentUser();
-      if (response.success && response.data) {
-        setUser(response.data);
-      } else {
-        // Token inválido → remover
-        authService.clearAuthData();
-      }
+            const data = await response.text();
 
-      setLoading(false);
-    }
+            if (response.ok) {
+                return { success: true };
+            } else {
+                return { success: false, error: data };
+            }
+        } catch (error) {
+            console.error("Erro no fetch de registro:", error);
+            return { success: false, error: "Servidor offline. Verifique o backend!" };
+        }
+    };
 
-    loadUser();
-  }, []);
+    const login = async (email, password) => {
+        try {
+            const response = await fetch('http://localhost:8080/usuarios/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, senha: password }),
+            });
 
-  const login = async (email, password) => {
-    const result = await authService.login(email, password);
+            const data = await response.text();
 
-    if (result.success) {
-      // Buscar o usuário após salvar o token
-      const me = await authService.getCurrentUser();
-      if (me.success) {
-        setUser(me.data);
-        return { success: true };
-      }
-    }
+            // 4. Verificando a mensagem exata que seu backend retorna no login
+            if (response.ok && data === "Login realizado!") {
+                setUser({ email });
+                return { success: true };
+            }
+            return { success: false, error: data };
+        } catch (error) {
+            console.error("Erro no fetch de login:", error);
+            return { success: false, error: "Erro ao conectar ao servidor." };
+        }
+    };
 
-    return { success: false, error: result.error };
-  };
+    const logout = () => setUser(null);
 
-  const register = async (name, email, password) => {
-    const result = await authService.register(name, email, password);
-
-    if (result.success) {
-      const me = await authService.getCurrentUser();
-      if (me.success) {
-        setUser(me.data);
-        return { success: true };
-      }
-    }
-
-    return { success: false, error: result.error };
-  };
-
-  const logout = () => {
-    authService.logout();
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        register,
-        logout,
-        loading,
-        isAuthenticated: !!user,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, register, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+    }
+    return context;
+};
