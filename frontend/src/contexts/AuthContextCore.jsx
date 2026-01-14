@@ -1,8 +1,30 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Sincronizar estado com localStorage na inicialização
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        const userData = localStorage.getItem('userData');
+        
+        if (token && userData) {
+            try {
+                setUser(JSON.parse(userData));
+                setIsAuthenticated(true);
+            } catch {
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('userData');
+                setUser(null);
+                setIsAuthenticated(false);
+            }
+        } else {
+            setUser(null);
+            setIsAuthenticated(false);
+        }
+    }, []);
 
     const register = async (name, email, password) => {
         try {
@@ -41,9 +63,12 @@ export function AuthProvider({ children }) {
 
             const data = await response.text();
 
-            // 4. Verificando a mensagem exata que seu backend retorna no login
             if (response.ok && data === "Login realizado!") {
-                setUser({ email });
+                const userData = { email, name: email.split('@')[0] };
+                setUser(userData);
+                setIsAuthenticated(true);
+                localStorage.setItem('jwtToken', 'token_' + Date.now());
+                localStorage.setItem('userData', JSON.stringify(userData));
                 return { success: true };
             }
             return { success: false, error: data };
@@ -53,10 +78,15 @@ export function AuthProvider({ children }) {
         }
     };
 
-    const logout = () => setUser(null);
+    const logout = () => {
+        setUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('userData');
+    };
 
     return (
-        <AuthContext.Provider value={{ user, register, login, logout }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, register, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

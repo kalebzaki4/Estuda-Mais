@@ -1,31 +1,14 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LuBookOpen, LuUser, LuLogOut, LuLayoutDashboard } from 'react-icons/lu'
-import { useState, useEffect } from 'react'
+import { LuBookOpen, LuUser, LuLogOut, LuPlus, LuTimer, LuMap, LuSettings } from 'react-icons/lu'
+import { useAuth } from '../../contexts/AuthContextCore.jsx'
 
 export default function Layout({ children }) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const token = localStorage.getItem('jwtToken')
-    const userData = localStorage.getItem('userData')
-    
-    if (token && userData) {
-      setIsAuthenticated(true)
-      setUser(JSON.parse(userData))
-    } else {
-      setIsAuthenticated(false)
-      setUser(null)
-    }
-  }, [location])
+  const { isAuthenticated, user, logout } = useAuth()
 
   const handleLogout = () => {
-    localStorage.removeItem('jwtToken')
-    localStorage.removeItem('userData')
-    setIsAuthenticated(false)
-    setUser(null)
+    logout()
     navigate('/login')
   }
 
@@ -43,7 +26,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Header */}
+      {/* Header Único */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/90 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -53,22 +36,39 @@ export default function Layout({ children }) {
               <span className="font-semibold text-lg">Estuda+</span>
             </Link>
 
-            {/* Navigation */}
+            {/* Navigation - Muda conforme autenticação */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link
-                to="/dashboard"
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
-                  isActivePath('/dashboard') 
-                    ? 'text-brand-300 bg-white/5' 
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <LuLayoutDashboard size={18} />
-                <span>Dashboard</span>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => window.location.hash = '#/dashboard'}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
+                  >
+                    <LuPlus size={18} />
+                    <span>Novo Estudo</span>
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => window.location.hash = '#/dashboard'}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
+                  >
+                    <LuTimer size={18} />
+                    <span>Pomodoro</span>
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => window.location.hash = '#/dashboard'}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
+                  >
+                    <LuMap size={18} />
+                    <span>Roadmaps</span>
+                  </Link>
+                </>
+              ) : null}
             </nav>
 
-            {/* User Menu */}
+            {/* User Menu - Renderiza APENAS conforme autenticação */}
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <div className="flex items-center space-x-3">
@@ -76,6 +76,13 @@ export default function Layout({ children }) {
                     <LuUser size={18} />
                     <span className="text-sm">{user?.name || 'Usuário'}</span>
                   </div>
+                  <Link
+                    to="/account"
+                    className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    title="Informações da conta"
+                  >
+                    <LuSettings size={18} />
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"

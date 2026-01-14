@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom' 
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
@@ -151,8 +151,12 @@ export default function Signup() {
         <div className={styles.leftPanel}>
           <div className={styles.panelOverlayWrap} aria-hidden="true" />
           <div className={styles.leftPanelContent}>
+            
+            {/* Ícone agora envolvido por Link para a home */}
             <div className={styles.heroIcon}>
-              <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
+              <Link to="/">
+                <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
+              </Link>
             </div>
 
             <h2 className={styles.heroTitle}>Conhecimento que inspira</h2>
@@ -350,7 +354,7 @@ export default function Signup() {
           </form>
 
           <p className={`${styles.footerText} ${styles.relativeZ10}`}>
-            Já tem uma conta? <a href="/login" className={styles.link}>Entrar</a>
+            Já tem uma conta? <Link to="/login" className={styles.link}>Entrar</Link>
           </p>
         </div>
       </section>
