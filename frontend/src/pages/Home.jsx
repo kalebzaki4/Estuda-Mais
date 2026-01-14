@@ -6,7 +6,6 @@ import { LuBookOpen, LuShieldCheck, LuTrendingUp, LuUsers, LuTrophy, LuStar } fr
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className={`max-w-7xl mx-auto text-center ${styles.heroContainer}`}>
           <div className="mb-8">

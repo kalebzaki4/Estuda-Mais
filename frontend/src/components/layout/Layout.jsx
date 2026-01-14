@@ -31,7 +31,10 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2 text-white hover:text-brand-300 transition-colors">
+            <Link 
+              to={isAuthenticated ? "/dashboard" : "/"} 
+              className="flex items-center space-x-2 text-white hover:text-brand-300 transition-colors"
+            >
               <LuBookOpen size={24} />
               <span className="font-semibold text-lg">Estuda+</span>
             </Link>
@@ -77,9 +80,9 @@ export default function Layout({ children }) {
                     <span className="text-sm">{user?.name || 'Usuário'}</span>
                   </div>
                   <Link
-                    to="/account"
+                    to="/configuracoes"
                     className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                    title="Informações da conta"
+                    title="Configurações da conta"
                   >
                     <LuSettings size={18} />
                   </Link>

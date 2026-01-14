@@ -6,6 +6,7 @@ import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Home from './pages/Home.jsx'
+import Settings from './pages/Settings.jsx'
 import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler.jsx'
 
 export default function App() {
@@ -25,6 +26,15 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Layout><Dashboard /></Layout>
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/configuracoes" 
+            element={
+              <ProtectedRoute>
+                <Layout><Settings /></Layout>
               </ProtectedRoute>
             } 
           />
