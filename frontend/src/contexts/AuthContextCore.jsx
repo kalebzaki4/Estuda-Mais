@@ -1,19 +1,35 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { getTokenExpiration } from '../utils/auth';
+
 export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const logoutTimer = useRef(null);
 
-    // Sincronizar estado com localStorage na inicialização
+    const setLogoutTimer = (token) => {
+        if (logoutTimer.current) clearTimeout(logoutTimer.current);
+        const expirationTime = getTokenExpiration(token);
+        const remainingTime = expirationTime - Date.now();
+
+        if (remainingTime > 0) {
+            logoutTimer.current = setTimeout(() => {
+                alert('Sua sessão expirou!');
+                logout(); 
+            }, remainingTime);
+        }
+    };
+
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         const userData = localStorage.getItem('userData');
-        
+
         if (token && userData) {
             try {
                 setUser(JSON.parse(userData));
                 setIsAuthenticated(true);
+                setLogoutTimer(token);
             } catch {
                 localStorage.removeItem('jwtToken');
                 localStorage.removeItem('userData');
@@ -24,6 +40,10 @@ export function AuthProvider({ children }) {
             setUser(null);
             setIsAuthenticated(false);
         }
+
+        return () => {
+            clearTimeout(logoutTimer.current); 
+        };
     }, []);
 
     const register = async (name, email, password) => {
@@ -69,6 +89,7 @@ export function AuthProvider({ children }) {
                 setIsAuthenticated(true);
                 localStorage.setItem('jwtToken', 'token_' + Date.now());
                 localStorage.setItem('userData', JSON.stringify(userData));
+                setLogoutTimer('token_' + Date.now()); // Inicia o timer após o login
                 return { success: true };
             }
             return { success: false, error: data };
@@ -83,6 +104,7 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(false);
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('userData');
+        clearTimeout(logoutTimer.current);
     };
 
     return (
