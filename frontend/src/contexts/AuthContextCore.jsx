@@ -10,14 +10,19 @@ export function AuthProvider({ children }) {
 
     const setLogoutTimer = (token) => {
         if (logoutTimer.current) clearTimeout(logoutTimer.current);
-        const expirationTime = getTokenExpiration(token);
-        const remainingTime = expirationTime - Date.now();
+        
+        try {
+            const expirationTime = getTokenExpiration(token);
+            const remainingTime = expirationTime - Date.now();
 
-        if (remainingTime > 0) {
-            logoutTimer.current = setTimeout(() => {
-                alert('Sua sessão expirou!');
-                logout(); 
-            }, remainingTime);
+            if (remainingTime > 0) {
+                logoutTimer.current = setTimeout(() => {
+                    alert('Sua sessão expirou!');
+                    logout(); 
+                }, remainingTime);
+            }
+        } catch (error) {
+            console.error("Erro ao calcular expiração do token:", error);
         }
     };
 
@@ -30,19 +35,12 @@ export function AuthProvider({ children }) {
                 setUser(JSON.parse(userData));
                 setIsAuthenticated(true);
                 setLogoutTimer(token);
-            } catch {
-                localStorage.removeItem('jwtToken');
-                localStorage.removeItem('userData');
-                setUser(null);
-                setIsAuthenticated(false);
+            } catch (err) {
+                logout();
             }
-        } else {
-            setUser(null);
-            setIsAuthenticated(false);
         }
-
         return () => {
-            clearTimeout(logoutTimer.current); 
+            if (logoutTimer.current) clearTimeout(logoutTimer.current); 
         };
     }, []);
 
@@ -50,26 +48,18 @@ export function AuthProvider({ children }) {
         try {
             const response = await fetch('http://localhost:8080/usuarios/cadastrar', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    nome: name, 
-                    email: email, 
-                    senha: password 
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: name, email: email, senha: password }),
             });
-
-            const data = await response.text();
 
             if (response.ok) {
                 return { success: true };
             } else {
-                return { success: false, error: data };
+                const errorText = await response.text();
+                return { success: false, error: errorText };
             }
         } catch (error) {
-            console.error("Erro no fetch de registro:", error);
-            return { success: false, error: "Servidor offline. Verifique o backend!" };
+            return { success: false, error: "Servidor offline." };
         }
     };
 
@@ -81,18 +71,24 @@ export function AuthProvider({ children }) {
                 body: JSON.stringify({ email, senha: password }),
             });
 
-            const data = await response.text();
+            // Como o backend agora retorna {"token": "..."}, usamos .json()
+            const data = await response.json();
 
-            if (response.ok && data === "Login realizado!") {
+            if (response.ok && data.token) {
                 const userData = { email, name: email.split('@')[0] };
+                
+                // Salva os dados
+                localStorage.setItem('jwtToken', data.token);
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
                 setUser(userData);
                 setIsAuthenticated(true);
-                localStorage.setItem('jwtToken', 'token_' + Date.now());
-                localStorage.setItem('userData', JSON.stringify(userData));
-                setLogoutTimer('token_' + Date.now()); // Inicia o timer após o login
-                return { success: true };
+                setLogoutTimer(data.token);
+
+                return { success: true, token: data.token };
+            } else {
+                return { success: false, error: data.error || "E-mail ou senha incorretos." };
             }
-            return { success: false, error: data };
         } catch (error) {
             console.error("Erro no fetch de login:", error);
             return { success: false, error: "Erro ao conectar ao servidor." };
@@ -104,7 +100,7 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(false);
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('userData');
-        clearTimeout(logoutTimer.current);
+        if (logoutTimer.current) clearTimeout(logoutTimer.current);
     };
 
     return (

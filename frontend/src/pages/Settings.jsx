@@ -8,7 +8,9 @@ export default function Settings() {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 0)
   }
 
   return (

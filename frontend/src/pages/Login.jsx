@@ -67,15 +67,9 @@ export default function Login() {
                     <div className={`${styles.floatingOrb} ${styles.floatingOrbLight}`}></div>
                 </div>
                 <div className={styles.particles}>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle1}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle2}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle3}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle4}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle5}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle6}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle7}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle8}`}></div>
-                    <div className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles.particle9}`}></div>
+                    {[...Array(9)].map((_, i) => (
+                        <div key={i} className={`${styles.particle} ${styles.particleWhite} ${styles.particleSnow} ${styles[`particle${i + 1}`]}`}></div>
+                    ))}
                 </div>
             </div>
 
@@ -92,7 +86,6 @@ export default function Login() {
                     <div className={`${styles.panelOverlayWrap} ${styles.panelOverlayLight}`} aria-hidden="true" />
 
                     <div className={styles.leftPanelContent}>
-                        {/* Ícone agora envolvido por Link para a home */}
                         <div className={styles.heroIcon}>
                             <Link to="/">
                                 <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
@@ -138,6 +131,7 @@ export default function Login() {
                             e.preventDefault()
                             setTouched({ email: true, password: true })
                             const newErrors = { email: '', password: '', general: '' }
+                            
                             if (!isValidEmail(email)) {
                                 newErrors.email = 'Insira um email válido.'
                             }
@@ -146,42 +140,30 @@ export default function Login() {
                             if (blockingIssues.length > 0) {
                                 newErrors.password = blockingIssues[0]
                             }
-                            setErrors(newErrors)
+                            
                             if (newErrors.email || newErrors.password) {
+                                setErrors(newErrors)
                                 return
                             }
+                            
                             setLoading(true)
+                            setErrors(newErrors) // Limpa erros gerais ao tentar novamente
 
-                            let result;
                             try {
-                                result = await login(email, password);
-                            } catch (e) {
-                                console.error("Erro inesperado no login:", e);
-                                setErrors({ ...newErrors, general: "Erro inesperado ao fazer login." });
+                                const result = await login(email, password);
+                                
+                                // Verifica se o login retornou sucesso (objeto com token ou flag success)
+                                if (result && (result.token || result.success || result.email)) {
+                                    navigate("/dashboard");
+                                } else {
+                                    setErrors({ ...newErrors, general: result?.error || "E-mail ou senha incorretos." });
+                                }
+                            } catch (err) {
+                                console.error("Erro no login:", err);
+                                setErrors({ ...newErrors, general: "Erro de conexão com o servidor." });
+                            } finally {
                                 setLoading(false);
-                                return;
                             }
-
-                            // Se login() retornar apenas o usuário (AuthContext novo), tratamos assim:
-                            if (result && result.email) {
-                                navigate("/dashboard");
-                                return;
-                            }
-
-                            // Se login() retornar { success: true }
-                            if (result?.success) {
-                                navigate("/dashboard");
-                                return;
-                            }
-
-                            // Se deu erro:
-                            setErrors({
-                                ...newErrors,
-                                general: result?.error || "Email ou senha incorretos."
-                            });
-
-
-                            setLoading(false)
                         }}
                         className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`}
                         aria-label="Formulário de login"
@@ -195,9 +177,6 @@ export default function Login() {
                                     name="email"
                                     type="email"
                                     required
-                                    aria-required="true"
-                                    aria-invalid={touched.email && !!errors.email}
-                                    aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
                                     placeholder="seu@email.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -208,18 +187,15 @@ export default function Login() {
                                     <FiMail className={styles.iconBlack} aria-hidden="true" />
                                 </span>
                             </div>
-                            {touched.email && errors.email ? (
-                                <p id="email-error" role="alert" className={styles.fieldError}>{errors.email}</p>
-                            ) : null}
+                            {touched.email && errors.email && (
+                                <p className={styles.fieldError}>{errors.email}</p>
+                            )}
                         </div>
 
                         <div>
                             <label htmlFor="password" className="sr-only">Senha</label>
                             <Motion.div
                                 key={showPassword ? "password-visible" : "password-hidden"}
-                                initial={{ x: 0 }}
-                                animate={{ x: [0, -2, 2, -2, 2, 0] }}
-                                transition={{ duration: 0.3 }}
                                 className={styles.inputWrapper}
                             >
                                 <input
@@ -227,9 +203,6 @@ export default function Login() {
                                     name="password"
                                     type={showPassword ? 'text' : 'password'}
                                     required
-                                    aria-required="true"
-                                    aria-invalid={touched.password && !!errors.password}
-                                    aria-describedby={touched.password && errors.password ? 'password-error' : undefined}
                                     placeholder="Sua senha"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -240,41 +213,28 @@ export default function Login() {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(v => !v)}
-                                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                                     className={styles.inputAction}
                                 >
                                     <AnimatePresence mode="wait" initial={false}>
-                                        {showPassword ? (
-                                            <Motion.span
-                                                key="eye-off"
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 0.8 }}
-                                                transition={{ duration: 0.15 }}
-                                            >
-                                                <FiEyeOff className={styles.iconBlack} />
-                                            </Motion.span>
-                                        ) : (
-                                            <Motion.span
-                                                key="eye-on"
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 0.8 }}
-                                                transition={{ duration: 0.15 }}
-                                            >
-                                                <FiEye className={styles.iconBlack} />
-                                            </Motion.span>
-                                        )}
+                                        <Motion.span
+                                            key={showPassword ? "eye-off" : "eye-on"}
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.8 }}
+                                            transition={{ duration: 0.15 }}
+                                        >
+                                            {showPassword ? <FiEyeOff className={styles.iconBlack} /> : <FiEye className={styles.iconBlack} />}
+                                        </Motion.span>
                                     </AnimatePresence>
                                 </button>
                             </Motion.div>
-                            {touched.password && errors.password ? (
-                                <p id="password-error" role="alert" className={styles.fieldError}>{errors.password}</p>
-                            ) : null}
+                            {touched.password && errors.password && (
+                                <p className={styles.fieldError}>{errors.password}</p>
+                            )}
                             <div className={styles.rowBetween}>
                                 <label className={`inline-flex ${styles.rememberLabel}`}>
                                     <input type="checkbox" />
-                                    Lembrar-me
+                                    <span style={{ marginLeft: '8px' }}>Lembrar-me</span>
                                 </label>
                                 <a href="#" className={styles.link}>Esqueci minha senha</a>
                             </div>
@@ -285,9 +245,7 @@ export default function Login() {
                             disabled={loading}
                             className={`${styles.submitButton} ${styles.submitFull}`}
                         >
-                            {loading ? (
-                                <span className={styles.submitSpinner} aria-hidden="true" />
-                            ) : null}
+                            {loading ? <span className={styles.submitSpinner} aria-hidden="true" /> : null}
                             <span>{loading ? 'Entrando...' : 'Entrar'}</span>
                         </button>
                     </Motion.form>

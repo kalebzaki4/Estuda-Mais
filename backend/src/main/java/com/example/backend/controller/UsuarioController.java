@@ -1,8 +1,12 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Usuario;
+import com.example.backend.model.dto.DadosTokenDTO;
 import com.example.backend.service.UsuarioService;
+import com.example.backend.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,35 +15,31 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/{email}")
-    public Usuario buscar(@PathVariable String email) {
-        return usuarioService.buscarPorEmail(email);
+    @Autowired
+    private TokenService tokenService;
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody Usuario usuario) {
+        var usuarioAutenticado = usuarioService.buscarPorEmail(usuario.getEmail());
+
+        if (usuarioAutenticado != null &&
+                passwordEncoder.matches(usuario.getSenha(), usuarioAutenticado.getSenha())) {
+
+            var tokenJWT = tokenService.gerarToken(usuarioAutenticado);
+            return ResponseEntity.ok(new DadosTokenDTO(tokenJWT));
+        }
+
+        return ResponseEntity.status(403).body("E-mail ou senha inválidos");
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrar(@RequestBody Usuario usuario) {
+    public ResponseEntity<String> cadastrar(@RequestBody Usuario usuario) {
         usuarioService.criarUsuario(usuario);
-        return "Usuário cadastrado com sucesso!";
+        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
     }
-
-    @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario) {
-        boolean valido = usuarioService.validarCredenciais(usuario.getEmail(), usuario.getSenha());
-        return valido ? "Login realizado!" : "Erro no login";
-    }
-
-    @PutMapping("/atualizar")
-    public String atualizar(@RequestBody Usuario usuario) {
-        usuarioService.atualizarUsuario(usuario);
-        return "Usuário atualizado com sucesso!";
-    }
-
-    @DeleteMapping("/deletar/{email}")
-    public String deletar(@PathVariable String email) {
-        usuarioService.deletarUsuario(email);
-        return "Usuário deletado com sucesso!";
-    }
-
 }

@@ -9,7 +9,9 @@ export default function Layout({ children }) {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 0)
   }
 
   const isActivePath = (path) => {
