@@ -19,22 +19,16 @@ export default function OAuth2RedirectHandler() {
         const errorKey = params.get('error_key') || null
 
         if (token) {
-          // Store token and try to fetch user information
-          localStorage.setItem('jwtToken', token)
-
-          // Attempt to get current user from API so the app can initialize user data
-          try {
-            const result = await authService.getCurrentUser()
-            if (result.success && result.data) {
-              localStorage.setItem('userData', JSON.stringify(result.data))
-            }
-          } catch (e) {
-            // Ignore errors here — token is set and the app will check auth status later
-            console.warn('Failed to fetch current user after OAuth redirect', e)
+          // Store token using service
+          authService.setAuthData(token)
+          
+          // Verify if token is valid before proceeding
+          if (authService.isAuthenticated()) {
+             navigate('/dashboard', { replace: true })
+          } else {
+             authService.logout()
+             navigate('/login?error=invalid_token', { replace: true })
           }
-
-          // Navigate to dashboard after login
-          navigate('/dashboard', { replace: true })
           return
         }
 
@@ -49,7 +43,7 @@ export default function OAuth2RedirectHandler() {
         // No token or error — just go to login safe fallback
         navigate('/login', { replace: true })
       } catch (ex) {
-        console.error('Error handling OAuth2 redirect', ex)
+        // Silently fail to login page to avoid exposing error details in console
         navigate('/login', { replace: true })
       }
     }

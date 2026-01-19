@@ -1,5 +1,6 @@
 import { LuPlus, LuSearch, LuLightbulb } from 'react-icons/lu'
 import { useState } from 'react'
+import { sanitizeInput } from '../../utils/validators.js'
 
 export default function NewStudySection() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -36,7 +37,7 @@ export default function NewStudySection() {
           type="text"
           placeholder="Buscar ou criar novo estudo..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(sanitizeInput(e.target.value))}
           className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-brand-300 focus:bg-white/15"
         />
       </div>

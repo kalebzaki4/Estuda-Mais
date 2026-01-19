@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { getTokenExpiration } from '../utils/auth';
+import authService from '../services/authService';
 
 export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
     const logoutTimer = useRef(null);
 
     const setLogoutTimer = (token) => {
@@ -13,13 +15,16 @@ export function AuthProvider({ children }) {
         
         try {
             const expirationTime = getTokenExpiration(token);
+            if (!expirationTime) return;
             const remainingTime = expirationTime - Date.now();
 
             if (remainingTime > 0) {
                 logoutTimer.current = setTimeout(() => {
-                    alert('Sua sessão expirou!');
                     logout(); 
+                    window.location.href = '/#/login'; 
                 }, remainingTime);
+            } else {
+                logout();
             }
         } catch (error) {
             console.error("Erro ao calcular expiração do token:", error);
@@ -27,84 +32,60 @@ export function AuthProvider({ children }) {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
-        const userData = localStorage.getItem('userData');
-
-        if (token && userData) {
+        const initAuth = async () => {
             try {
-                setUser(JSON.parse(userData));
-                setIsAuthenticated(true);
-                setLogoutTimer(token);
-            } catch (err) {
+                if (authService.isAuthenticated()) {
+                    const res = await authService.getCurrentUser();
+                    if (res.success) {
+                        setUser(res.data);
+                        setIsAuthenticated(true);
+                        setLogoutTimer(authService.getToken());
+                    } else {
+                        logout();
+                    }
+                } else {
+                    authService.clearAuthData();
+                }
+            } catch (e) {
                 logout();
+            } finally {
+                setLoading(false);
             }
-        }
+        };
+        initAuth();
+
         return () => {
             if (logoutTimer.current) clearTimeout(logoutTimer.current); 
         };
     }, []);
 
     const register = async (name, email, password) => {
-        try {
-            const response = await fetch('http://localhost:8080/usuarios/cadastrar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome: name, email: email, senha: password }),
-            });
-
-            if (response.ok) {
-                return { success: true };
-            } else {
-                const errorText = await response.text();
-                return { success: false, error: errorText };
-            }
-        } catch (error) {
-            return { success: false, error: "Servidor offline." };
-        }
+        return await authService.register(name, email, password);
     };
 
     const login = async (email, password) => {
-        try {
-            const response = await fetch('http://localhost:8080/usuarios/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha: password }),
-            });
-
-            // Como o backend agora retorna {"token": "..."}, usamos .json()
-            const data = await response.json();
-
-            if (response.ok && data.token) {
-                const userData = { email, name: email.split('@')[0] };
-                
-                // Salva os dados
-                localStorage.setItem('jwtToken', data.token);
-                localStorage.setItem('userData', JSON.stringify(userData));
-                
-                setUser(userData);
+        const res = await authService.login(email, password);
+        if (res.success) {
+            const userRes = await authService.getCurrentUser();
+            if (userRes.success) {
+                setUser(userRes.data);
                 setIsAuthenticated(true);
-                setLogoutTimer(data.token);
-
-                return { success: true, token: data.token };
-            } else {
-                return { success: false, error: data.error || "E-mail ou senha incorretos." };
+                setLogoutTimer(res.token);
+                return { success: true, token: res.token };
             }
-        } catch (error) {
-            console.error("Erro no fetch de login:", error);
-            return { success: false, error: "Erro ao conectar ao servidor." };
         }
+        return res;
     };
 
     const logout = () => {
+        authService.logout();
         setUser(null);
         setIsAuthenticated(false);
-        localStorage.removeItem('jwtToken');
-        localStorage.removeItem('userData');
         if (logoutTimer.current) clearTimeout(logoutTimer.current);
     };
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, register, login, logout }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, loading, register, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

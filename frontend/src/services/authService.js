@@ -6,21 +6,49 @@ import {
   AUTH_ME_ENDPOINT,
   loginRequestConfig,
   registerRequestConfig,
-  getAuthHeaders,
+  makeLoginPayload,
+  makeRegisterPayload,
 } from '../config/apiEndpoints.js'
+import { isTokenValid, getUserFromToken } from '../utils/auth.js'
 
 const storageTokenKey = 'jwtToken'
 
+function getAuthHeaders() {
+  const token = localStorage.getItem(storageTokenKey);
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': token ? `Bearer ${token}` : '',
+  };
+}
+
 async function request(url, opts = {}) {
-  const res = await fetch(url, opts)
-  const json = await res.json().catch(() => null)
-  if (!res.ok) return { success: false, status: res.status, error: json || res.statusText }
-  return { success: true, data: json }
+  try {
+    const res = await fetch(url, opts)
+    // Check if response has content before parsing JSON
+    const text = await res.text();
+    let json = null;
+    try {
+        json = text ? JSON.parse(text) : null;
+    } catch (e) {
+        // If not JSON, use text as error or data
+        json = { message: text };
+    }
+
+    if (!res.ok) return { success: false, status: res.status, error: (json && json.message) || res.statusText || text }
+    return { success: true, data: json }
+  } catch (e) {
+    return { success: false, error: "Erro de conexão" }
+  }
 }
 
 const authService = {
   isAuthenticated() {
-    return !!localStorage.getItem(storageTokenKey)
+    const token = this.getToken()
+    return isTokenValid(token)
+  },
+
+  getToken() {
+    return localStorage.getItem(storageTokenKey)
   },
 
   setAuthData(token) {
@@ -29,29 +57,58 @@ const authService = {
 
   clearAuthData() {
     localStorage.removeItem(storageTokenKey)
+    localStorage.removeItem('userData') // Clean legacy data
+    // Clean user-specific local stats
+    localStorage.removeItem('userPoints')
+    localStorage.removeItem('studyMinutesToday')
+    localStorage.removeItem('pomodoroHistory')
+    localStorage.removeItem('studyHistory')
+    localStorage.removeItem('studyDay')
   },
 
   async getCurrentUser() {
-    try {
-      const headers = getAuthHeaders()
-      const res = await request(`${API_BASE_URL}${AUTH_ME_ENDPOINT}`, { method: 'GET', headers })
-      // No longer storing user data in localStorage here
-      return res
-    } catch (e) {
-      return { success: false, error: e.message || String(e) }
+    const token = this.getToken();
+    if (!token) return { success: false, error: "No token found" };
+    
+    // If backend has ME endpoint, use it.
+    if (AUTH_ME_ENDPOINT) {
+        try {
+            const headers = getAuthHeaders()
+            const res = await request(`${API_BASE_URL}${AUTH_ME_ENDPOINT}`, { method: 'GET', headers })
+            return res
+        } catch (e) {
+            return { success: false, error: e.message || String(e) }
+        }
     }
+
+    // Fallback: decode token
+    const user = getUserFromToken(token);
+    if (user) {
+        return { success: true, data: user };
+    }
+    return { success: false, error: "Invalid token" };
   },
 
   async login(email, password) {
     try {
-      const body = JSON.stringify({ email, password })
+      const body = JSON.stringify(makeLoginPayload({ email, password }))
       const res = await request(`${API_BASE_URL}${AUTH_LOGIN_ENDPOINT}`, { ...loginRequestConfig, body })
-      if (res.success && res.data) {
-        const bodyData = res.data.data || res.data
-        const token = res.data.token || (bodyData && bodyData.token) || null
-
-        if (token) localStorage.setItem(storageTokenKey, token)
+      
+      let token = null;
+      if (res.success) {
+          // Backend returns { token: "..." }
+          if (res.data && res.data.token) {
+              token = res.data.token;
+          } else if (res.data && res.data.data && res.data.data.token) {
+               token = res.data.data.token;
+          }
       }
+
+      if (token) {
+        this.setAuthData(token)
+        return { success: true, token, ...res }
+      }
+      
       return res
     } catch (e) {
       return { success: false, error: e.message || String(e) }
@@ -60,14 +117,8 @@ const authService = {
 
   async register(name, email, password) {
     try {
-      const body = JSON.stringify({ name, email, password })
+      const body = JSON.stringify(makeRegisterPayload({ name, email, password }))
       const res = await request(`${API_BASE_URL}${AUTH_REGISTER_ENDPOINT}`, { ...registerRequestConfig, body })
-      if (res.success && res.data) {
-        const bodyData = res.data.data || res.data
-        const token = res.data.token || (bodyData && bodyData.token) || null
-
-        if (token) localStorage.setItem(storageTokenKey, token)
-      }
       return res
     } catch (e) {
       return { success: false, error: e.message || String(e) }
@@ -76,8 +127,10 @@ const authService = {
 
   async logout() {
     try {
-      const headers = getAuthHeaders()
-      await request(`${API_BASE_URL}${AUTH_LOGOUT_ENDPOINT}`, { method: 'POST', headers })
+      if (AUTH_LOGOUT_ENDPOINT) {
+        const headers = getAuthHeaders()
+        await request(`${API_BASE_URL}${AUTH_LOGOUT_ENDPOINT}`, { method: 'POST', headers })
+      }
     } catch (e) {
       // ignore
     } finally {

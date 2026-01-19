@@ -4,6 +4,7 @@ import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { useAuth } from '../contexts/AuthContextCore.jsx'
+import { hasDangerousPatterns } from '../utils/validators.js'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
 
@@ -78,6 +79,7 @@ export default function Signup() {
 
     if (!email) newErrors.email = 'Email é obrigatório.'
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) newErrors.email = 'Email inválido.'
+    else if (hasDangerousPatterns(email)) newErrors.email = 'Email contém caracteres inválidos.'
 
     if (!password) newErrors.password = 'Senha é obrigatória.'
     else if (password.length < 8) newErrors.password = 'Senha deve ter pelo menos 8 caracteres.'

@@ -3,7 +3,7 @@ import { SiGoogle, SiGithub } from 'react-icons/si'
 import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-import { isValidEmail, getPasswordIssues } from '../utils/validators'
+import { isValidEmail, getPasswordIssues, hasDangerousPatterns } from '../utils/validators'
 import { useAuth } from '../contexts/AuthContextCore.jsx'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
@@ -134,7 +134,10 @@ export default function Login() {
                             
                             if (!isValidEmail(email)) {
                                 newErrors.email = 'Insira um email válido.'
+                            } else if (hasDangerousPatterns(email)) {
+                                newErrors.email = 'Email contém caracteres inválidos.'
                             }
+
                             const pwdIssues = getPasswordIssues(password)
                             const blockingIssues = pwdIssues.filter(msg => !msg.startsWith('Recomendado:'))
                             if (blockingIssues.length > 0) {

@@ -2,9 +2,13 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContextCore.jsx"
 
 export default function ProtectedRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading, isAuthenticated } = useAuth();
 
-  if (!user) {
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
