@@ -1,47 +1,91 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from "./contexts/AuthContextCore.jsx";
+import { AnimatePresence } from 'framer-motion'
 import Layout from './components/layout/Layout.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
+import PublicRoute from './components/auth/PublicRoute.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Home from './pages/Home.jsx'
 import Settings from './pages/Settings.jsx'
 import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
+
+function AnimatedRoutes() {
+  const location = useLocation()
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route 
+          path="/" 
+          element={
+            <PublicRoute>
+              <Home />
+            </PublicRoute>
+          } 
+        />
+        
+        <Route 
+          path="/login" 
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          } 
+        />
+        <Route 
+          path="/signup" 
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          } 
+        />
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+        
+        <Route 
+          path="/dashboard"  
+          element={
+            <ProtectedRoute>
+              <Layout><Dashboard /></Layout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard/:tab"  
+          element={
+            <ProtectedRoute>
+              <Layout><Dashboard /></Layout>
+            </ProtectedRoute>
+          } 
+        />
+
+        <Route 
+          path="/configuracoes" 
+          element={
+            <ProtectedRoute>
+              <Layout><Settings /></Layout>
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route path="/pomodoro" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
 
 export default function App() {
   return (
-    <AuthProvider>
-      {/* HashRouter é a melhor prática para GitHub Pages para evitar erros 404 de rotas */}
-      <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
-        <Routes>
-          <Route path="/" element={<Layout><Home /></Layout>} />
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-          
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Layout><Dashboard /></Layout>
-              </ProtectedRoute>
-            } 
-          />
-
-          <Route 
-            path="/configuracoes" 
-            element={
-              <ProtectedRoute>
-                <Layout><Settings /></Layout>
-              </ProtectedRoute>
-            } 
-          />
-          
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </HashRouter>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+          <AnimatedRoutes />
+        </HashRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }

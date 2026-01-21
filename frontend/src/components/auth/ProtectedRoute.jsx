@@ -5,7 +5,11 @@ export default function ProtectedRoute({ children }) {
   const { user, loading, isAuthenticated } = useAuth();
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#0a0a0a] text-white">
+        <div className="animate-pulse">Carregando...</div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContextCore.jsx'
-import { LuBookOpen, LuTrendingUp, LuFlame, LuClock, LuTarget, LuAward, LuPlay, LuChevronRight } from 'react-icons/lu'
+import { FaBookOpen, FaChartLine, FaFire, FaClock, FaBullseye, FaTrophy, FaPlay, FaChevronRight, FaBook } from 'react-icons/fa'
+import { motion, AnimatePresence } from 'framer-motion'
+import studyService from '../services/studyService.js'
 import ProgressOverview from '../components/dashboard/ProgressOverview.jsx'
 import StudyStatistics from '../components/dashboard/StudyStatistics.jsx'
 import NewStudySection from '../components/dashboard/NewStudySection.jsx'
@@ -11,7 +13,31 @@ import AchievementsSection from '../components/dashboard/AchievementsSection.jsx
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState('visao-geral')
+  const { tab } = useParams()
+  const navigate = useNavigate()
+  
+  // Mapeamento de abas válidas
+  const validTabs = ['visao-geral', 'estatisticas', 'novo-estudo', 'roadmaps', 'competicao', 'conquistas']
+  const initialTab = validTabs.includes(tab) ? tab : 'visao-geral'
+  
+  const [activeTab, setActiveTab] = useState(initialTab)
+
+  // Sincronizar URL com activeTab se o parametro mudar (navegação externa/menu)
+  useEffect(() => {
+    if (tab && validTabs.includes(tab)) {
+      setActiveTab(tab)
+    } else if (!tab && activeTab !== 'visao-geral') {
+       // Se estiver na raiz /dashboard, pode manter a última ou ir para visao-geral
+       // Vamos forçar visao-geral se não tiver tab para consistência
+       setActiveTab('visao-geral')
+    }
+  }, [tab])
+
+  // Função para mudar aba e atualizar URL
+  const handleTabChange = (newTabId) => {
+    setActiveTab(newTabId)
+    navigate(`/dashboard/${newTabId}`)
+  }
   const [points, setPoints] = useState(() => {
     try {
       const raw = localStorage.getItem('userPoints')
@@ -52,56 +78,35 @@ export default function Dashboard() {
     }
   })
 
-  const [mode, setMode] = useState('work')
-  const [workMinutes, setWorkMinutes] = useState(25)
-  const [breakMinutes, setBreakMinutes] = useState(5)
-  const [secondsRemaining, setSecondsRemaining] = useState(workMinutes * 60)
-  const [isRunning, setIsRunning] = useState(false)
-  const timerRef = useRef(null)
+  const handleSessionComplete = (entry) => {
+    const updatedHistory = [entry, ...pomodoroHistory].slice(0, 40)
+    setPomodoroHistory(updatedHistory)
+    try {
+      localStorage.setItem('pomodoroHistory', JSON.stringify(updatedHistory))
+    } catch {}
 
-  useEffect(() => {
-    setSecondsRemaining((mode === 'work' ? workMinutes : breakMinutes) * 60)
-  }, [mode, workMinutes, breakMinutes])
+    const todayKey = new Date().toDateString()
+    const updatedStudyHistory = { ...studyHistory }
+    updatedStudyHistory[todayKey] = (updatedStudyHistory[todayKey] || 0) + (entry.type === 'work' ? entry.minutes : 0)
+    setStudyHistory(updatedStudyHistory)
+    try {
+      localStorage.setItem('studyHistory', JSON.stringify(updatedStudyHistory))
+    } catch {}
 
-  useEffect(() => {
-    if (!isRunning) return
-    timerRef.current = setInterval(() => {
-      setSecondsRemaining((prev) => {
-        if (prev <= 1) {
-          const finishedAt = new Date().toISOString()
-          const entry = { id: Date.now(), type: mode, minutes: mode === 'work' ? workMinutes : breakMinutes, finishedAt }
-          const updated = [entry, ...pomodoroHistory].slice(0, 40)
-          setPomodoroHistory(updated)
-          try {
-            localStorage.setItem('pomodoroHistory', JSON.stringify(updated))
-          } catch {}
-          const nextMode = mode === 'work' ? 'break' : 'work'
-          if (mode === 'work') {
-            const addMin = workMinutes
-            const newToday = studyMinutesToday + addMin
-            setStudyMinutesToday(newToday)
-            try {
-              localStorage.setItem('studyMinutesToday', String(newToday))
-            } catch {}
-            const gained = addMin * 10
-            setPoints(points + gained)
-            try {
-              localStorage.setItem('userPoints', String(points + gained))
-            } catch {}
-          }
-          setMode(nextMode)
-          return (nextMode === 'work' ? workMinutes : breakMinutes) * 60
-        }
-        return prev - 1
-      })
-    }, 1000)
-    return () => clearInterval(timerRef.current)
-  }, [isRunning, mode, workMinutes, breakMinutes, pomodoroHistory, studyMinutesToday, points])
+    if (entry.type === 'work') {
+      const newToday = studyMinutesToday + entry.minutes
+      setStudyMinutesToday(newToday)
+      try {
+        localStorage.setItem('studyMinutesToday', String(newToday))
+      } catch {}
 
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, '0')
-    const s = Math.floor(seconds % 60).toString().padStart(2, '0')
-    return `${m}:${s}`
+      const gained = entry.minutes * 10
+      const newPoints = points + gained
+      setPoints(newPoints)
+      try {
+        localStorage.setItem('userPoints', String(newPoints))
+      } catch {}
+    }
   }
 
   // Calculate statistics
@@ -123,223 +128,219 @@ export default function Dashboard() {
     .filter((entry) => entry.type === 'work')
     .reduce((sum, entry) => sum + entry.minutes, 0) / 60)
 
+  // Calculate Real Stats
+  const bestDay = (() => {
+    const entries = Object.entries(studyHistory)
+    if (entries.length === 0) return { minutes: 0, day: '-' }
+    
+    // Sort by minutes desc
+    const sorted = entries.sort(([, a], [, b]) => b - a)
+    const [dateStr, minutes] = sorted[0]
+    
+    // Get day name (e.g. "Quinta-feira")
+    const date = new Date(dateStr)
+    const dayName = date.toLocaleDateString('pt-BR', { weekday: 'long' })
+    
+    return { 
+      minutes, 
+      day: dayName.charAt(0).toUpperCase() + dayName.slice(1) 
+    }
+  })()
+
+  const dailyAverage = (() => {
+    const entries = Object.entries(studyHistory)
+    if (entries.length === 0) return 0
+    
+    const total = entries.reduce((sum, [, minutes]) => sum + minutes, 0)
+    // Average over recorded days
+    return Math.round(total / entries.length) || 0
+  })()
+
+  // Animation Variants
+  const tabContentVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: 'easeIn' } }
+  }
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+  }
+
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3">
+            <motion.h1 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-4xl sm:text-5xl font-bold text-white mb-3"
+            >
               Olá{user?.name ? `, ${user.name}` : ''}
-            </h1>
-            <p className="text-lg text-white/70">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-lg text-white/70"
+            >
               Seu hub de estudos completo. Aprenda, compita e alcance seus objetivos.
-            </p>
+            </motion.p>
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex gap-2 mb-12 border-b border-white/10 overflow-x-auto">
+          <div className="flex gap-2 mb-12 border-b border-white/10 overflow-x-auto scrollbar-hide">
             {[
-              { id: 'visao-geral', label: 'Visão Geral', icon: LuTrendingUp },
-              { id: 'estatisticas', label: 'Estatísticas', icon: LuChevronRight },
-              { id: 'novo-estudo', label: 'Novo Estudo', icon: LuTarget },
-              { id: 'roadmaps', label: 'Roadmaps', icon: LuBookOpen },
-              { id: 'competicao', label: 'Competição', icon: LuAward },
-              { id: 'conquistas', label: 'Conquistas', icon: LuTrendingUp },
-              { id: 'pomodoro', label: 'Pomodoro', icon: LuClock },
-            ].map((tab) => (
+              { id: 'visao-geral', label: 'Visão Geral', icon: FaChartLine },
+              { id: 'estatisticas', label: 'Estatísticas', icon: FaChevronRight },
+              { id: 'novo-estudo', label: 'Novo Estudo', icon: FaBullseye },
+              { id: 'roadmaps', label: 'Roadmaps', icon: FaBookOpen },
+              { id: 'competicao', label: 'Competição', icon: FaTrophy },
+              { id: 'conquistas', label: 'Conquistas', icon: FaChartLine },
+            ].map((t) => (
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`pb-3 px-4 font-medium transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? 'text-brand-300 border-b-2 border-brand-300'
+                key={t.id}
+                onClick={() => handleTabChange(t.id)}
+                className={`pb-3 px-4 font-medium transition-colors whitespace-nowrap relative flex items-center gap-2 ${
+                  activeTab === t.id
+                    ? 'text-brand-300'
                     : 'text-white/70 hover:text-white'
                 }`}
               >
-                {tab.label}
+                <t.icon size={16} />
+                {t.label}
+                {activeTab === t.id && (
+                  <motion.div 
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-300"
+                  />
+                )}
               </button>
             ))}
           </div>
 
           {/* Content Sections */}
-          <div className="space-y-8">
-            {/* Visão Geral Tab */}
-            {activeTab === 'visao-geral' && (
-              <div className="space-y-8">
-                {/* Quick Stats */}
-                <ProgressOverview
-                  studyMinutesToday={studyMinutesToday}
-                  weeklyStreak={weeklyStreak}
-                  totalSessions={totalSessions}
-                  totalHours={totalHours}
-                />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              variants={tabContentVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="space-y-8"
+            >
+              {/* Visão Geral Tab */}
+              {activeTab === 'visao-geral' && (
+                <div className="space-y-8">
+                  {/* Quick Stats */}
+                  <ProgressOverview
+                    studyMinutesToday={studyMinutesToday}
+                    weeklyStreak={weeklyStreak}
+                    totalSessions={totalSessions}
+                    totalHours={totalHours}
+                  />
 
-                {/* Quick Actions */}
-                <div className="bg-gradient-to-r from-brand-500/20 to-purple-500/20 border border-brand-300/30 rounded-2xl p-8">
-                  <h2 className="text-2xl font-semibold text-white mb-6">⚡ Ações Rápidas</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <button
-                      onClick={() => setActiveTab('pomodoro')}
-                      className="px-6 py-4 bg-brand-500 text-white rounded-xl hover:bg-brand-600 transition-colors font-medium flex items-center justify-center gap-2 group"
-                    >
-                      <LuPlay size={18} className="group-hover:scale-110 transition-transform" />
-                      Iniciar Pomodoro
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('novo-estudo')}
-                      className="px-6 py-4 border border-brand-300/50 text-white rounded-xl hover:bg-brand-500/20 transition-colors font-medium flex items-center justify-center gap-2 group"
-                    >
-                      <LuTarget size={18} className="group-hover:scale-110 transition-transform" />
-                      Novo Estudo
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('roadmaps')}
-                      className="px-6 py-4 border border-white/20 text-white rounded-xl hover:bg-white/5 transition-colors font-medium flex items-center justify-center gap-2 group"
-                    >
-                      <LuBookOpen size={18} className="group-hover:scale-110 transition-transform" />
-                      Ver Roadmaps
-                    </button>
-                    <Link
-                      to="/configuracoes"
-                      className="px-6 py-4 border border-white/20 text-white rounded-xl hover:bg-white/5 transition-colors font-medium flex items-center justify-center gap-2 group"
-                    >
-                      <LuAward size={18} className="group-hover:scale-110 transition-transform" />
-                      Configurações
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Recent Activity */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-                  <h2 className="text-xl font-semibold text-white mb-6">📊 Sua Semana</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="text-center">
-                      <p className="text-white/70 mb-2">Melhor Dia</p>
-                      <p className="text-3xl font-bold text-white">120 min</p>
-                      <p className="text-white/50 text-sm mt-1">Quinta-feira</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-white/70 mb-2">Média Diária</p>
-                      <p className="text-3xl font-bold text-white">87 min</p>
-                      <p className="text-white/50 text-sm mt-1">Esta semana</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Estatísticas Tab */}
-            {activeTab === 'estatisticas' && (
-              <StudyStatistics pomodoroHistory={pomodoroHistory} />
-            )}
-
-            {/* Novo Estudo Tab */}
-            {activeTab === 'novo-estudo' && (
-              <NewStudySection />
-            )}
-
-            {/* Roadmaps Tab */}
-            {activeTab === 'roadmaps' && (
-              <RoadmapsSection />
-            )}
-
-            {/* Competição Tab */}
-            {activeTab === 'competicao' && (
-              <CompetitionSection points={points} />
-            )}
-
-            {/* Conquistas Tab */}
-            {activeTab === 'conquistas' && (
-              <AchievementsSection points={points} weeklyStreak={weeklyStreak} />
-            )}
-
-            {/* Pomodoro Tab */}
-            {activeTab === 'pomodoro' && (
-              <div className="space-y-6">
-                {/* Timer Card */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-                  <h2 className="text-2xl font-semibold text-white mb-8 text-center">⏱️ Pomodoro</h2>
-
-                  {/* Timer Display */}
-                  <div className="text-center mb-8">
-                    <div className="text-7xl font-bold text-brand-300 font-mono mb-4">
-                      {formatTime(secondsRemaining)}
-                    </div>
-                    <p className="text-white/70 text-lg">
-                      {mode === 'work' ? '📚 Tempo de Estudo' : '☕ Tempo de Pausa'}
-                    </p>
-                  </div>
-
-                  {/* Controls */}
-                  <div className="flex gap-4 justify-center mb-8">
-                    <button
-                      onClick={() => setIsRunning(!isRunning)}
-                      className="px-8 py-3 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-colors font-medium"
-                    >
-                      {isRunning ? 'Pausar' : 'Iniciar'}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsRunning(false)
-                        setMode('work')
-                        setSecondsRemaining(workMinutes * 60)
-                      }}
-                      className="px-8 py-3 border border-white/20 text-white rounded-lg hover:bg-white/5 transition-colors font-medium"
-                    >
-                      Resetar
-                    </button>
-                  </div>
-
-                  {/* Settings */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-white/70 text-sm mb-2">Tempo de Estudo (min)</label>
-                      <input
-                        type="number"
-                        value={workMinutes}
-                        onChange={(e) => setWorkMinutes(Math.max(1, parseInt(e.target.value || '25', 10)))}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-brand-300"
-                        min="1"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-white/70 text-sm mb-2">Tempo de Pausa (min)</label>
-                      <input
-                        type="number"
-                        value={breakMinutes}
-                        onChange={(e) => setBreakMinutes(Math.max(1, parseInt(e.target.value || '5', 10)))}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-brand-300"
-                        min="1"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Histórico Card */}
-                {pomodoroHistory.length > 0 && (
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-                    <h2 className="text-xl font-semibold text-white mb-6">📜 Histórico da Sessão</h2>
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
-                      {pomodoroHistory.slice(0, 15).map((entry) => (
-                        <div key={entry.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
-                          <span className="text-white font-medium">
-                            {entry.type === 'work' ? '📚 Estudo' : '☕ Pausa'} • {entry.minutes} min
-                          </span>
-                          <span className="text-white/70 text-sm">
-                            {new Date(entry.finishedAt).toLocaleTimeString()}
-                          </span>
-                        </div>
+                  {/* Quick Actions */}
+                  <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show"
+                    className="bg-gradient-to-r from-brand-500/20 to-purple-500/20 border border-brand-300/30 rounded-2xl p-8"
+                  >
+                    <motion.h2 variants={itemVariants} className="text-2xl font-semibold text-white mb-6">⚡ Ações Rápidas</motion.h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {[
+                        { id: 'novo-estudo', label: 'Novo Estudo', icon: FaBullseye, action: () => handleTabChange('novo-estudo'), primary: true },
+                        { id: 'roadmaps', label: 'Ver Roadmaps', icon: FaBookOpen, action: () => handleTabChange('roadmaps') },
+                        { id: 'config', label: 'Configurações', icon: FaTrophy, to: '/configuracoes' }
+                      ].map((btn, idx) => (
+                        <motion.div key={btn.id} variants={itemVariants}>
+                          {btn.to ? (
+                            <Link
+                              to={btn.to}
+                              className={`w-full px-6 py-4 rounded-xl transition-all font-medium flex items-center justify-center gap-2 group ${
+                                btn.primary 
+                                  ? 'bg-brand-500 text-white hover:bg-brand-600' 
+                                  : 'border border-white/20 text-white hover:bg-white/5'
+                              }`}
+                            >
+                              <btn.icon size={18} className="group-hover:scale-110 transition-transform" />
+                              {btn.label}
+                            </Link>
+                          ) : (
+                            <button
+                              onClick={btn.action}
+                              className={`w-full px-6 py-4 rounded-xl transition-all font-medium flex items-center justify-center gap-2 group ${
+                                btn.primary 
+                                  ? 'bg-brand-500 text-white hover:bg-brand-600' 
+                                  : 'border border-white/20 text-white hover:bg-white/5'
+                              }`}
+                            >
+                              <btn.icon size={18} className="group-hover:scale-110 transition-transform" />
+                              {btn.label}
+                            </button>
+                          )}
+                        </motion.div>
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                  </motion.div>
+
+                  {/* Recent Activity */}
+                  <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="show"
+                    className="bg-white/5 border border-white/10 rounded-2xl p-8"
+                  >
+                    <motion.h2 variants={itemVariants} className="text-xl font-semibold text-white mb-6">📊 Sua Semana</motion.h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <motion.div variants={itemVariants} className="text-center">
+                        <p className="text-white/70 mb-2">Melhor Dia</p>
+                        <p className="text-3xl font-bold text-white">
+                          {bestDay.minutes} <span className="text-sm font-normal text-white/50">min</span>
+                        </p>
+                        <p className="text-white/50 text-sm mt-1">{bestDay.day}</p>
+                      </motion.div>
+                      <motion.div variants={itemVariants} className="text-center">
+                        <p className="text-white/70 mb-2">Média Diária</p>
+                        <p className="text-3xl font-bold text-white">
+                          {dailyAverage} <span className="text-sm font-normal text-white/50">min</span>
+                        </p>
+                        <p className="text-white/50 text-sm mt-1">Registrada</p>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
+              {/* Estatísticas Tab */}
+              {activeTab === 'estatisticas' && (
+                <StudyStatistics pomodoroHistory={pomodoroHistory} />
+              )}
+
+              {/* Novo Estudo Tab */}
+              {activeTab === 'novo-estudo' && (
+                <NewStudySection 
+                  user={user} 
+                  onSessionComplete={handleSessionComplete} 
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </div>
   )
 }
-

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { SiGoogle, SiGithub } from 'react-icons/si'
-import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
+import { FaBookOpen, FaShieldAlt } from 'react-icons/fa'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues, hasDangerousPatterns } from '../utils/validators'
@@ -23,17 +23,39 @@ export default function Login() {
 
     const container = {
         initial: { opacity: 0 },
-        animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut', when: 'beforeChildren', staggerChildren: 0.05, delayChildren: 0.05 } },
-        exit: { opacity: 0 }
+        animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } },
+        exit: { opacity: 0, transition: { duration: 0.3 } }
     }
+    
     const panelVariant = {
-        initial: { y: 20, opacity: 0, scale: 0.985, filter: 'blur(8px)' },
-        animate: { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 380, damping: 24 } },
-        exit: { y: -16, opacity: 0, scale: 0.99, transition: { duration: 0.28, ease: 'easeIn' } }
+        initial: { y: 20, opacity: 0, scale: 0.99 },
+        animate: { 
+            y: 0, 
+            opacity: 1, 
+            scale: 1, 
+            transition: { duration: 0.4, ease: 'easeOut', delay: 0.1 } 
+        },
+        exit: { y: 20, opacity: 0, scale: 0.99, transition: { duration: 0.3 } }
     }
-    const leftVariant = { initial: { x: -16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26 } } }
-    const rightVariant = { initial: { x: 16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26, delay: 0.03 } } }
-    const childVariant = { initial: { opacity: 0, y: 14, scale: 0.985 }, animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: 'easeOut' } } }
+
+    const leftVariant = { 
+        initial: { x: -10, opacity: 0 }, 
+        animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut', delay: 0.2 } } 
+    }
+    
+    const rightVariant = { 
+        initial: { x: 10, opacity: 0 }, 
+        animate: { 
+            x: 0, 
+            opacity: 1, 
+            transition: { duration: 0.4, ease: 'easeOut', delay: 0.2, staggerChildren: 0.05 } 
+        } 
+    }
+    
+    const childVariant = { 
+        initial: { opacity: 0, y: 10 }, 
+        animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } } 
+    }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -88,7 +110,7 @@ export default function Login() {
                     <div className={styles.leftPanelContent}>
                         <div className={styles.heroIcon}>
                             <Link to="/">
-                                <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
+                                <FaBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
                             </Link>
                         </div>
 
@@ -98,7 +120,7 @@ export default function Login() {
                         </p>
 
                         <div className={styles.heroInfo}>
-                            <LuShieldCheck aria-hidden="true" />
+                            <FaShieldAlt aria-hidden="true" />
                             <span>Segurança e privacidade garantidas</span>
                         </div>
                     </div>
@@ -170,9 +192,18 @@ export default function Login() {
                         }}
                         className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`}
                         aria-label="Formulário de login"
-                        variants={childVariant}
+                        variants={{
+                            initial: { opacity: 0 },
+                            animate: { 
+                                opacity: 1, 
+                                transition: { 
+                                    duration: 0.2, 
+                                    staggerChildren: 0.05 
+                                } 
+                            }
+                        }}
                     >
-                        <div>
+                        <Motion.div variants={childVariant}>
                             <label htmlFor="email" className="sr-only">Email</label>
                             <div className={styles.inputWrapper}>
                                 <input
@@ -193,11 +224,11 @@ export default function Login() {
                             {touched.email && errors.email && (
                                 <p className={styles.fieldError}>{errors.email}</p>
                             )}
-                        </div>
+                        </Motion.div>
 
-                        <div>
+                        <Motion.div variants={childVariant}>
                             <label htmlFor="password" className="sr-only">Senha</label>
-                            <Motion.div
+                            <div
                                 key={showPassword ? "password-visible" : "password-hidden"}
                                 className={styles.inputWrapper}
                             >
@@ -230,7 +261,7 @@ export default function Login() {
                                         </Motion.span>
                                     </AnimatePresence>
                                 </button>
-                            </Motion.div>
+                            </div>
                             {touched.password && errors.password && (
                                 <p className={styles.fieldError}>{errors.password}</p>
                             )}
@@ -241,16 +272,19 @@ export default function Login() {
                                 </label>
                                 <a href="#" className={styles.link}>Esqueci minha senha</a>
                             </div>
-                        </div>
+                        </Motion.div>
 
-                        <button
+                        <Motion.button
                             type="submit"
                             disabled={loading}
                             className={`${styles.submitButton} ${styles.submitFull}`}
+                            variants={childVariant}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                         >
                             {loading ? <span className={styles.submitSpinner} aria-hidden="true" /> : null}
                             <span>{loading ? 'Entrando...' : 'Entrar'}</span>
-                        </button>
+                        </Motion.button>
                     </Motion.form>
 
                     <Motion.p className={`${styles.footerText} ${styles.relativeZ10}`} variants={childVariant}>

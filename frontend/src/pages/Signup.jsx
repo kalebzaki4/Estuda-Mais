@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom' 
-import { LuBookOpen, LuShieldCheck } from 'react-icons/lu'
+import { FaBookOpen, FaShieldAlt } from 'react-icons/fa'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { useAuth } from '../contexts/AuthContextCore.jsx'
@@ -13,17 +13,39 @@ const AnimatePresence = FM.AnimatePresence
 
 const container = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut', when: 'beforeChildren', staggerChildren: 0.05, delayChildren: 0.05 } },
-  exit: { opacity: 0 }
+  animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } },
+  exit: { opacity: 0, transition: { duration: 0.3 } }
 }
+
 const panelVariant = {
-  initial: { y: 20, opacity: 0, scale: 0.985, filter: 'blur(8px)' },
-  animate: { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 380, damping: 24 } },
-  exit: { y: -16, opacity: 0, scale: 0.99, transition: { duration: 0.28, ease: 'easeIn' } }
+  initial: { y: 20, opacity: 0, scale: 0.99 },
+  animate: { 
+      y: 0, 
+      opacity: 1, 
+      scale: 1, 
+      transition: { duration: 0.4, ease: 'easeOut', delay: 0.1 } 
+  },
+  exit: { y: 20, opacity: 0, scale: 0.99, transition: { duration: 0.3 } }
 }
-const leftVariant = { initial: { x: -16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26 } } }
-const rightVariant = { initial: { x: 16, opacity: 0, scale: 0.99 }, animate: { x: 0, opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 26, delay: 0.03 } } }
-const childVariant = { initial: { opacity: 0, y: 14, scale: 0.985 }, animate: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: 'easeOut' } } }
+
+const leftVariant = { 
+  initial: { x: -10, opacity: 0 }, 
+  animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut', delay: 0.2 } } 
+}
+
+const rightVariant = { 
+  initial: { x: 10, opacity: 0 }, 
+  animate: { 
+      x: 0, 
+      opacity: 1, 
+      transition: { duration: 0.4, ease: 'easeOut', delay: 0.2, staggerChildren: 0.05 } 
+  } 
+}
+
+const childVariant = { 
+  initial: { opacity: 0, y: 10 }, 
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } } 
+}
 
 export default function Signup() {
   const { register } = useAuth()
@@ -126,10 +148,10 @@ export default function Signup() {
   return (
     <Motion.main
       className={`page-login ${styles.loginPage} ${styles.pageRoot}`}
-      initial={{ opacity: 0, y: -50, rotateX: 15 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      exit={{ opacity: 0, y: -50, rotateX: 15 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={container}
     >
       <div className={styles.backgroundElements}>
         <div className={styles.floatingOrbs}>
@@ -147,17 +169,21 @@ export default function Signup() {
 
       <div className={styles.loginAmbientGlow} aria-hidden="true" />
 
-      <section aria-label="Painel de autenticação" className={`${styles.loginPanelRoot} ${styles.loginPanel} animate-fade-in`}>
+      <Motion.section 
+        aria-label="Painel de autenticação" 
+        className={`${styles.loginPanelRoot} ${styles.loginPanel}`}
+        variants={panelVariant}
+      >
         <div className={styles.textureSubtle} aria-hidden="true" />
 
-        <div className={styles.leftPanel}>
+        <Motion.div className={styles.leftPanel} variants={leftVariant}>
           <div className={styles.panelOverlayWrap} aria-hidden="true" />
           <div className={styles.leftPanelContent}>
             
             {/* Ícone agora envolvido por Link para a home */}
             <div className={styles.heroIcon}>
               <Link to="/">
-                <LuBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
+                <FaBookOpen size={48} className={styles.iconBlack} aria-hidden="true" />
               </Link>
             </div>
 
@@ -165,18 +191,18 @@ export default function Signup() {
             <p className={styles.heroLead}>Aprenda continuamente com conteúdos selecionados e avance na sua jornada.</p>
 
             <div className={styles.heroInfo}>
-              <LuShieldCheck aria-hidden="true" />
+              <FaShieldAlt aria-hidden="true" />
               <span>Segurança e privacidade garantidas</span>
             </div>
           </div>
 
           <div className={`${styles.haloWrap} ${styles.shadowHalo}`} aria-hidden="true" />
-        </div>
+        </Motion.div>
 
-        <div className={`${styles.rightPanel} animate-slide-in-up`}>
+        <Motion.div className={styles.rightPanel} variants={rightVariant}>
           <div className={`${styles.rightPanelOverlayWrap} ${styles.rightPanelOverlay}`} aria-hidden="true" />
 
-          <header className={`${styles.header} ${styles.relativeZ10}`}>
+          <Motion.header className={`${styles.header} ${styles.relativeZ10}`} variants={childVariant}>
             <h1 className={styles.title}>Criar Conta</h1>
             <p className={styles.subtitle}>Bem-vindo! Crie sua conta para continuar.</p>
 
@@ -185,19 +211,33 @@ export default function Signup() {
                 {errors.general}
               </div>
             )}
-          </header>
+          </Motion.header>
 
-          <div className={`${styles.relativeZ10} ${styles.socialGrid} animate-slide-in-up delay-200`}>
+          <Motion.div className={`${styles.relativeZ10} ${styles.socialGrid}`} variants={childVariant}>
             <SocialButton icon={<SiGoogle className={styles.socialIcon} />} label="Cadastrar com Google" onClick={() => window.location.href = import.meta.env.VITE_GOOGLE_OAUTH_URL || 'http://localhost:8080/oauth2/authorization/google'} />
             <SocialButton icon={<SiGithub className={styles.socialIcon} />} label="Cadastrar com GitHub" onClick={() => window.location.href = import.meta.env.VITE_GITHUB_OAUTH_URL || 'http://localhost:8080/oauth2/authorization/github'} />
-          </div>
+          </Motion.div>
 
-          <Divider label="Ou" />
+          <Motion.div variants={childVariant}><Divider label="Ou" /></Motion.div>
 
-          <form onSubmit={handleSubmit} className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`} aria-label="Formulário de cadastro">
+          <Motion.form 
+            onSubmit={handleSubmit} 
+            className={`${styles.form} ${styles.relativeZ10} ${styles.spaceY4}`} 
+            aria-label="Formulário de cadastro"
+            variants={{
+                 initial: { opacity: 0 },
+                 animate: { 
+                     opacity: 1, 
+                     transition: { 
+                         duration: 0.2, 
+                         staggerChildren: 0.05 
+                     } 
+                 }
+             }}
+          >
             
             {/* NOME */}
-            <div>
+            <Motion.div variants={childVariant}>
               <label htmlFor="name" className="sr-only">Nome</label>
               <div className={styles.inputWrapper}>
                 <input
@@ -210,16 +250,16 @@ export default function Signup() {
                   className={`${styles.inputBase} ${styles.inputLight} ${touched.name && errors.name ? styles.inputLightError : ''}`}
                 />
                 <span className={styles.inputIcon}>
-                  <LuBookOpen className={styles.iconBlack} aria-hidden="true" />
+                  <FaBookOpen className={styles.iconBlack} aria-hidden="true" />
                 </span>
               </div>
               {touched.name && errors.name && (
                 <p className={styles.fieldError}>{errors.name}</p>
               )}
-            </div>
+            </Motion.div>
 
             {/* EMAIL */}
-            <div>
+            <Motion.div variants={childVariant}>
               <label htmlFor="email" className="sr-only">Email</label>
               <div className={styles.inputWrapper}>
                 <input
@@ -238,10 +278,10 @@ export default function Signup() {
               {touched.email && errors.email && (
                 <p className={styles.fieldError}>{errors.email}</p>
               )}
-            </div>
+            </Motion.div>
 
             {/* SENHA */}
-            <div>
+            <Motion.div variants={childVariant}>
               <label htmlFor="password" className="sr-only">Senha</label>
               <div className={styles.inputWrapper}>
                 <input
@@ -284,10 +324,10 @@ export default function Signup() {
               {touched.password && errors.password && (
                 <p className={styles.fieldError}>{errors.password}</p>
               )}
-            </div>
+            </Motion.div>
 
             {/* CONFIRMAR SENHA */}
-            <div>
+            <Motion.div variants={childVariant}>
               <label htmlFor="confirm-password" className="sr-only">Confirmar Senha</label>
               <div className={styles.inputWrapper}>
                 <input
@@ -330,10 +370,10 @@ export default function Signup() {
               {touched.confirmPassword && errors.confirmPassword && (
                 <p className={styles.fieldError}>{errors.confirmPassword}</p>
               )}
-            </div>
+            </Motion.div>
 
             {/* TERMOS */}
-            <div className={styles.rowBetween}>
+            <Motion.div className={styles.rowBetween} variants={childVariant}>
               <label className={`inline-flex ${styles.rememberLabel}`} htmlFor="terms">
                 <input
                   type="checkbox"
@@ -343,23 +383,30 @@ export default function Signup() {
                 />
                 Eu concordo com os <a href="#" className={styles.link}>Termos de Serviço</a>.
               </label>
-            </div>
+            </Motion.div>
 
             {errors.general && (
               <p role="alert" className={styles.fieldError}>{errors.general}</p>
             )}
 
-            <button type="submit" disabled={loading || !termsAccepted} className={`${styles.submitButton} ${styles.submitFull}`}>
+            <Motion.button 
+              type="submit" 
+              disabled={loading || !termsAccepted} 
+              className={`${styles.submitButton} ${styles.submitFull}`}
+              variants={childVariant}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
               {loading && <span className={styles.submitSpinner} />}
               <span>{loading ? 'Cadastrando...' : 'Cadastrar'}</span>
-            </button>
-          </form>
+            </Motion.button>
+          </Motion.form>
 
-          <p className={`${styles.footerText} ${styles.relativeZ10}`}>
+          <Motion.p className={`${styles.footerText} ${styles.relativeZ10}`} variants={childVariant}>
             Já tem uma conta? <Link to="/login" className={styles.link}>Entrar</Link>
-          </p>
-        </div>
-      </section>
+          </Motion.p>
+        </Motion.div>
+      </Motion.section>
     </Motion.main>
   )
 }

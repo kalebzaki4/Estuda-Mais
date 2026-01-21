@@ -1,28 +1,37 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LuBookOpen, LuUser, LuLogOut, LuPlus, LuTimer, LuMap, LuSettings } from 'react-icons/lu'
 import { useAuth } from '../../contexts/AuthContextCore.jsx'
+import { FaBookOpen, FaTachometerAlt, FaMap, FaUser, FaCog, FaSignOutAlt, FaPlus } from 'react-icons/fa'
 
 export default function Layout({ children }) {
+  const { user, isAuthenticated, logout } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
-  const { isAuthenticated, user, logout } = useAuth()
+
+  // Não mostrar header nas páginas de login/signup
+  const hideHeaderPaths = ['/login', '/signup', '/oauth2/redirect']
+  const shouldShowHeader = !hideHeaderPaths.includes(location.pathname)
 
   const handleLogout = () => {
     logout()
     navigate('/login')
   }
 
-  const isActivePath = (path) => {
-    return location.pathname === path
-  }
-
-  // Não mostrar header nas páginas de login/signup
-  const hideHeaderPaths = ['/login', '/signup', '/oauth2/redirect']
-  const shouldShowHeader = !hideHeaderPaths.includes(location.pathname)
-
   if (!shouldShowHeader) {
     return <>{children}</>
   }
+
+  const isActive = (path) => {
+    if (path === '/dashboard' && location.pathname === '/dashboard') return true;
+    if (path !== '/dashboard' && location.pathname.startsWith(path)) return true;
+    return false;
+  }
+
+  const navLinkClass = (path) => `
+    flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200
+    ${isActive(path) 
+      ? 'bg-white/10 text-white font-medium' 
+      : 'text-white/70 hover:text-white hover:bg-white/5'}
+  `
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -35,36 +44,26 @@ export default function Layout({ children }) {
               to={isAuthenticated ? "/dashboard" : "/"} 
               className="flex items-center space-x-2 text-white hover:text-brand-300 transition-colors"
             >
-              <LuBookOpen size={24} />
-              <span className="font-semibold text-lg">Estuda+</span>
+              <FaBookOpen size={24} className="text-brand-400" />
+              <span className="font-bold text-lg tracking-tight">Estuda+</span>
             </Link>
 
             {/* Navigation - Muda conforme autenticação */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-2">
               {isAuthenticated ? (
                 <>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => window.location.hash = '#/dashboard'}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
-                  >
-                    <LuPlus size={18} />
+                  <Link to="/dashboard" className={navLinkClass('/dashboard')}>
+                    <FaTachometerAlt size={18} />
+                    <span>Visão Geral</span>
+                  </Link>
+                  
+                  <Link to="/dashboard/novo-estudo" className={navLinkClass('/dashboard/novo-estudo')}>
+                    <FaPlus size={18} />
                     <span>Novo Estudo</span>
                   </Link>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => window.location.hash = '#/dashboard'}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
-                  >
-                    <LuTimer size={18} />
-                    <span>Pomodoro</span>
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => window.location.hash = '#/dashboard'}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-white/70 hover:text-white hover:bg-white/5"
-                  >
-                    <LuMap size={18} />
+
+                  <Link to="/dashboard/roadmaps" className={navLinkClass('/dashboard/roadmaps')}>
+                    <FaMap size={18} />
                     <span>Roadmaps</span>
                   </Link>
                 </>
@@ -75,42 +74,36 @@ export default function Layout({ children }) {
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 text-white/70">
-                    <LuUser size={18} />
-                    <span className="text-sm">{user?.name || 'Usuário'}</span>
-                  </div>
-                  <Link
+                  <Link 
                     to="/configuracoes"
-                    className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                    title="Configurações da conta"
+                    className="flex items-center space-x-2 text-white/70 hover:text-white transition-colors group"
                   >
-                    <LuSettings size={18} />
+                    <div className="w-8 h-8 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-300 group-hover:bg-brand-500 group-hover:text-white transition-all">
+                      <FaUser size={16} />
+                    </div>
+                    <span className="text-sm font-medium hidden sm:block">{user?.name?.split(' ')[0] || 'Conta'}</span>
                   </Link>
+
+                  <div className="h-6 w-px bg-white/10 mx-2" />
+
                   <button
                     onClick={handleLogout}
-                    className="flex items-center space-x-2 px-3 py-2 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    className="p-2 text-white/50 hover:text-red-400 transition-colors rounded-lg hover:bg-white/5"
+                    title="Sair"
                   >
-                    <LuLogOut size={18} />
-                    <span className="text-sm">Sair</span>
+                    <FaSignOutAlt size={20} />
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center space-x-3">
-                  <Link
-                    to="/login"
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      isActivePath('/login')
-                        ? 'text-brand-300 bg-white/5'
-                        : 'text-white/70 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
+                <div className="flex items-center space-x-4">
+                  <Link to="/login" className="text-white/70 hover:text-white font-medium transition-colors">
                     Entrar
                   </Link>
-                  <Link
-                    to="/signup"
-                    className="px-4 py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-colors"
+                  <Link 
+                    to="/signup" 
+                    className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-brand-500/20"
                   >
-                    Criar Conta
+                    Começar Agora
                   </Link>
                 </div>
               )}
@@ -120,7 +113,7 @@ export default function Layout({ children }) {
       </header>
 
       {/* Main Content */}
-      <main className="pt-16">
+      <main className="pt-16 min-h-screen">
         {children}
       </main>
     </div>

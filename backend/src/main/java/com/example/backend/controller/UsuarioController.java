@@ -1,10 +1,17 @@
 package com.example.backend.controller;
 
+import com.example.backend.model.SessaoEstudo;
 import com.example.backend.model.Usuario;
+import com.example.backend.repository.SessaoEstudoRepository;
+import com.example.backend.repository.UsuarioRepository;
+import com.example.backend.service.EstatisticaService;
 import com.example.backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -13,6 +20,11 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EstatisticaService estatisticaService;
+
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody Usuario usuario) {
@@ -29,5 +41,14 @@ public class UsuarioController {
     public ResponseEntity<String> cadastrar(@RequestBody Usuario usuario) {
         usuarioService.criarUsuario(usuario);
         return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+    }
+
+    @GetMapping("/{id}/estatisticas")
+    public ResponseEntity<?> obterEstatisticas(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(estatisticaService.calcularResumoUsuario(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

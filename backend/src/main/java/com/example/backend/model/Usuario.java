@@ -20,4 +20,7 @@ public class Usuario {
     @Column (name = "senha", nullable = false, length = 255)
     private String senha;
 
+    @Column (name = "xp", nullable = false)
+    private int xp;
+
 }

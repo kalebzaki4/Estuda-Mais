@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { LuChevronLeft, LuChevronRight, LuBookOpen, LuUsers, LuTrophy, LuMapPin } from 'react-icons/lu'
+import { FaChevronLeft, FaChevronRight, FaBookOpen, FaUsers, FaTrophy, FaMapMarkerAlt } from 'react-icons/fa'
 import { GiTomato, GiTargetPrize } from 'react-icons/gi'
 import styles from '../../styles/HighlightsCarousel.module.css'
 
@@ -7,14 +7,14 @@ const DEFAULT_ITEMS = [
   {
     id: 'courses',
     title: 'Conteudo de tecnologia',
-    Icon: LuBookOpen,
+    Icon: FaBookOpen,
     description: 'Conteúdo de tecnologia atualizado e relevante. Sistema atualizado para garantir um melhor curriculo.',
     bullets: ['Descreva o seu projeto', 'Anote suas ideias', 'Planeje seu futuro' ]
   },
   {
     id: 'roadmaps',
     title: 'Roadmaps Profissionais',
-    Icon: LuMapPin,
+    Icon: FaMapMarkerAlt,
     description: 'Trilhas passo-a-passo para funções reais. Checkpoints, tempo estimado e recomendações de prática para cada etapa.',
     bullets: ['Trilhas por objetivos', 'Checkpoints mensuráveis']
   },
@@ -35,14 +35,14 @@ const DEFAULT_ITEMS = [
   {
     id: 'community',
     title: 'Comunidade',
-    Icon: LuUsers,
+    Icon: FaUsers,
     description: 'Grupos de estudo, sessões em grupo são mais motivadoras — aprenda com pares e acelere sua curva de aprendizado.',
     bullets: ['Grupos por tema', 'Sessões em grupo' ],
   },
   {
     id: 'certificates',
     title: 'Certificações',
-    Icon: LuTrophy,
+    Icon: FaTrophy,
     description: 'Garanta seucesso, seu futuro esta em suas mãos. Conquiste certificações reconhecidas no mundo usando Estuda+.',
     bullets: ['Avaliações práticas', 'Certificado verificável', 'Sugestão de portfólio']
   }
@@ -145,8 +145,8 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
         {/* nav */}
         {maxStart > 0 && (
           <>
-            <button className={styles.prev} aria-label="Anterior" onClick={prev}><LuChevronLeft size={18} /></button>
-            <button className={styles.next} aria-label="Próximo" onClick={next}><LuChevronRight size={18} /></button>
+            <button className={styles.prev} aria-label="Anterior" onClick={prev}><FaChevronLeft size={18} /></button>
+            <button className={styles.next} aria-label="Próximo" onClick={next}><FaChevronRight size={18} /></button>
           </>
         )}
 
