@@ -1,9 +1,10 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Usuario;
+import com.example.backend.model.dto.DadosTokenDTO;
 import com.example.backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder; // Importação correta
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,9 @@ public class UsuarioService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TokenService tokenService;
 
     // criar usuario
     public void criarUsuario(Usuario usuario) {
@@ -57,5 +61,13 @@ public class UsuarioService {
         if (usuarioExistente != null) {
             usuarioRepository.delete(usuarioExistente);
         }
+    }
+
+    // Autenticação via token JWT
+    public DadosTokenDTO autenticar(Usuario dadosLogin) {
+        return usuarioRepository.findByEmail(dadosLogin.getEmail())
+                .filter(user -> passwordEncoder.matches(dadosLogin.getSenha(), user.getSenha()))
+                .map(user -> new DadosTokenDTO(tokenService.gerarToken(user)))
+                .orElse(null);
     }
 }

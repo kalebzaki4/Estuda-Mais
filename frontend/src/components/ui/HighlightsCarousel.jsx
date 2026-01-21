@@ -6,10 +6,10 @@ import styles from '../../styles/HighlightsCarousel.module.css'
 const DEFAULT_ITEMS = [
   {
     id: 'courses',
-    title: 'Cursos & Trilhas',
+    title: 'Conteudo de tecnologia',
     Icon: LuBookOpen,
-    description: 'Aulas práticas com projetos que transformam teoria em experiência — aprenda fazendo, crie um portfólio e comprove suas habilidades.',
-    bullets: ['Projetos hands-on', 'Exercícios automatizados']
+    description: 'Conteúdo de tecnologia atualizado e relevante. Sistema atualizado para garantir um melhor curriculo.',
+    bullets: ['Descreva o seu projeto', 'Anote suas ideias', 'Planeje seu futuro' ]
   },
   {
     id: 'roadmaps',
@@ -27,23 +27,23 @@ const DEFAULT_ITEMS = [
   },
   {
     id: 'challenges',
-    title: 'Desafios Semanais',
+    title: 'Ranking semanal',
     Icon: GiTargetPrize,
-    description: 'Problemas reais e curados para exercitar pensamento crítico — ganhe pontos, feedback e destaque no ranking.',
-    bullets: ['Problemas práticos', 'Feedback automático']
+    description: 'Não pare de estudar, supere desafios semanais e veja seu nome no ranking. Competição saudável para manter a motivação lá em cima.',
+    bullets: ['Se dedique', 'Feedback automático']
   },
   {
     id: 'community',
-    title: 'Comunidade & Mentoria',
+    title: 'Comunidade',
     Icon: LuUsers,
-    description: 'Grupos de estudo, sessões de revisão e suporte de mentores — aprenda com pares e acelere sua curva de aprendizado.',
-    bullets: ['Grupos por tema', 'Mentoria pontual'],
+    description: 'Grupos de estudo, sessões em grupo são mais motivadoras — aprenda com pares e acelere sua curva de aprendizado.',
+    bullets: ['Grupos por tema', 'Sessões em grupo' ],
   },
   {
     id: 'certificates',
     title: 'Certificações',
     Icon: LuTrophy,
-    description: 'Avaliações práticas e certificados verificáveis para comprovar competências e valorizar seu currículo.',
+    description: 'Garanta seucesso, seu futuro esta em suas mãos. Conquiste certificações reconhecidas no mundo usando Estuda+.',
     bullets: ['Avaliações práticas', 'Certificado verificável', 'Sugestão de portfólio']
   }
 ]
@@ -55,7 +55,6 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
   const timerRef = useRef(null)
   const rootRef = useRef(null)
 
-  // responsive slides count
   useEffect(() => {
     function update() {
       const w = window.innerWidth

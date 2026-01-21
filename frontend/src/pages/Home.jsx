@@ -37,14 +37,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Destaques Section - Carousel Placeholder */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-surface-800 animate-fade-in">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-white mb-12 animate-slide-in-up">
             Destaques do Estuda+
           </h2>
           <div className="relative w-full overflow-hidden rounded-2xl shadow-soft border border-white/10 h-96">
-            {/* Highlights carousel component */}
             <div id="home-highlights" className="p-3 md:p-6">
               <HighlightsCarousel />
             </div>
@@ -65,7 +63,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-white mb-3">Progresso Personalizado</h3>
               <p className="text-white/70">
-                Acompanhe seu desenvolvimento com métricas detalhadas e conteúdo adaptado ao seu ritmo.
+                Acompanhe seu desenvolvimento com gráficos detalhados e conteúdo cheio de recompensa.
               </p>
             </div>
             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg group">
@@ -81,9 +79,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-lg bg-brand-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <LuTrophy size={24} className="text-brand-300" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Certificações</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Competições</h3>
               <p className="text-white/70">
-                Ganhe certificados reconhecidos ao concluir cursos e comprove suas habilidades.
+                Ganhe conquistas dentro da plataforma ao superar seu próprio limite.
               </p>
             </div>
           </div>
