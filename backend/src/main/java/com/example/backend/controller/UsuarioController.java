@@ -6,7 +6,9 @@ import com.example.backend.repository.SessaoEstudoRepository;
 import com.example.backend.repository.UsuarioRepository;
 import com.example.backend.service.EstatisticaService;
 import com.example.backend.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,6 @@ public class UsuarioController {
     private EstatisticaService estatisticaService;
 
 
-
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody Usuario usuario) {
         var dadosToken = usuarioService.autenticar(usuario);
@@ -38,9 +39,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody Usuario usuario) {
+    public ResponseEntity<String> cadastrar(@RequestBody @Valid Usuario usuario) {
         usuarioService.criarUsuario(usuario);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
     }
 
     @GetMapping("/{id}/estatisticas")
