@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.SessaoEstudo;
+import com.example.backend.model.dto.SessaoFinalizadaDTO;
 import com.example.backend.model.dto.SessaoIniciadaDTO;
 import com.example.backend.repository.SessaoEstudoRepository;
 import com.example.backend.service.SessaoEstudoService;
@@ -36,8 +37,13 @@ public class SessaoEstudoController {
         return repository.findTop5ByUsuarioIdOrderByDataInicioDesc(usuarioId);
     }
 
+    @GetMapping("/feed")
+    public ResponseEntity<List<SessaoEstudo>> obterFeedSocial() {
+        return ResponseEntity.ok(service.getSocialFeed());
+    }
+
     @PutMapping("/{id}/finalizar")
-    public ResponseEntity<SessaoEstudo> finalizar(@PathVariable Long id, @RequestParam Integer minutos) {
-        return ResponseEntity.ok(service.finalizarSessao(id, minutos));
+    public ResponseEntity<SessaoEstudo> finalizar(@PathVariable Long id, @RequestBody SessaoFinalizadaDTO dados) {
+        return ResponseEntity.ok(service.finalizarSessao(id, dados.minutos(), dados.resumo(), dados.topicos()));
     }
 }

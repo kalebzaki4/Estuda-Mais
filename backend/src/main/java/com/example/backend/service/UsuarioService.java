@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
@@ -69,5 +71,9 @@ public class UsuarioService {
                 .filter(user -> passwordEncoder.matches(dadosLogin.getSenha(), user.getSenha()))
                 .map(user -> new DadosTokenDTO(tokenService.gerarToken(user)))
                 .orElse(null);
+    }
+
+    public List<Usuario> getRanking() {
+        return usuarioRepository.findTop10ByOrderByXpDesc();
     }
 }

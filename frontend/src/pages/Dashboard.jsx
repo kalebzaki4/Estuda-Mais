@@ -10,9 +10,10 @@ import NewStudySection from '../components/dashboard/NewStudySection.jsx'
 import RoadmapsSection from '../components/dashboard/RoadmapsSection.jsx'
 import CompetitionSection from '../components/dashboard/CompetitionSection.jsx'
 import AchievementsSection from '../components/dashboard/AchievementsSection.jsx'
+import SocialFeed from '../components/dashboard/SocialFeed.jsx'
 
 export default function Dashboard() {
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
   const { tab } = useParams()
   const navigate = useNavigate()
   
@@ -38,14 +39,7 @@ export default function Dashboard() {
     setActiveTab(newTabId)
     navigate(`/dashboard/${newTabId}`)
   }
-  const [points, setPoints] = useState(() => {
-    try {
-      const raw = localStorage.getItem('userPoints')
-      return raw ? parseInt(raw, 10) || 0 : 0
-    } catch {
-      return 0
-    }
-  })
+  
   const [studyMinutesToday, setStudyMinutesToday] = useState(() => {
     try {
       const d = localStorage.getItem('studyDay')
@@ -100,12 +94,8 @@ export default function Dashboard() {
         localStorage.setItem('studyMinutesToday', String(newToday))
       } catch {}
 
-      const gained = entry.minutes * 10
-      const newPoints = points + gained
-      setPoints(newPoints)
-      try {
-        localStorage.setItem('userPoints', String(newPoints))
-      } catch {}
+      // Atualiza o perfil do usuário para refletir o novo XP imediatamente
+      refreshUser()
     }
   }
 
@@ -241,93 +231,25 @@ export default function Dashboard() {
               exit="exit"
               className="space-y-8"
             >
-              {/* Visão Geral Tab */}
+              {/* Visão Geral Tab (Social Feed) */}
               {activeTab === 'visao-geral' && (
-                <div className="space-y-8">
-                  {/* Quick Stats */}
-                  <ProgressOverview
-                    studyMinutesToday={studyMinutesToday}
-                    weeklyStreak={weeklyStreak}
-                    totalSessions={totalSessions}
-                    totalHours={totalHours}
-                  />
-
-                  {/* Quick Actions */}
-                  <motion.div 
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show"
-                    className="bg-gradient-to-r from-brand-500/20 to-purple-500/20 border border-brand-300/30 rounded-2xl p-8"
-                  >
-                    <motion.h2 variants={itemVariants} className="text-2xl font-semibold text-white mb-6">⚡ Ações Rápidas</motion.h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {[
-                        { id: 'novo-estudo', label: 'Novo Estudo', icon: FaBullseye, action: () => handleTabChange('novo-estudo'), primary: true },
-                        { id: 'roadmaps', label: 'Ver Roadmaps', icon: FaBookOpen, action: () => handleTabChange('roadmaps') },
-                        { id: 'config', label: 'Configurações', icon: FaTrophy, to: '/configuracoes' }
-                      ].map((btn, idx) => (
-                        <motion.div key={btn.id} variants={itemVariants}>
-                          {btn.to ? (
-                            <Link
-                              to={btn.to}
-                              className={`w-full px-6 py-4 rounded-xl transition-all font-medium flex items-center justify-center gap-2 group ${
-                                btn.primary 
-                                  ? 'bg-brand-500 text-white hover:bg-brand-600' 
-                                  : 'border border-white/20 text-white hover:bg-white/5'
-                              }`}
-                            >
-                              <btn.icon size={18} className="group-hover:scale-110 transition-transform" />
-                              {btn.label}
-                            </Link>
-                          ) : (
-                            <button
-                              onClick={btn.action}
-                              className={`w-full px-6 py-4 rounded-xl transition-all font-medium flex items-center justify-center gap-2 group ${
-                                btn.primary 
-                                  ? 'bg-brand-500 text-white hover:bg-brand-600' 
-                                  : 'border border-white/20 text-white hover:bg-white/5'
-                              }`}
-                            >
-                              <btn.icon size={18} className="group-hover:scale-110 transition-transform" />
-                              {btn.label}
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {/* Recent Activity */}
-                  <motion.div 
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show"
-                    className="bg-white/5 border border-white/10 rounded-2xl p-8"
-                  >
-                    <motion.h2 variants={itemVariants} className="text-xl font-semibold text-white mb-6">📊 Sua Semana</motion.h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <motion.div variants={itemVariants} className="text-center">
-                        <p className="text-white/70 mb-2">Melhor Dia</p>
-                        <p className="text-3xl font-bold text-white">
-                          {bestDay.minutes} <span className="text-sm font-normal text-white/50">min</span>
-                        </p>
-                        <p className="text-white/50 text-sm mt-1">{bestDay.day}</p>
-                      </motion.div>
-                      <motion.div variants={itemVariants} className="text-center">
-                        <p className="text-white/70 mb-2">Média Diária</p>
-                        <p className="text-3xl font-bold text-white">
-                          {dailyAverage} <span className="text-sm font-normal text-white/50">min</span>
-                        </p>
-                        <p className="text-white/50 text-sm mt-1">Registrada</p>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                </div>
+                <SocialFeed 
+                  user={user} 
+                  onStartNewStudy={() => handleTabChange('novo-estudo')} 
+                />
               )}
 
               {/* Estatísticas Tab */}
               {activeTab === 'estatisticas' && (
-                <StudyStatistics pomodoroHistory={pomodoroHistory} />
+                <StudyStatistics 
+                  pomodoroHistory={pomodoroHistory}
+                  studyMinutesToday={studyMinutesToday}
+                  weeklyStreak={weeklyStreak}
+                  totalSessions={totalSessions}
+                  totalHours={totalHours}
+                  bestDay={bestDay}
+                  dailyAverage={dailyAverage}
+                />
               )}
 
               {/* Novo Estudo Tab */}
@@ -336,6 +258,21 @@ export default function Dashboard() {
                   user={user} 
                   onSessionComplete={handleSessionComplete} 
                 />
+              )}
+
+              {/* Roadmaps Tab */}
+              {activeTab === 'roadmaps' && (
+                <RoadmapsSection />
+              )}
+
+              {/* Competição Tab */}
+              {activeTab === 'competicao' && (
+                <CompetitionSection user={user} />
+              )}
+
+              {/* Conquistas Tab */}
+              {activeTab === 'conquistas' && (
+                <AchievementsSection />
               )}
             </motion.div>
           </AnimatePresence>

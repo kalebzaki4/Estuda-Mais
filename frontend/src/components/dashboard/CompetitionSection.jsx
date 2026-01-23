@@ -1,12 +1,38 @@
+import { useState, useEffect } from 'react'
 import { FaMedal, FaChartLine } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import axios from 'axios'
 
 export default function CompetitionSection({ 
-  points,
-  leaderboard = [],
-  friendsProgress = [],
-  recentActivity = []
+  user: currentUser,
+  points: initialPoints,
 }) {
+  const [leaderboard, setLeaderboard] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/usuarios/ranking')
+        const data = response.data.map((user, index) => ({
+          rank: index + 1,
+          name: user.nome,
+          points: user.xp || 0,
+          avatar: user.avatar || '👤',
+          isYou: user.id === currentUser?.id,
+          trend: 'up'
+        }))
+        setLeaderboard(data)
+      } catch (error) {
+        console.error('Erro ao buscar ranking:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRanking()
+  }, [currentUser])
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -35,12 +61,17 @@ export default function CompetitionSection({
         className="bg-white/5 border border-white/10 rounded-2xl p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-white">🏆 Ranking Semanal</h3>
+          <h3 className="text-lg font-semibold text-white">🏆 Ranking Global</h3>
           <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
             <FaMedal size={16} className="text-yellow-400" />
           </div>
         </div>
-        {leaderboard.length > 0 ? (
+        
+        {loading ? (
+          <div className="text-center py-8 text-white/50">
+            Carregando ranking...
+          </div>
+        ) : leaderboard.length > 0 ? (
           <div className="space-y-3">
             {leaderboard.map((user) => (
               <div
@@ -62,7 +93,7 @@ export default function CompetitionSection({
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-semibold">{user.points}</span>
+                  <span className="text-white font-semibold">{user.points} XP</span>
                   {user.trend === 'up' && (
                     <FaChartLine size={16} className="text-green-400" />
                   )}

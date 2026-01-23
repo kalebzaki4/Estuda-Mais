@@ -41,4 +41,7 @@ public class SessaoEstudo {
 
     private Integer xpGanhosTotal = 0;
     private boolean concluida = false;
+
+    @Column(columnDefinition = "TEXT")
+    private String resumo;
 }

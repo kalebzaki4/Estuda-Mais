@@ -1,10 +1,17 @@
 import { FaChartLine, FaBook, FaCheck } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import ProgressOverview from './ProgressOverview'
 
 export default function StudyStatistics({ 
   pomodoroHistory, 
   subjectStats = [], // Default to empty if not provided
-  completionStats = { completed: 0, remaining: 0 } // Default to 0
+  completionStats = { completed: 0, remaining: 0 }, // Default to 0
+  studyMinutesToday = 0,
+  weeklyStreak = 0,
+  totalSessions = 0,
+  totalHours = 0,
+  bestDay = { minutes: 0, day: '-' },
+  dailyAverage = 0
 }) {
   // Calculate statistics from pomodoro history
   const thisWeekSessions = pomodoroHistory.filter(entry => {
@@ -45,6 +52,14 @@ export default function StudyStatistics({
       initial="hidden"
       animate="show"
     >
+      {/* Quick Stats (Moved from Overview) */}
+      <ProgressOverview
+        studyMinutesToday={studyMinutesToday}
+        weeklyStreak={weeklyStreak}
+        totalSessions={totalSessions}
+        totalHours={totalHours}
+      />
+
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Weekly Stats */}
@@ -93,6 +108,30 @@ export default function StudyStatistics({
           </div>
         </motion.div>
       </div>
+
+      {/* Week Summary (Moved from Overview) */}
+      <motion.div 
+        variants={item}
+        className="bg-white/5 border border-white/10 rounded-2xl p-8"
+      >
+        <h2 className="text-xl font-semibold text-white mb-6">📊 Resumo da Semana</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="text-center">
+            <p className="text-white/70 mb-2">Melhor Dia</p>
+            <p className="text-3xl font-bold text-white">
+              {bestDay.minutes} <span className="text-sm font-normal text-white/50">min</span>
+            </p>
+            <p className="text-white/50 text-sm mt-1">{bestDay.day}</p>
+          </div>
+          <div className="text-center">
+            <p className="text-white/70 mb-2">Média Diária</p>
+            <p className="text-3xl font-bold text-white">
+              {dailyAverage} <span className="text-sm font-normal text-white/50">min</span>
+            </p>
+            <p className="text-white/50 text-sm mt-1">Registrada</p>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Subject Progress */}
       <motion.div 

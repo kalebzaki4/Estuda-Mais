@@ -84,8 +84,17 @@ export function AuthProvider({ children }) {
         if (logoutTimer.current) clearTimeout(logoutTimer.current);
     };
 
+    const refreshUser = async () => {
+        if (authService.isAuthenticated()) {
+            const res = await authService.getCurrentUser();
+            if (res.success) {
+                setUser(res.data);
+            }
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, loading, register, login, logout }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, loading, register, login, logout, refreshUser }}>
             {children}
         </AuthContext.Provider>
     );

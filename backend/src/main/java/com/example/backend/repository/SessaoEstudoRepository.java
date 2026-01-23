@@ -12,4 +12,6 @@ public interface SessaoEstudoRepository extends JpaRepository<SessaoEstudo, Long
     List<SessaoEstudo> findByUsuarioIdAndDataInicioAfter(Long usuarioId, LocalDateTime data);
 
     List<SessaoEstudo> findTop5ByUsuarioIdOrderByDataInicioDesc(Long usuarioId);
+
+    List<SessaoEstudo> findByConcluidaTrueAndResumoIsNotNullOrderByDataInicioDesc();
 }

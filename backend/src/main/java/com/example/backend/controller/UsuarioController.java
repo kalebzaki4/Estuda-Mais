@@ -52,4 +52,9 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<Usuario>> obterRanking() {
+        return ResponseEntity.ok(usuarioService.getRanking());
+    }
 }

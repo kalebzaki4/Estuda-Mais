@@ -14,22 +14,40 @@ public class DadosIniciaisConfig {
     @Bean
     CommandLineRunner carregarDados(MateriaRepository repository) {
         return args -> {
-            if (repository.count() == 0) {
-                Materia m1 = new Materia();
-                m1.setNome("React");
-                m1.setIcone("FaReact");
-                m1.setCor("#61DBFB");
-                m1.setXpPorTopico(50);
+            List<Materia> materiasParaCadastrar = List.of(
+                    criarMateria("React", "FaReact", "#61DBFB", 50),
+                    criarMateria("Java", "FaJava", "#f89820", 60),
+                    criarMateria("Spring Boot", "SiSpringboot", "#6DB33F", 70),
+                    criarMateria("MySQL", "SiMysql", "#4479A1", 50),
+                    criarMateria("JavaScript", "IoLogoJavascript", "#F7DF1E", 40),
+                    criarMateria("TypeScript", "SiTypescript", "#3178C6", 55),
+                    criarMateria("Python", "FaPython", "#3776AB", 50),
+                    criarMateria("Estrutura de Dados", "FaCode", "#A855F7", 80),
+                    criarMateria("Inglês", "FaLanguage", "#FF5733", 45)
+            );
 
-                Materia m2 = new Materia();
-                m2.setNome("Java");
-                m2.setIcone("FaJava");
-                m2.setCor("#f89820");
-                m2.setXpPorTopico(60);
+            int novosCadastros = 0;
+            for (Materia m : materiasParaCadastrar) {
+                if (repository.findByNomeIgnoreCase(m.getNome()).isEmpty()) {
+                    repository.save(m);
+                    novosCadastros++;
+                }
+            }
 
-                repository.saveAll(List.of(m1, m2));
-                System.out.println("✅ Matérias iniciais cadastradas!");
+            if (novosCadastros > 0) {
+                System.out.println("✅ " + novosCadastros + " novas matérias cadastradas com sucesso!");
+            } else {
+                System.out.println("ℹ️ Todas as matérias já estão presentes no banco de dados.");
             }
         };
+    }
+
+    private Materia criarMateria(String nome, String icone, String cor, int xp) {
+        Materia m = new Materia();
+        m.setNome(nome);
+        m.setIcone(icone);
+        m.setCor(cor);
+        m.setXpPorTopico(xp);
+        return m;
     }
 }

@@ -21,6 +21,8 @@ public class SessaoEstudoService {
     private SessaoEstudoRepository sessaoRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PostService postService;
 
     public SessaoEstudo prepararEstudo(String nomeMateria, Long usuarioId) {
         Materia materia = materiaRepository.findByNomeIgnoreCase(nomeMateria)
@@ -71,19 +73,40 @@ public class SessaoEstudoService {
         return sessaoRepository.save(sessao);
     }
 
-    public SessaoEstudo finalizarSessao(Long sessaoId, Integer minutosReais) {
+    public SessaoEstudo finalizarSessao(Long sessaoId, Integer minutosReais, String resumo, List<String> topicos) {
         SessaoEstudo sessao = sessaoRepository.findById(sessaoId)
                 .orElseThrow(() -> new RuntimeException("Sessão não encontrada"));
 
+        if (resumo == null || resumo.length() < 100) {
+            throw new RuntimeException("Resumo deve ter pelo menos 100 caracteres para ganhar XP.");
+        }
+
         sessao.setConcluida(true);
         sessao.setDuracaoRealizada(minutosReais);
+        sessao.setResumo(resumo);
+        if (topicos != null) {
+            sessao.setTopicosEstudados(topicos);
+        }
+
+        // Cálculo de XP: (Quantidade_Pomodoros * 50) + (Quantidade_Topicos * 10)
+        int pomodoros = minutosReais / 25;
+        int qtdTopicos = sessao.getTopicosEstudados().size();
+        int xpGanho = (pomodoros * 50) + (qtdTopicos * 10);
 
         Usuario usuario = sessao.getUsuario();
-        int bonusConclusao = 100;
-        usuario.setXp(usuario.getXp() + bonusConclusao);
-        sessao.setXpGanhosTotal(sessao.getXpGanhosTotal() + bonusConclusao);
+        usuario.setXp(usuario.getXp() + xpGanho);
+        sessao.setXpGanhosTotal(xpGanho);
 
         usuarioRepository.save(usuario);
-        return sessaoRepository.save(sessao);
+        SessaoEstudo sessaoSalva = sessaoRepository.save(sessao);
+        
+        // Criar post no feed social
+        postService.criarPostDeSessao(sessaoSalva);
+        
+        return sessaoSalva;
+    }
+
+    public List<SessaoEstudo> getSocialFeed() {
+        return sessaoRepository.findByConcluidaTrueAndResumoIsNotNullOrderByDataInicioDesc();
     }
 }
