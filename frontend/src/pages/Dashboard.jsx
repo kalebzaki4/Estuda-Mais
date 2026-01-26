@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContextCore.jsx'
 import { FaBookOpen, FaChartLine, FaFire, FaClock, FaBullseye, FaTrophy, FaPlay, FaChevronRight, FaBook } from 'react-icons/fa'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -16,23 +16,27 @@ export default function Dashboard() {
   const { user, refreshUser } = useAuth()
   const { tab } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   
   // Mapeamento de abas válidas
   const validTabs = ['visao-geral', 'estatisticas', 'novo-estudo', 'roadmaps', 'competicao', 'conquistas']
   const initialTab = validTabs.includes(tab) ? tab : 'visao-geral'
   
   const [activeTab, setActiveTab] = useState(initialTab)
+  const [statsFilter, setStatsFilter] = useState(location.state?.filter || null)
 
   // Sincronizar URL com activeTab se o parametro mudar (navegação externa/menu)
   useEffect(() => {
     if (tab && validTabs.includes(tab)) {
       setActiveTab(tab)
+      // Se a aba mudar para estatísticas e houver um filtro no state, atualizar o statsFilter
+      if (tab === 'estatisticas' && location.state?.filter) {
+        setStatsFilter(location.state.filter)
+      }
     } else if (!tab && activeTab !== 'visao-geral') {
-       // Se estiver na raiz /dashboard, pode manter a última ou ir para visao-geral
-       // Vamos forçar visao-geral se não tiver tab para consistência
        setActiveTab('visao-geral')
     }
-  }, [tab])
+  }, [tab, location.state])
 
   // Função para mudar aba e atualizar URL
   const handleTabChange = (newTabId) => {
@@ -249,6 +253,7 @@ export default function Dashboard() {
                   totalHours={totalHours}
                   bestDay={bestDay}
                   dailyAverage={dailyAverage}
+                  initialFilter={statsFilter}
                 />
               )}
 

@@ -2,8 +2,10 @@ import { FaPlus, FaSearch, FaStopwatch, FaBook, FaJava, FaReact, FaCode, FaPytho
 import { HiXMark } from 'react-icons/hi2'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { sanitizeInput } from '../../utils/validators.js'
 import PomodoroTimer from './PomodoroTimer.jsx'
+import StudySummaryComponent from './StudySummaryComponent.jsx'
 import studyService from '../../services/studyService.js'
 
 const subjectConfig = {
@@ -22,9 +24,15 @@ export default function NewStudySection({
   suggestedTopics = [], 
   recentStudies = [] 
 }) {
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedMateria, setSelectedMateria] = useState(null)
-  const [showTimer, setShowTimer] = useState(false)
+  
+  // Novo controle de fluxo unificado
+  // Estados possíveis: 'setup' | 'timer' | 'summary'
+  const [view, setView] = useState('setup')
+  const [summaryData, setSummaryData] = useState(null)
+
   const [materias, setMaterias] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -52,16 +60,39 @@ export default function NewStudySection({
   }
 
   const handleResetStudy = () => {
+    // Se o timer estava ativo e temos dados, vamos para o resumo
+    if (view === 'timer' && summaryData) {
+      setView('summary')
+      return
+    }
+
+    // Caso contrário, volta para o início
+    handleStartNewStudy()
+  }
+
+  const handleInternalSessionComplete = (data) => {
+    setSummaryData(data)
+    // Não mudamos a view aqui ainda, esperamos o "Continuar Jornada" do PomodoroTimer
+    if (onSessionComplete) {
+      onSessionComplete(data)
+    }
+  }
+
+  const handleStartNewStudy = () => {
     setSelectedMateria(null)
     setTopics([])
     setCurrentTopic('')
     setSearchQuery('')
-    setShowTimer(false)
+    setView('setup')
+    setSummaryData(null)
     setSessionId(null)
-    setStartingSession(false)
-    
-    // Opcional: recarregar matérias para garantir que os ícones e cores estejam corretos
     carregarDados()
+  }
+
+  const handleViewStats = () => {
+    // Redirecionar para estatísticas com filtro de hoje
+    // Podemos usar state ou query params se o Dashboard suportar
+    navigate('/dashboard/estatisticas', { state: { filter: 'today' } })
   }
 
   useEffect(() => {
@@ -84,7 +115,7 @@ export default function NewStudySection({
       if (!resInit.success) throw new Error(resInit.error)
 
       setSessionId(sid)
-      setShowTimer(true)
+      setView('timer')
     } catch (err) {
       console.error("Erro ao iniciar sessão:", err)
       // Aqui poderíamos mostrar um toast ou alerta
@@ -147,13 +178,52 @@ export default function NewStudySection({
 
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      
-      <AnimatePresence>
-        {!showTimer && (
+      <AnimatePresence mode="wait">
+        {view === 'summary' && summaryData ? (
           <motion.div
-            initial={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0, marginBottom: 0, overflow: 'hidden' }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            key="summary"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <StudySummaryComponent 
+              data={summaryData}
+              onViewStats={handleViewStats}
+              onNewStudy={handleStartNewStudy}
+            />
+          </motion.div>
+        ) : view === 'timer' ? (
+          <motion.div 
+            key="timer"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.4 }}
+            className="bg-[#0f111a]/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 relative shadow-2xl"
+          >
+            <button 
+              onClick={() => setView('setup')} 
+              className="absolute top-6 right-6 text-white/30 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-lg z-20"
+            >
+              <HiXMark size={24} />
+            </button>
+            <PomodoroTimer 
+              user={user} 
+              onSessionComplete={handleInternalSessionComplete} 
+              onReset={handleResetStudy}
+              initialSubject={selectedMateria?.nome || searchQuery} 
+              sessionId={sessionId}
+              initialTopics={topics}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="setup"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
             className="space-y-8"
           >
             {/* Seção de Busca Glassmorphism */}
@@ -217,7 +287,7 @@ export default function NewStudySection({
                         onClick={() => selectMateria(materia)}
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`relative overflow-hidden bg-white/5 backdrop-blur-sm border rounded-2xl p-5 transition-all text-left group ${getSubjectStyles(materia.nome)}`}
+                        className="relative overflow-hidden bg-white/5 backdrop-blur-sm border rounded-2xl p-5 transition-all text-left group"
                       >
                         <div className="relative z-10">
                           <h4 className="text-white font-bold group-hover:text-brand-300 transition-colors">
@@ -285,15 +355,9 @@ export default function NewStudySection({
                 </div>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Timer Pomodoro Refatorado */}
-      <motion.div variants={item}>
-        <AnimatePresence mode="wait">
-          {!showTimer ? (
-            <div className="relative group overflow-hidden">
+            {/* Banner inferior de Iniciar Sessão */}
+            <motion.div variants={item} className="relative group overflow-hidden">
               <div className="absolute -inset-1 bg-gradient-to-r from-brand-500 to-purple-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative bg-[#0f111a]/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-8">
                 <div className="flex items-center gap-6">
@@ -329,31 +393,10 @@ export default function NewStudySection({
                   {startingSession ? 'INICIANDO...' : 'INICIAR SESSÃO'}
                 </motion.button>
               </div>
-            </div>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-[#0f111a]/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 relative shadow-2xl"
-            >
-              <button 
-                onClick={() => setShowTimer(false)} 
-                className="absolute top-6 right-6 text-white/30 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-lg"
-              >
-                <HiXMark size={24} />
-              </button>
-              <PomodoroTimer 
-                user={user} 
-                onSessionComplete={onSessionComplete} 
-                onReset={handleResetStudy}
-                initialSubject={selectedMateria?.nome || searchQuery} 
-                sessionId={sessionId}
-                initialTopics={topics}
-              />
             </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

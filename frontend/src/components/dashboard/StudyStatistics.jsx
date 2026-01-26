@@ -1,5 +1,6 @@
-import { FaChartLine, FaBook, FaCheck } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import { FaChartLine, FaBook, FaCheck, FaTimes } from 'react-icons/fa'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 import ProgressOverview from './ProgressOverview'
 
 export default function StudyStatistics({ 
@@ -11,17 +12,24 @@ export default function StudyStatistics({
   totalSessions = 0,
   totalHours = 0,
   bestDay = { minutes: 0, day: '-' },
-  dailyAverage = 0
+  dailyAverage = 0,
+  initialFilter = null
 }) {
+  const [filter, setFilter] = useState(initialFilter)
+
   // Calculate statistics from pomodoro history
-  const thisWeekSessions = pomodoroHistory.filter(entry => {
+  const filteredHistory = filter === 'today' 
+    ? pomodoroHistory.filter(entry => new Date(entry.finishedAt).toDateString() === new Date().toDateString())
+    : pomodoroHistory;
+
+  const thisWeekSessions = filteredHistory.filter(entry => {
     const entryDate = new Date(entry.finishedAt)
     const weekAgo = new Date()
     weekAgo.setDate(weekAgo.getDate() - 7)
     return entryDate > weekAgo && entry.type === 'work'
   }).length
 
-  const thisWeekMinutes = pomodoroHistory
+  const thisWeekMinutes = filteredHistory
     .filter(entry => {
       const entryDate = new Date(entry.finishedAt)
       const weekAgo = new Date()
@@ -52,6 +60,29 @@ export default function StudyStatistics({
       initial="hidden"
       animate="show"
     >
+      <AnimatePresence>
+        {filter === 'today' && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="bg-brand-500/10 border border-brand-500/20 rounded-xl p-4 flex items-center justify-between"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-brand-400 rounded-full animate-pulse" />
+              <p className="text-brand-300 font-medium">Filtrando estatísticas de: <span className="font-bold uppercase">Hoje</span></p>
+            </div>
+            <button 
+              onClick={() => setFilter(null)}
+              className="text-brand-300/50 hover:text-brand-300 transition-colors p-1"
+              title="Limpar Filtro"
+            >
+              <FaTimes size={18} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Quick Stats (Moved from Overview) */}
       <ProgressOverview
         studyMinutesToday={studyMinutesToday}
