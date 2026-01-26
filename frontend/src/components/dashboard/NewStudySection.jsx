@@ -287,7 +287,7 @@ export default function NewStudySection({
                         onClick={() => selectMateria(materia)}
                         whileHover={{ y: -4 }}
                         whileTap={{ scale: 0.98 }}
-                        className="relative overflow-hidden bg-white/5 backdrop-blur-sm border rounded-2xl p-5 transition-all text-left group"
+                        className={`relative overflow-hidden bg-white/5 backdrop-blur-sm border rounded-2xl p-5 transition-all text-left group ${getSubjectStyles(materia.nome)}`}
                       >
                         <div className="relative z-10">
                           <h4 className="text-white font-bold group-hover:text-brand-300 transition-colors">
