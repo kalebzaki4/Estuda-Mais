@@ -2,7 +2,7 @@ import { FaPlus, FaSearch, FaStopwatch, FaBook, FaJava, FaReact, FaCode, FaPytho
 import { HiXMark } from 'react-icons/hi2'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { sanitizeInput } from '../../utils/validators.js'
 import PomodoroTimer from './PomodoroTimer.jsx'
 import StudySummaryComponent from './StudySummaryComponent.jsx'
@@ -25,6 +25,7 @@ export default function NewStudySection({
   recentStudies = [] 
 }) {
   const navigate = useNavigate()
+  const location = useLocation()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedMateria, setSelectedMateria] = useState(null)
   
@@ -96,8 +97,15 @@ export default function NewStudySection({
   }
 
   useEffect(() => {
+    setView('setup')
+    setSummaryData(null)
+    setSelectedMateria(null)
+    setTopics([])
+    setCurrentTopic('')
+    setSearchQuery('')
+    setSessionId(null)
     carregarDados()
-  }, [])
+  }, [location.pathname])
 
   const handleStartFocus = async () => {
     if (!selectedMateria) return

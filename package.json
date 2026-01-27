@@ -1,5 +1,15 @@
 {
+  "name": "estuda-mais",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "canvas-confetti": "^1.9.4"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
   }
 }
