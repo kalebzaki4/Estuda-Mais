@@ -1,0 +1,36 @@
+# Arquivo: .github/dependabot.yml
+version: 2
+updates:
+  # 1. Configuração para o Frontend (React/Vite)
+  - package-ecosystem: "npm"
+    directory: "/frontend" # Ajustado para sua pasta de front
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    labels:
+      - "frontend"
+      - "dependencies"
+
+  # 2. Configuração para o Backend (Java/Maven)
+  - package-ecosystem: "maven"
+    directory: "/backend" # Supondo que seu Java ficará aqui
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:15"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    labels:
+      - "backend"
+      - "java"
+
+  # 3. Monitorar as GitHub Actions (Segurança extra)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "ci/cd"
