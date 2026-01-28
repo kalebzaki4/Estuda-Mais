@@ -3,6 +3,7 @@ import { FaClock, FaBook, FaPlay, FaPause, FaRedo, FaPlus, FaTrophy, FaChartBar,
 import { HiXMark } from 'react-icons/hi2'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import confetti from 'canvas-confetti'
 import studyService from '../../services/studyService.js'
 
@@ -140,13 +141,17 @@ export default function PomodoroTimer({
       setShowRewardModal(true)
       setShowXpParticles(true)
 
-      // Disparar confetes
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#8a2be2', '#2575fc', '#facc15']
-      })
+      // Disparar confetes com proteção contra erros
+      try {
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#8a2be2', '#2575fc', '#facc15']
+        })
+      } catch (confettiError) {
+        console.warn('⚠️ Confetti falhou, continuando sem efeitos visuais:', confettiError)
+      }
       
       // Desativar partículas após a animação
       setTimeout(() => setShowXpParticles(false), 2000)
@@ -165,7 +170,15 @@ export default function PomodoroTimer({
       }
     } catch (error) {
       console.error("Erro ao finalizar sessão:", error)
-      alert("Erro ao salvar sessão. Verifique o resumo.")
+      toast.error("Erro ao salvar sessão", {
+        description: "Verifique o resumo e tente novamente.",
+        style: {
+          background: '#000000',
+          color: '#FFFFFF',
+          border: '1px solid #7c3aed',
+        },
+        duration: 5000
+      })
     } finally {
       setIsFinishing(false)
     }
@@ -179,7 +192,15 @@ export default function PomodoroTimer({
     const topicRegex = /^(?=(?:.*\s.*){1,}|.{10,})(?!.*(.)\1{4,}).*$/
     
     if (!topicRegex.test(sanitized)) {
-      alert("Tópico inválido! Use pelo menos 10 caracteres ou 2 palavras, e evite repetições.")
+      toast.error("Tópico inválido!", {
+        description: "Use pelo menos 10 caracteres ou 2 palavras. Evite repetições.",
+        style: {
+          background: '#000000',
+          color: '#FFFFFF',
+          border: '1px solid #7c3aed',
+        },
+        duration: 4000
+      })
       return
     }
 

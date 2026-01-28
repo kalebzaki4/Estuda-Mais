@@ -1,0 +1,114 @@
+/* ===== CUSTOMIZAÇÃO DO SONNER TOAST ===== */
+/* Variáveis CSS para o Sonner */
+:root {
+  --sonner-border-radius: 12px;
+  --sonner-background: #1a1a1a;
+  --sonner-text-color: #ffffff;
+  --sonner-border-color: rgba(139, 92, 246, 0.3);
+}
+[data-sonner-toast] {
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(30, 20, 50, 0.9) 100%) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 1px rgba(123, 47, 247, 0.3);
+  animation: toastSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: Poppins, Inter, system-ui, sans-serif;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: linear-gradient(135deg, rgba(30, 20, 30, 0.95) 0%, rgba(40, 15, 30, 0.9) 100%) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1), 0 0 1px rgba(239, 68, 68, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] {
+  color: #ef4444 !important;
+}
+
+/* Toast de sucesso */
+[data-sonner-toast][data-type="success"] {
+  background: linear-gradient(135deg, rgba(20, 30, 20, 0.95) 0%, rgba(15, 40, 20, 0.9) 100%) !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1), 0 0 1px rgba(34, 197, 94, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] {
+  color: #22c55e !important;
+}
+
+/* Toast de info */
+[data-sonner-toast][data-type="info"] {
+  background: linear-gradient(135deg, rgba(20, 25, 35, 0.95) 0%, rgba(15, 25, 45, 0.9) 100%) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1), 0 0 1px rgba(59, 130, 246, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-icon] {
+  color: #3b82f6 !important;
+}
+
+/* Texto do toast */
+[data-sonner-toast] [data-content] {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+[data-sonner-toast] [data-description] {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+/* Botão de fechar */
+[data-sonner-toast] [data-close-button] {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Container do Toaster */
+[data-sonner-toaster] {
+  z-index: 9999;
+}
+
+/* Ícones do toast */
+[data-sonner-toast] [data-icon] {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Progress bar customizado */
+[data-sonner-toast] [data-progress] {
+  background: linear-gradient(to right, rgba(123, 47, 247, 0.6), rgba(123, 47, 247, 0.3));
+}
+
+[data-sonner-toast][data-type="error"] [data-progress] {
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.6), rgba(239, 68, 68, 0.3));
+}
+
+[data-sonner-toast][data-type="success"] [data-progress] {
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.6), rgba(34, 197, 94, 0.3));
+}
+
+[data-sonner-toast][data-type="info"] [data-progress] {
+  background: linear-gradient(to right, rgba(59, 130, 246, 0.6), rgba(59, 130, 246, 0.3));
+}
