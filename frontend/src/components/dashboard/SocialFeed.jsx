@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaHeart, FaComment, FaShare, FaPlus, FaClock, FaTrophy, FaBook, FaFire } from 'react-icons/fa'
-import { FaJava, FaReact, FaJsSquare, FaPython, FaDatabase, FaTerminal, FaCode } from 'react-icons/fa'
+import { FaPlus, FaClock, FaTrophy, FaBook, FaFire, FaJava, FaReact, FaJsSquare, FaPython, FaDatabase, FaTerminal, FaCode } from 'react-icons/fa'
+import { Heart, MessageCircle, Share2, Sparkles } from 'lucide-react'
 import axios from 'axios'
 
 const subjectConfig = {
@@ -37,7 +37,8 @@ export default function SocialFeed({ user, onStartNewStudy }) {
         likes: post.curtidas || 0,
         comments: post.comentarios?.map(c => ({ user: 'Estudante', text: c })) || [],
         isLiked: false,
-        showComments: false
+        showComments: false,
+        isLiking: false // Estado para otimistic UI
       }))
       setPosts(feedPosts)
     } catch (err) {
@@ -53,14 +54,46 @@ export default function SocialFeed({ user, onStartNewStudy }) {
 
   const handleLike = async (postId) => {
     try {
-      await axios.post(`http://localhost:8080/posts/${postId}/curtir`)
+      // Otimistic UI - atualizar localmente primeiro
       setPosts(prev => prev.map(post => 
         post.id === postId 
-          ? { ...post, likes: post.likes + 1, isLiked: true }
+          ? { 
+              ...post, 
+              isLiked: !post.isLiked,
+              likes: post.isLiked ? post.likes - 1 : post.likes + 1,
+              isLiking: true
+            }
+          : post
+      ))
+
+      // Sincronizar com backend
+      if (posts.find(p => p.id === postId)?.isLiked) {
+        // Se já estava curtido, remover curtida
+        await axios.delete(`http://localhost:8080/posts/${postId}/curtir`)
+      } else {
+        // Caso contrário, adicionar curtida
+        await axios.post(`http://localhost:8080/posts/${postId}/curtir`)
+      }
+
+      // Remover estado de carregamento
+      setPosts(prev => prev.map(post => 
+        post.id === postId 
+          ? { ...post, isLiking: false }
           : post
       ))
     } catch (error) {
       console.error("Erro ao curtir:", error)
+      // Revert em caso de erro
+      setPosts(prev => prev.map(post => 
+        post.id === postId 
+          ? { 
+              ...post, 
+              isLiked: !post.isLiked,
+              likes: post.isLiked ? post.likes - 1 : post.likes + 1,
+              isLiking: false
+            }
+          : post
+      ))
     }
   }
 
@@ -134,82 +167,118 @@ export default function SocialFeed({ user, onStartNewStudy }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-[#1a1a2e]/60 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-[#8a2be2]/30 transition-all group"
+              className="bg-black border border-zinc-800 rounded-2xl overflow-hidden hover:border-purple-600/50 transition-all duration-300 group shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
             >
               {/* Header do Post */}
-              <div className="p-6 flex items-center justify-between border-b border-white/5">
+              <div className="p-6 flex items-center justify-between border-b border-zinc-800/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold">
-                    {post.user.name.charAt(0)}
-                  </div>
+                  <motion.div 
+                    className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center text-white font-bold text-lg"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {post.user.name.charAt(0).toUpperCase()}
+                  </motion.div>
                   <div>
-                    <h4 className="text-white font-bold">{post.user.name}</h4>
-                    <p className="text-white/40 text-[10px] uppercase tracking-widest font-black">
+                    <h4 className="text-white font-bold text-sm">{post.user.name}</h4>
+                    <p className="text-zinc-400 text-xs">
                       {new Date(post.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
                 </div>
-                <div className="bg-white/5 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
+                <div className="bg-purple-900/30 px-3 py-1.5 rounded-full border border-purple-500/30 flex items-center gap-2 group-hover:border-purple-500/60 transition-colors">
                   {getSubjectIcon(post.subject)}
-                  <span className="text-white/70 text-xs font-bold">{post.subject}</span>
+                  <span className="text-purple-400 text-xs font-semibold">{post.subject}</span>
                 </div>
               </div>
 
               {/* Conteúdo do Post */}
               <div className="p-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex gap-4">
+                  <div className="flex gap-6">
                     <div className="flex flex-col">
-                      <span className="text-[10px] text-white/30 uppercase font-black">Tempo</span>
-                      <span className="text-lg font-bold text-white">{post.duration} min</span>
+                      <span className="text-xs text-zinc-500 uppercase font-semibold tracking-wide">Tempo</span>
+                      <span className="text-2xl font-bold text-white">{post.duration}min</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[10px] text-white/30 uppercase font-black">XP Ganho</span>
-                      <span className="text-lg font-bold text-amber-400">+{post.xp} XP</span>
+                      <span className="text-xs text-zinc-500 uppercase font-semibold tracking-wide">XP</span>
+                      <span className="text-2xl font-bold text-purple-400">+{post.xp}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <FaFire className="text-orange-500" />
-                    <span className="text-sm font-black text-white">CONCLUÍDO</span>
+                  <div className="flex items-center gap-2 bg-green-500/10 px-3 py-2 rounded-lg border border-green-500/30">
+                    <FaFire className="text-orange-400 text-sm" />
+                    <span className="text-xs font-bold text-white">COMPLETO</span>
                   </div>
                 </div>
 
                 {post.topics.length > 0 && (
                   <div className="flex flex-wrap gap-2">
                     {post.topics.map((topic, tIdx) => (
-                      <span key={tIdx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-white/50 font-bold">
+                      <motion.span 
+                        key={tIdx}
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1 bg-zinc-900/50 border border-zinc-700/50 rounded-full text-xs text-zinc-300 font-medium hover:border-purple-500/50 transition-colors cursor-default"
+                      >
                         #{topic}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 )}
 
                 {post.summary && (
-                  <p className="text-white/60 text-sm line-clamp-3 italic">
+                  <p className="text-zinc-400 text-sm leading-relaxed italic border-l-2 border-purple-600/50 pl-3">
                     "{post.summary}"
                   </p>
                 )}
               </div>
 
               {/* Footer do Post (Interações) */}
-              <div className="px-6 py-4 bg-white/5 flex items-center gap-6 border-t border-white/5">
-                <button 
+              <div className="px-6 py-4 bg-zinc-900/30 flex items-center gap-6 border-t border-zinc-800/50">
+                {/* Like Button */}
+                <motion.button 
                   onClick={() => handleLike(post.id)}
-                  className={`flex items-center gap-2 transition-colors ${post.isLiked ? 'text-red-500' : 'text-white/40 hover:text-white'}`}
+                  whileTap={{ scale: 1.2 }}
+                  disabled={post.isLiking}
+                  className={`flex items-center gap-2 transition-all duration-300 ${
+                    post.isLiked 
+                      ? 'text-purple-500' 
+                      : 'text-zinc-500 hover:text-white'
+                  }`}
                 >
-                  <FaHeart className={post.isLiked ? 'scale-110 animate-bounce' : ''} />
-                  <span className="text-xs font-bold">{post.likes}</span>
-                </button>
-                <button 
+                  <motion.div
+                    animate={post.isLiked ? { scale: [1, 1.3, 1] } : {}}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Heart 
+                      size={20}
+                      className={post.isLiked ? 'fill-purple-500' : ''}
+                    />
+                  </motion.div>
+                  <span className="text-sm font-semibold">{post.likes}</span>
+                </motion.button>
+
+                {/* Comment Button */}
+                <motion.button 
                   onClick={() => toggleComments(post.id)}
-                  className={`flex items-center gap-2 transition-colors ${post.showComments ? 'text-[#8a2be2]' : 'text-white/40 hover:text-white'}`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex items-center gap-2 transition-all duration-300 ${
+                    post.showComments 
+                      ? 'text-purple-500' 
+                      : 'text-zinc-500 hover:text-white'
+                  }`}
                 >
-                  <FaComment />
-                  <span className="text-xs font-bold">{post.comments.length}</span>
-                </button>
-                <button className="flex items-center gap-2 text-white/40 hover:text-white transition-colors ml-auto">
-                  <FaShare />
-                </button>
+                  <MessageCircle size={20} />
+                  <span className="text-sm font-semibold">{post.comments.length}</span>
+                </motion.button>
+
+                {/* Share Button */}
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 text-zinc-500 hover:text-white transition-all duration-300 ml-auto"
+                >
+                  <Share2 size={20} />
+                </motion.button>
               </div>
 
               {/* Seção de Comentários */}
@@ -219,40 +288,46 @@ export default function SocialFeed({ user, onStartNewStudy }) {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden bg-[#0a0a0f]/50 border-t border-white/5"
+                    className="overflow-hidden bg-zinc-900/20 border-t border-zinc-800/50"
                   >
                     <div className="p-6 space-y-4">
-                      {post.comments.map((comment, cIdx) => (
-                        <div key={cIdx} className="flex gap-3">
-                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
-                            {comment.user.charAt(0)}
+                      {post.comments.length > 0 ? (
+                        post.comments.map((comment, cIdx) => (
+                          <div key={cIdx} className="flex gap-3">
+                            <div className="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-xs font-bold text-purple-400 shrink-0 border border-purple-500/30">
+                              {comment.user.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="bg-zinc-900/50 rounded-xl px-4 py-2 flex-1 border border-zinc-800/50">
+                              <p className="text-white font-semibold text-xs mb-1">{comment.user}</p>
+                              <p className="text-zinc-300 text-sm">{comment.text}</p>
+                            </div>
                           </div>
-                          <div className="bg-white/5 rounded-2xl px-4 py-2 flex-1">
-                            <p className="text-white font-bold text-xs mb-1">{comment.user}</p>
-                            <p className="text-white/70 text-sm">{comment.text}</p>
-                          </div>
-                        </div>
-                      ))}
+                        ))
+                      ) : (
+                        <p className="text-zinc-400 text-sm text-center py-4 italic">Nenhum comentário ainda. Seja o primeiro!</p>
+                      )}
 
-                      <div className="flex gap-3 pt-2">
-                        <div className="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-[10px] font-bold text-white shrink-0">
-                          {user?.name?.charAt(0) || 'U'}
+                      <div className="flex gap-3 pt-4 border-t border-zinc-800/50">
+                        <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                          {user?.name?.charAt(0).toUpperCase() || 'U'}
                         </div>
                         <div className="flex-1 flex gap-2">
                           <input
                             type="text"
-                            placeholder="Escreva um comentário..."
+                            placeholder="Deixe um comentário..."
                             value={commentText[post.id] || ''}
                             onChange={(e) => setCommentText(prev => ({ ...prev, [post.id]: e.target.value }))}
                             onKeyPress={(e) => e.key === 'Enter' && handleAddComment(post.id)}
-                            className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-[#8a2be2]/50"
+                            className="flex-1 bg-zinc-900/50 border border-zinc-700/50 rounded-lg px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-purple-600/50 transition-colors"
                           />
-                          <button
+                          <motion.button
                             onClick={() => handleAddComment(post.id)}
-                            className="px-4 py-2 bg-[#8a2be2]/20 hover:bg-[#8a2be2]/40 text-[#8a2be2] rounded-xl text-xs font-bold transition-colors"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-4 py-2 bg-purple-600/20 hover:bg-purple-600/40 text-purple-400 rounded-lg text-xs font-bold transition-colors border border-purple-500/30"
                           >
-                            Postar
-                          </button>
+                            Enviar
+                          </motion.button>
                         </div>
                       </div>
                     </div>
@@ -262,10 +337,10 @@ export default function SocialFeed({ user, onStartNewStudy }) {
             </motion.div>
           ))
         ) : (
-          <div className="text-center py-20 bg-white/5 rounded-3xl border border-dashed border-white/10">
-            <FaTrophy className="text-white/10 text-6xl mx-auto mb-4" />
+          <div className="text-center py-20 bg-zinc-900/30 rounded-2xl border border-dashed border-zinc-800">
+            <FaTrophy className="text-zinc-700 text-5xl mx-auto mb-4" />
             <h3 className="text-white font-bold">Nenhuma atividade recente</h3>
-            <p className="text-white/30 text-sm">Seja o primeiro a compartilhar seu progresso!</p>
+            <p className="text-zinc-400 text-sm">Seja o primeiro a compartilhar seu progresso!</p>
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider } from "./contexts/AuthContextCore.jsx";
 import { AnimatePresence } from 'framer-motion'
+import { Toaster } from 'sonner'
 import Layout from './components/layout/Layout.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
 import PublicRoute from './components/auth/PublicRoute.jsx'
@@ -84,6 +85,16 @@ export default function App() {
       <AuthProvider>
         <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
           <AnimatedRoutes />
+          <Toaster
+            theme="dark"
+            position="top-right"
+            richColors
+            closeButton
+            expand={true}
+            duration={4000}
+            visibleToasts={3}
+            containerAriaLabel="Toast Notifications"
+          />
         </HashRouter>
       </AuthProvider>
     </ErrorBoundary>

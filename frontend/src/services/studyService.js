@@ -7,21 +7,65 @@ const studyService = {
   async listarMaterias() {
     const token = localStorage.getItem('jwtToken');
     const headers = {
-      'Authorization': token ? `Bearer ${token}` : '',
+      'Content-Type': 'application/json',
     };
+    
+    // Adicionar token se existir
+    if (token && token.trim()) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
 
     try {
+      console.log('📡 Iniciando requisição GET /materias');
+      console.log('🔗 URL:', `${API_BASE_URL}/materias`);
+      
+      // Usar AbortController com timeout manualel
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
       const res = await fetch(`${API_BASE_URL}/materias`, {
-        headers
+        method: 'GET',
+        headers,
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
 
-      if (!res.ok) return { success: false, error: "Erro ao buscar matérias" };
+      console.log('📊 Status HTTP:', res.status);
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('❌ HTTP Error:', res.status, errorText);
+        return { 
+          success: false, 
+          error: `HTTP ${res.status}: ${errorText || res.statusText}` 
+        };
+      }
 
       const data = await res.json();
-      // Retorna sucesso e os dados (espera-se um Array do Java)
-      return { success: true, data };
+      console.log('📦 Dados recebidos:', data);
+      
+      // Tratamento flexível da resposta
+      if (Array.isArray(data)) {
+        console.log(`✅ Sucesso! ${data.length} matérias carregadas`);
+        return { success: true, data };
+      }
+      
+      if (data && typeof data === 'object') {
+        // Se é um objeto, retornar array vazio ou tentar extrair os dados
+        if (data.data && Array.isArray(data.data)) {
+          return { success: true, data: data.data };
+        }
+        return { success: true, data: [] };
+      }
+      
+      return { success: true, data: [] };
     } catch (error) {
-      return { success: false, error: "Erro de conexão ao buscar matérias" };
+      console.error('❌ Erro na requisição:', error.name, error.message);
+      const errorMsg = error.name === 'AbortError' 
+        ? 'Timeout - servidor não respondeu' 
+        : error.message;
+      return { success: false, error: errorMsg };
     }
   },
 
