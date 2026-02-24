@@ -2,13 +2,14 @@ package com.estudamais.api.model;
 
 import com.estudamais.api.dto.UsuarioDTO;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "usuarios")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 
     @Id

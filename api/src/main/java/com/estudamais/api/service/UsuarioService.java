@@ -21,9 +21,6 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
-
-    // No UsuarioService.java
-
     public void deletarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
