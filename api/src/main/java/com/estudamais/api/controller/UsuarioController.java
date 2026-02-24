@@ -1,6 +1,10 @@
 package com.estudamais.api.controller;
 
+import com.estudamais.api.dto.DadosTokenDTO;
 import com.estudamais.api.dto.UsuarioDTO;
+import com.estudamais.api.infra.security.TokenService;
+import com.estudamais.api.model.Usuario;
+import com.estudamais.api.repository.UsuarioRepository;
 import com.estudamais.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,15 +12,34 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(origins = "*")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Endpoint para criar um novo usuário
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @PostMapping
     public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados) {
         this.usuarioService.criarUsuario(dados);
         return ResponseEntity.ok().build();
+    }
+
+    // Endpoint para fazer login
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody UsuarioDTO dados) {
+        Usuario usuario = this.usuarioRepository.findByEmail(dados.email());
+
+        if (usuario != null && usuario.getSenha().equals(dados.senha())) {
+            String token = tokenService.gerarToken(usuario);
+            return ResponseEntity.ok(new DadosTokenDTO(token));
+        }
+
+        return ResponseEntity.status(401).body("Credenciais inválidas");
     }
 
     // Endpoint para deletar um usuário
