@@ -41,7 +41,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody UsuarioDTO dados) {
         Usuario usuario = this.usuarioRepository.findByEmail(dados.email());
-        
+
         if (usuario != null && usuario.getSenha().equals(dados.senha())) {
             String token = tokenService.gerarToken(usuario);
             return ResponseEntity.ok(new DadosTokenDTO(token));
@@ -65,5 +65,11 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<Object> listarUsuarios() {
         return ResponseEntity.ok(this.usuarioService.listarUsuarios());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        return ResponseEntity.ok(new UsuarioDTO(usuario));
     }
 }

@@ -2,6 +2,7 @@ package com.estudamais.api.infra.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.estudamais.api.model.Usuario;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
@@ -22,6 +23,19 @@ public class TokenService {
                     .sign(algoritmo);
         } catch (Exception exception) {
             throw new RuntimeException("Erro ao gerar token", exception);
+        }
+    }
+
+    public String getSubject(String tokenJWT) {
+        try {
+            Algorithm algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo)
+                    .withIssuer("estuda-mais-api")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Token JWT inválido ou expirado!");
         }
     }
 
