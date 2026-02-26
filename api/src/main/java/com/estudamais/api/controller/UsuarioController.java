@@ -1,10 +1,13 @@
 package com.estudamais.api.controller;
 
 import com.estudamais.api.dto.UsuarioDTO;
+import com.estudamais.api.model.Usuario;
+import com.estudamais.api.repository.UsuarioRepository;
 import com.estudamais.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -12,11 +15,18 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     // Endpoint para criar um novo usuário
     @PostMapping
-    public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados) {
-        this.usuarioService.criarUsuario(dados);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados, UriComponentsBuilder uriBuilder) {
+        var usuario = new Usuario(dados);
+        usuarioRepository.save(usuario);
+
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(usuario);
     }
 
     // Endpoint para deletar um usuário
