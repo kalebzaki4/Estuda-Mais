@@ -118,41 +118,37 @@ export default function Signup() {
     return Object.keys(newErrors).length === 0
   }
 
-const makeRegisterPayload = ({ name, email, password }) => ({
-  nome: String(name || '').trim(), 
+const makeRegisterPayload = ({ nome, email, senha }) => ({
+  nome: String(nome || '').trim(), 
   email: String(email || '').trim(),
-  senha: String(password || ''), 
+  senha: String(senha || ''), 
 })
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true })
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    if (!validateForm()) return
+  const payload = makeRegisterPayload({ nome, email, senha });
 
-    setLoading(true)
-    setErrors(prev => ({ ...prev, general: undefined }))
-try {
-  const payload = makeRegisterPayload({ name, email, password });
-  
-  const response = await fetch('http://localhost:8080/usuarios', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
+  try {
+    const response = await fetch('http://localhost:8080/usuarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-  if (response.ok) {
-    navigate('/dashboard');
-  } else {
-    const errorData = await response.json();
-    setErrors(prev => ({ ...prev, general: errorData.message || 'Erro ao cadastrar.' }));
+    if (response.ok) {
+      alert("Cadastro realizado! Agora faça login.");
+      navigate('/login');
+    } else {
+      alert("Erro ao cadastrar. Talvez o e-mail já exista.");
+    }
+  } catch (error) {
+    alert("Erro de conexão com o servidor.");
+  } finally {
+    setLoading(false);
   }
-} catch (error) {
-  setErrors(prev => ({ ...prev, general: 'Não foi possível conectar ao servidor.' }));
-}
-  }
+};
 
   return (
     <Motion.main

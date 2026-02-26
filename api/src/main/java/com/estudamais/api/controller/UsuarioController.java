@@ -9,6 +9,7 @@ import com.estudamais.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -23,10 +24,16 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    // Endpoint para criar um novo usuário
     @PostMapping
-    public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados) {
-        this.usuarioService.criarUsuario(dados);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados, UriComponentsBuilder uriBuilder) {
+        var usuario = new Usuario();
+        usuarioRepository.save(usuario);
+
+        // uri
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DadosTokenDTO(tokenService.gerarToken(usuario)));
     }
 
     // Endpoint para fazer login
@@ -44,7 +51,7 @@ public class UsuarioController {
 
     // Endpoint para deletar um usuário
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletarUsuario(@PathVariable Long id) { // Mudamos de UsuarioDTO para Long
+    public ResponseEntity<Object> deletarUsuario(@PathVariable Long id) {
         this.usuarioService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }
