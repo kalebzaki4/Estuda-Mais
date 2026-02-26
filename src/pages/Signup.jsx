@@ -118,34 +118,37 @@ export default function Signup() {
     return Object.keys(newErrors).length === 0
   }
 
-  const makeRegisterPayload = ({ name, email, password }) => ({
-    name: String(name || '').trim(),
-    email: String(email || '').trim(),
-    password: String(password || ''),
-  })
+const makeRegisterPayload = ({ nome, email, senha }) => ({
+  nome: String(nome || '').trim(), 
+  email: String(email || '').trim(),
+  senha: String(senha || ''), 
+})
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setTouched({ name: true, email: true, password: true, confirmPassword: true, terms: true })
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    if (!validateForm()) return
+  const payload = makeRegisterPayload({ nome, email, senha });
 
-    setLoading(true)
-    setErrors(prev => ({ ...prev, general: undefined }))
-    try {
-      // TODO: Implementar chamada ao novo backend para registrar usuário
-      // Mock implementation - remove quando backend estiver pronto
-      const payload = makeRegisterPayload({ name, email, password })
-      const result = await register(payload.name, payload.email, payload.password)
+  try {
+    const response = await fetch('http://localhost:8080/usuarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-      if (result && result.success) navigate('/dashboard')
-      else setErrors(prev => ({ ...prev, general: result?.error || 'Erro ao cadastrar. Tente novamente.' }))
-    } catch (error) {
-      setErrors(prev => ({ ...prev, general: 'Erro ao cadastrar. Tente novamente.' }))
-    } finally {
-      setLoading(false)
+    if (response.ok) {
+      alert("Cadastro realizado! Agora faça login.");
+      navigate('/login');
+    } else {
+      alert("Erro ao cadastrar. Talvez o e-mail já exista.");
     }
+  } catch (error) {
+    alert("Erro de conexão com o servidor.");
+  } finally {
+    setLoading(false);
   }
+};
 
   return (
     <Motion.main

@@ -38,4 +38,12 @@ public class UsuarioService {
     public Object listarUsuarios() {
         return usuarioRepository.findAll();
     }
+
+    public boolean login(UsuarioDTO dados) {
+        Usuario usuario = usuarioRepository.findByEmail(dados.email());
+        if (usuario != null && usuario.getSenha().equals(dados.senha())) {
+            return true;
+        }
+        return false;
+    }
 }
