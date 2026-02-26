@@ -28,13 +28,11 @@ public class UsuarioController {
     // Endpoint para criar um novo usuário (Cadastro)
     @PostMapping
     public ResponseEntity<Object> criarUsuario(@RequestBody UsuarioDTO dados, UriComponentsBuilder uriBuilder) {
-        // Mantive a criação do objeto passando os 'dados' (do seu HEAD)
         var usuario = new Usuario(dados);
         usuarioRepository.save(usuario);
 
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
 
-        // Retorna o token após o cadastro (da branch de JWT)
         var token = tokenService.gerarToken(usuario);
         return ResponseEntity.created(uri).body(new DadosTokenDTO(token));
     }
@@ -43,8 +41,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody UsuarioDTO dados) {
         Usuario usuario = this.usuarioRepository.findByEmail(dados.email());
-
-        // Verificação simples de senha (melhorar com BCrypt depois!)
+        
         if (usuario != null && usuario.getSenha().equals(dados.senha())) {
             String token = tokenService.gerarToken(usuario);
             return ResponseEntity.ok(new DadosTokenDTO(token));
