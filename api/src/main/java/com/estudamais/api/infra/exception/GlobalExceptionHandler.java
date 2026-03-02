@@ -1,4 +1,4 @@
-package com.estudamais.api.infra.security.exception;
+package com.estudamais.api.infra.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
