@@ -1,6 +1,6 @@
 package com.estudamais.api.dto;
 
-import com.estudamais.api.model.Usuario;
+import com.estudamais.api.domain.usuario.Usuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

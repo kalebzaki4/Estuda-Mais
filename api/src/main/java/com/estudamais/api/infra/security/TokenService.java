@@ -3,7 +3,7 @@ package com.estudamais.api.infra.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.estudamais.api.model.Usuario;
+import com.estudamais.api.domain.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
