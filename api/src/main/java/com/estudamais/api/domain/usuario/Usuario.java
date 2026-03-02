@@ -1,4 +1,4 @@
-package com.estudamais.api.model;
+package com.estudamais.api.domain.usuario;
 
 import com.estudamais.api.dto.UsuarioDTO;
 import jakarta.persistence.*;
@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
     @Id
