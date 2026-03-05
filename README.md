@@ -11,11 +11,6 @@ Bem-vindo ao repositório frontend do **Estuda+**! Esta aplicação web interati
     * [Instalação](#instalação)
     * [Rodar o Aplicativo](#rodar-o-aplicativo)
 4.  [🌐 Deploy no GitHub Pages](#-deploy-no-github-pages)
-5.  [🎨 Paleta de Cores](#-paleta-de-cores)
-6.  [📈 Status do Projeto e Próximos Passos](#-status-do-projeto-e-próximos-passos)
-7.  [🤝 Contribuição](#-contribuição)
-8.  [📄 Licença](#-licença)
-9.  [📧 Contacto](#-contacto)
 
 ## 🌟 Destaques e Funcionalidades Principais
 
