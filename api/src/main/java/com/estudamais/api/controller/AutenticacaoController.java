@@ -2,6 +2,7 @@ package com.estudamais.api.controller;
 
 import com.estudamais.api.domain.usuario.Usuario;
 import com.estudamais.api.dto.LoginDTO;
+import com.estudamais.api.infra.security.TokenDTO;
 import com.estudamais.api.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,11 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<?> autenticarUsuario(@RequestBody @Valid LoginDTO loginDTO) {
-        var Token = new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.senha());
-        var authentication = authenticationManager.authenticate(Token);
+    public ResponseEntity autenticarUsuario(@RequestBody @Valid LoginDTO dados) {
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+        var authentication = authenticationManager.authenticate(authenticationToken);
+        var TokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) authentication.getPrincipal()));
+        return ResponseEntity.ok(new TokenDTO(TokenJWT));
     }
 }
