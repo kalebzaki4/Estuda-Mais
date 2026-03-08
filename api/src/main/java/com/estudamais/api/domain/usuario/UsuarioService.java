@@ -2,9 +2,11 @@ package com.estudamais.api.domain.usuario;
 
 import com.estudamais.api.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,13 +15,39 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public void criarUsuario(UsuarioDTO dados) {
-        if (usuarioRepository.findByEmail(dados.email()) != null) {
+        if (usuarioRepository.findByEmail(dados.email()).isPresent()) {
             throw new RuntimeException("Email já cadastrado");
         }
 
         Usuario usuario = new Usuario(dados);
+        usuario.setSenha(passwordEncoder.encode(dados.senha()));
+
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void atualizarUsuario(Long id, UsuarioDTO dados) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setNome(dados.nome());
+
+        if (!dados.email().equals(usuario.getEmail())) {
+            if (usuarioRepository.findByEmail(dados.email()).isPresent()) {
+                throw new RuntimeException("Email já cadastrado");
+            }
+            usuario.setEmail(dados.email());
+        }
+
+        if (dados.senha() != null && !dados.senha().isBlank()) {
+            usuario.setSenha(passwordEncoder.encode(dados.senha()));
+        }
+
         usuarioRepository.save(usuario);
     }
 
@@ -31,29 +59,10 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    @Transactional
-    public void atualizarUsuario(Long id, UsuarioDTO dados) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        usuario.setNome(dados.nome());
-
-        if (!dados.email().equals(usuario.getEmail())) {
-            if (usuarioRepository.findByEmail(dados.email()) != null) {
-                throw new RuntimeException("Email já cadastrado");
-            }
-            usuario.setEmail(dados.email());
-        }
-
-        if (dados.senha() != null && !dados.senha().isBlank()) {
-            usuario.setSenha(dados.senha());
-        }
-
-        usuarioRepository.save(usuario);
-    }
-
     public List<Usuario> listarUsuarios() {
-        return (List<Usuario>) usuarioRepository.findAll();
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarioRepository.findAll().forEach(usuarios::add);
+        return usuarios;
     }
 
     public Usuario buscarPorId(Long id) {
@@ -62,14 +71,11 @@ public class UsuarioService {
     }
 
     public Usuario buscarPorEmail(String email) {
-        Usuario usuario = (Usuario) usuarioRepository.findByEmail(email);
-        if (usuario == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-        return usuario;
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     public boolean existsByEmail(String email) {
-        return usuarioRepository.findByEmail(email) != null;
+        return usuarioRepository.findByEmail(email).isPresent();
     }
 }
