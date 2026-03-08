@@ -2,7 +2,7 @@ package com.estudamais.api.controller;
 
 import com.estudamais.api.domain.usuario.Usuario;
 import com.estudamais.api.domain.usuario.UsuarioService;
-import com.estudamais.api.dto.DadosTokenDTO;
+import com.estudamais.api.dto.TokenDTO;
 import com.estudamais.api.dto.UsuarioDTO;
 import com.estudamais.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class UsuarioController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<DadosTokenDTO> criarUsuario(
+    public ResponseEntity<TokenDTO> criarUsuario(
             @RequestBody UsuarioDTO dados,
             UriComponentsBuilder uriBuilder) {
 
@@ -37,7 +37,7 @@ public class UsuarioController {
 
         URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DadosTokenDTO(token));
+        return ResponseEntity.created(uri).body(new TokenDTO(token));
     }
 
     @DeleteMapping("/{id}")
