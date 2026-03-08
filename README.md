@@ -11,11 +11,6 @@ Bem-vindo ao repositório frontend do **Estuda+**! Esta aplicação web interati
     * [Instalação](#instalação)
     * [Rodar o Aplicativo](#rodar-o-aplicativo)
 4.  [🌐 Deploy no GitHub Pages](#-deploy-no-github-pages)
-5.  [🎨 Paleta de Cores](#-paleta-de-cores)
-6.  [📈 Status do Projeto e Próximos Passos](#-status-do-projeto-e-próximos-passos)
-7.  [🤝 Contribuição](#-contribuição)
-8.  [📄 Licença](#-licença)
-9.  [📧 Contacto](#-contacto)
 
 ## 🌟 Destaques e Funcionalidades Principais
 
@@ -23,19 +18,16 @@ O Estuda+ oferece um conjunto robusto e crescente de funcionalidades, desenhadas
 
 * **Autenticação Segura**:
     * **Login**: Acesso simplificado e seguro à sua conta pessoal.
-    * **Registo**: Crie a sua nova conta de forma rápida e intuitiva, com validações inteligentes.
+    * **Registro**: Crie a sua nova conta de forma rápida e intuitiva, com validações inteligentes.
 * **Dashboard Dinâmico e Personalizado (Início)**:
     * **Visão Geral Diária**: Um resumo conciso do seu tempo de estudo e progresso recente.
     * **Resumo dos Seus Tópicos de Estudo**: Acompanhe visualmente o tempo dedicado e o progresso em cada área de conhecimento.
     * **Atividade Recente dos Amigos**: Mantenha-se conectado e motivado pela atividade de estudo da sua rede de amigos.
-* **Exploração de Cursos Abrangente**:
-    * Uma vasta biblioteca de cursos, com foco em recursos "Grátis" e curadoria de conteúdo.
-    * Integração direta com plataformas externas, como vídeos do YouTube, para um aprendizado flexível e diversificado.
 * **Temporizador Pomodoro Integrado**:
     * Ferramenta de gestão de tempo essencial para otimizar o foco, combater a procrastinação e aumentar a produtividade nas suas sessões de estudo.
 * **Monitorização Detalhada do Progresso**:
-    * Métricas claras e visualizações sobre o seu tempo total de estudo, cursos concluídos e pontos de experiência (XP) acumulados.
-    * Secção de **Conquistas** para celebrar os seus marcos de aprendizagem e manter a motivação em alta.
+    * Métricas claras e visualizações sobre o seu tempo total de estudo e pontos de experiência (XP) acumulados.
+    * Seção de **Conquistas** para celebrar os seus marcos de aprendizagem e manter a motivação em alta.
 * **Gestão de Perfil de Utilizador**:
     * Visualize e edite as suas informações pessoais e preferências.
     * Acompanhe a sua lista de amigos e as suas interações.
@@ -43,11 +35,8 @@ O Estuda+ oferece um conjunto robusto e crescente de funcionalidades, desenhadas
     * Aprofunde-se em qualquer tópico de estudo com uma página dedicada que exibe:
         * Uma descrição aprofundada do conteúdo.
         * Um registo cronológico das suas atividades recentes de estudo.
-        * Links diretos para recursos relevantes no YouTube, cuidadosamente selecionados.
 * **Design Responsivo e Acessível**:
     * A interface adapta-se perfeitamente a qualquer tamanho de ecrã, proporcionando uma excelente experiência de utilizador em dispositivos desktop, tablets e telemóveis.
-* **Tema Escuro Moderno e Ergonómico**:
-    * Uma paleta de cores cuidadosamente selecionada (preto, roxo e branco) para reduzir a fadiga ocular durante longas sessões de estudo e proporcionar uma estética elegante e focada.
 
 ## 🚀 Tecnologias e Ferramentas
 
@@ -74,16 +63,15 @@ Certifique-se de ter as seguintes ferramentas instaladas no seu sistema:
 1.  **Clone o repositório:**
     Abra o seu terminal (PowerShell, Git Bash, CMD, etc.) e execute o comando para clonar o projeto:
     ```bash
-    git clone [https://github.com/](https://github.com/)<SEU_USUARIO_GITHUB>/estuda-mais-frontend.git
+    git clone [https://github.com/](https://github.com/)<kalebzaki4>/estuda-mais.git
     ```
-    *(Substitua `<SEU_USUARIO_GITHUB>` pelo seu nome de utilizador do GitHub e `estuda-mais-frontend` pelo nome real do seu repositório).*
 
 2.  **Navegue até o diretório do projeto frontend:**
     Após a clonagem, entre na pasta do projeto:
     ```bash
     cd estuda-mais-frontend
     ```
-    *(Se você clonou para um diretório específico, como `C:\Users\kalebzaki\Downloads\Estuda +\estuda-mais\frontend`, certifique-se de navegar para ele).*
+    *(Se você clonou para um diretório específico, como `C:\Users\você\Downloads\Estuda +\estuda-mais`, certifique-se de navegar para ele).*
 
 3.  **Instale as dependências:**
     No diretório do projeto, instale todas as bibliotecas e pacotes necessários:
