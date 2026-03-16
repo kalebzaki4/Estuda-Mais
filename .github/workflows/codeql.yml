@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '25 6 * * 6' # Roda todo sábado às 06:25
+    - cron: '25 6 * * 6'
 
 jobs:
   analyze:
@@ -18,31 +18,45 @@ jobs:
       packages: read
       actions: read
       contents: read
-
     strategy:
       fail-fast: false
       matrix:
         include:
           - language: java-kotlin
-            build-mode: autobuild # Tenta compilar seu Spring Boot automaticamente para uma análise profunda
+            build-mode: manual
           - language: javascript-typescript
             build-mode: none
           - language: actions
             build-mode: none
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-        # Ativa buscas por falhas de segurança estendidas e qualidade de código
-        queries: security-extended,security-and-quality
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended,security-and-quality
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
-      with:
-        category: "/language:${{matrix.language}}"
+      # 🔥 BUILD MANUAL PARA JAVA (o autobuild estava falhando)
+      - name: Build Java com Maven
+        if: matrix.language == 'java-kotlin'
+        run: |
+          cd api
+          ./mvnw clean package \
+            -B -V \
+            -DskipTests \
+            -Dmaven.javadoc.skip=true \
+            -Dcheckstyle.skip=true \
+            -Dpmd.skip=true \
+            -Dspotbugs.skip \
+            -Denforcer.skip \
+            -Dlicense.skip=true \
+            -Drat.skip=true \
+            -Dspotless.check.skip=true
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
