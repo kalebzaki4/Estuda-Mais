@@ -39,16 +39,16 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           queries: security-extended,security-and-quality
 
-      # === JAVA SETUP (igual ao seu CI) ===
-      - name: Set up JDK 17
+      # === JAVA SETUP (agora com a versão certa do seu projeto) ===
+      - name: Set up JDK 21
         if: matrix.language == 'java-kotlin'
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'maven'
 
-      # === BUILD MANUAL (o que estava faltando) ===
+      # === BUILD MANUAL ===
       - name: Build Java com Maven
         if: matrix.language == 'java-kotlin'
         run: |
