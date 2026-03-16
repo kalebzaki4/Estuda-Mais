@@ -2,8 +2,9 @@
 version: 2
 updates:
   # 1. Configuração para o Frontend (React/Vite)
+  # Verifique se a sua pasta se chama "frontend" ou "web"
   - package-ecosystem: "npm"
-    directory: "/frontend" # Ajustado para sua pasta de front
+    directory: "/frontend" 
     schedule:
       interval: "weekly"
       day: "monday"
@@ -15,8 +16,9 @@ updates:
       - "dependencies"
 
   # 2. Configuração para o Backend (Java/Maven)
+  # Se o seu arquivo pom.xml estiver na raiz da pasta "backend"
   - package-ecosystem: "maven"
-    directory: "/backend" # Supondo que seu Java ficará aqui
+    directory: "/backend" 
     schedule:
       interval: "weekly"
       day: "monday"
@@ -27,7 +29,7 @@ updates:
       - "backend"
       - "java"
 
-  # 3. Monitorar as GitHub Actions (Segurança extra)
+  # 3. Monitorar as GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
