@@ -39,19 +39,30 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           queries: security-extended,security-and-quality
 
-      # 🔥 BUILD MANUAL PARA JAVA (o autobuild estava falhando)
+      # === JAVA SETUP (obrigatório para o Maven rodar) ===
+      - name: Set up JDK 17
+        if: matrix.language == 'java-kotlin'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      # === BUILD MANUAL PARA JAVA ===
       - name: Build Java com Maven
         if: matrix.language == 'java-kotlin'
         run: |
           cd api
           ./mvnw clean package \
-            -B -V \
-            -DskipTests \
-            -Dmaven.javadoc.skip=true \
-            -Dcheckstyle.skip=true \
+            -B -V -e \
+            -Dfindbugs.skip \
+            -Dcheckstyle.skip \
             -Dpmd.skip=true \
             -Dspotbugs.skip \
             -Denforcer.skip \
+            -Dmaven.javadoc.skip \
+            -DskipTests \
+            -Dmaven.test.skip.exec \
             -Dlicense.skip=true \
             -Drat.skip=true \
             -Dspotless.check.skip=true
