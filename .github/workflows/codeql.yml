@@ -11,8 +11,8 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
     permissions:
       security-events: write
       packages: read
@@ -39,7 +39,7 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           queries: security-extended,security-and-quality
 
-      # === JAVA SETUP (obrigatório para o Maven rodar) ===
+      # === JAVA SETUP (igual ao seu CI) ===
       - name: Set up JDK 17
         if: matrix.language == 'java-kotlin'
         uses: actions/setup-java@v4
@@ -48,21 +48,19 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      # === BUILD MANUAL PARA JAVA ===
+      # === BUILD MANUAL (o que estava faltando) ===
       - name: Build Java com Maven
         if: matrix.language == 'java-kotlin'
         run: |
           cd api
           ./mvnw clean package \
             -B -V -e \
-            -Dfindbugs.skip \
-            -Dcheckstyle.skip \
+            -DskipTests \
+            -Dmaven.javadoc.skip=true \
+            -Dcheckstyle.skip=true \
             -Dpmd.skip=true \
             -Dspotbugs.skip \
             -Denforcer.skip \
-            -Dmaven.javadoc.skip \
-            -DskipTests \
-            -Dmaven.test.skip.exec \
             -Dlicense.skip=true \
             -Drat.skip=true \
             -Dspotless.check.skip=true
