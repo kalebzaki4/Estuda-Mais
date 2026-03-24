@@ -2,9 +2,7 @@ package com.estudamais.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record AutenticacaoDTO(
-        @NotBlank
-        String nome,
+public record UsuarioExclusaoDTO(
         @NotBlank
         String email,
         @NotBlank
