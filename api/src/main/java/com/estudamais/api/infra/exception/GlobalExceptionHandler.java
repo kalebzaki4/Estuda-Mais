@@ -1,10 +1,11 @@
-package com.estudamais.api.exception;
+package com.estudamais.api.infra.exception;
 
 import com.estudamais.api.dto.ErroRespostaDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.estudamais.api.infra.config.exception.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -12,32 +13,19 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 404
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErroRespostaDTO> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        ErroRespostaDTO erro = new ErroRespostaDTO(
-                LocalDateTime.now(),
-                404,
-                "Not Found",
-                ex.getMessage()
-        );
+        var erro = new ErroRespostaDTO(LocalDateTime.now(), 404, "Not Found", ex.getMessage());
         return ResponseEntity.status(404).body(erro);
     }
 
-    // 400
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErroRespostaDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-        String mensagem = ex.getFieldErrors().stream()
-                .map(erro -> erro.getField() + ": " + erro.getDefaultMessage())
+        var erros = ex.getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        ErroRespostaDTO erro = new ErroRespostaDTO(
-                LocalDateTime.now(),
-                400,
-                "Requisição Inválida",
-                mensagem
-        );
-
+        var erro = new ErroRespostaDTO(LocalDateTime.now(), 400, "Requisição Inválida", erros);
         return ResponseEntity.badRequest().body(erro);
     }
 }
