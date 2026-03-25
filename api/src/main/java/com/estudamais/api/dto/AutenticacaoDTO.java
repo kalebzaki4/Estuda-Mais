@@ -3,10 +3,10 @@ package com.estudamais.api.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public record AutenticacaoDTO(
-        @NotBlank
+        @NotBlank(message = "O campo nome é obrigatório")
         String nome,
-        @NotBlank
+        @NotBlank (message = "O campo email é obrigatório")
         String email,
-        @NotBlank
+        @NotBlank (message = "O campo senha é obrigatório")
         String senha) {
 }

@@ -1,7 +1,7 @@
 package com.estudamais.api.service;
 
 import com.estudamais.api.dto.AutenticacaoDTO;
-import com.estudamais.api.exception.ResourceNotFoundException;
+import com.estudamais.api.infra.config.exception.ResourceNotFoundException;
 import com.estudamais.api.model.Usuario;
 import com.estudamais.api.repository.UsuarioRepository;
 import jakarta.validation.Valid;
