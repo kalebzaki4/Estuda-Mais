@@ -1,3 +1,5 @@
-# Esconder configurações locais com senhas reais
+
 **/src/main/resources/application-local.properties
-node_modules
+
+node_modules/
+**/node_modules/
