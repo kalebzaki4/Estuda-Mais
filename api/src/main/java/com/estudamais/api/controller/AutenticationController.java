@@ -1,6 +1,9 @@
 package com.estudamais.api.controller;
 
 import com.estudamais.api.dto.AutenticacaoDTO;
+import com.estudamais.api.infra.security.TokenService;
+import com.estudamais.api.model.Usuario;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,16 +19,19 @@ public class AutenticationController {
 
     private final AuthenticationManager authenticationManager;
 
+    private final TokenService tokenService;
+
     @Autowired
-    public AutenticationController(AuthenticationManager authenticationManager) {
+    public AutenticationController(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping
-    public ResponseEntity<?> autenticar(@RequestBody AutenticacaoDTO dados) {
+    public ResponseEntity autenticar(@RequestBody @Valid AutenticacaoDTO dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.nome(), dados.senha());
-        authenticationManager.authenticate(token);
+        var authentication = authenticationManager.authenticate(token);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(tokenService.gerarToken((Usuario) authentication.getPrincipal()));
     }
 }
