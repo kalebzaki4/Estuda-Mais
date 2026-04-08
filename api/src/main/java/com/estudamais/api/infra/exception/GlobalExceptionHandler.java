@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // erro 404
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErroRespostaDTO> handleResourceNotFoundException(ResourceNotFoundException ex) {
         var erro = new ErroRespostaDTO(LocalDateTime.now(), 404, "Not Found", ex.getMessage());
         return ResponseEntity.status(404).body(erro);
     }
 
+    // erro 400
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErroRespostaDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         var erros = ex.getFieldErrors().stream()
