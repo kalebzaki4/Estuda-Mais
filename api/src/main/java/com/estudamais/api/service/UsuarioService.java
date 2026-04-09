@@ -34,12 +34,12 @@ public class UsuarioService {
     }
 
     public Usuario findById(Long id) {
-        return usuarioRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository.findById((id)).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
 
     @Transactional
     public Usuario deleteUsuario(Long id) {
-        Usuario usuario = usuarioRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário com o ID: " + id));
+        Usuario usuario = usuarioRepository.findById((id)).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário com o ID: " + id));
 
         usuarioRepository.delete(usuario);
         return usuario;
@@ -47,7 +47,7 @@ public class UsuarioService {
 
     @Transactional
     public Usuario updateUsuario(Long id, @Valid AutenticacaoDTO dadosUsuario) {
-        Usuario usuario = usuarioRepository.findById(Math.toIntExact(id)).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário"));
+        Usuario usuario = usuarioRepository.findById((id)).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário"));
         usuario.setNome(dadosUsuario.nome());
         usuario.setEmail(dadosUsuario.email());
         usuario.setSenha(dadosUsuario.senha());
