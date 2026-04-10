@@ -1,6 +1,7 @@
 package com.estudamais.api.service;
 
 import com.estudamais.api.dto.AutenticacaoDTO;
+import com.estudamais.api.dto.UsuarioAtualizacaoDTO;
 import com.estudamais.api.infra.config.exception.ResourceNotFoundException;
 import com.estudamais.api.model.Usuario;
 import com.estudamais.api.repository.UsuarioRepository;
@@ -46,7 +47,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario updateUsuario(Long id, @Valid AutenticacaoDTO dadosUsuario) {
+    public Usuario updateUsuario(Long id, @Valid UsuarioAtualizacaoDTO dadosUsuario) {
         Usuario usuario = usuarioRepository.findById((id)).orElseThrow(() -> new ResourceNotFoundException("Ops! Não encontramos o usuário"));
         usuario.setNome(dadosUsuario.nome());
         usuario.setEmail(dadosUsuario.email());

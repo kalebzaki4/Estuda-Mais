@@ -18,7 +18,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256("12345678");
             return JWT.create()
                     .withIssuer("API estudamais")
-                    .withSubject(usuario.getNome())
+                    .withSubject(usuario.getEmail())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception){

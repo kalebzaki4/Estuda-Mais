@@ -1,6 +1,7 @@
 package com.estudamais.api.controller;
 
 import com.estudamais.api.dto.AutenticacaoDTO;
+import com.estudamais.api.dto.UsuarioAtualizacaoDTO;
 import com.estudamais.api.model.Usuario;
 import com.estudamais.api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -53,7 +54,7 @@ public class UsuarioController {
 
     // atualizar usuario
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody @Valid AutenticacaoDTO dadosUsuario) {
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioAtualizacaoDTO dadosUsuario) {
         Usuario usuarioAtualizado = usuarioService.updateUsuario(id, dadosUsuario);
         return ResponseEntity.ok(usuarioAtualizado);
     }

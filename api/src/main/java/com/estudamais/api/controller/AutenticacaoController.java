@@ -14,24 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping ("/login")
-public class AutenticationController {
+@RequestMapping("/auth")
+public class AutenticacaoController {
 
     private final AuthenticationManager authenticationManager;
 
     private final TokenService tokenService;
 
     @Autowired
-    public AutenticationController(AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AutenticacaoController(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
     }
 
     @PostMapping
     public ResponseEntity autenticar(@RequestBody @Valid AutenticacaoDTO dados) {
-        var token = new UsernamePasswordAuthenticationToken(dados.nome(), dados.senha());
-        var authentication = authenticationManager.authenticate(token);
+        try {
+            var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+            var authentication = authenticationManager.authenticate(token);
 
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) authentication.getPrincipal()));
+            var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+            return ResponseEntity.ok(tokenJWT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
