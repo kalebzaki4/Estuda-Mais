@@ -6,6 +6,7 @@ import com.estudamais.api.infra.config.exception.ResourceNotFoundException;
 import com.estudamais.api.model.Usuario;
 import com.estudamais.api.repository.UsuarioRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +17,19 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public Usuario salvarUsuario(AutenticacaoDTO dto) {
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(dto.email());
-        novoUsuario.setEmail(dto.email());
-        novoUsuario.setSenha(dto.senha());
-
-        return usuarioRepository.save(novoUsuario);
+    public Usuario salvarUsuario(Usuario usuario) {
+        String senha = usuario.getSenha();
+        String senhaCrpitografada = passwordEncoder.encode(senha);
+        usuario.setSenha(senhaCrpitografada);
+        return usuarioRepository.save(usuario);
     }
 
     public List<Usuario> findAll() {
