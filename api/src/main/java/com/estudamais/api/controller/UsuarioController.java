@@ -39,7 +39,12 @@ public class UsuarioController {
     // criar usuario
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid AutenticacaoDTO dadosUsuario, UriComponentsBuilder uriBuilder) {
-        Usuario usuarioSalvo = usuarioService.salvarUsuario(dadosUsuario);
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setEmail(dadosUsuario.email());
+        novoUsuario.setSenha(dadosUsuario.senha());
+
+        Usuario usuarioSalvo = usuarioService.salvarUsuario(novoUsuario);
+
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuarioSalvo.getId()).toUri();
         return ResponseEntity.created(uri).body(usuarioSalvo);
     }
