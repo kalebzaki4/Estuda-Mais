@@ -41,7 +41,7 @@ public class UsuarioController {
     }
 
     // atualizar usuario
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody @Valid Usuario dadosUsuario) {
         dadosUsuario.setId(id);
         Usuario usuarioAtualizado = usuarioService.updateUsuario(dadosUsuario);
@@ -50,7 +50,7 @@ public class UsuarioController {
     }
 
     // deletar Usuario
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id) {
         this.usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
