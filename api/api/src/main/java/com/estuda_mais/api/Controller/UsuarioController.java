@@ -29,7 +29,7 @@ public class UsuarioController {
     // localizar usuario por ID
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getUserById(@PathVariable Long id) {
-        Usuario user = UsuarioService.findById(id);
+        Usuario user = UsuarioService.buscarPorNome(id);
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
