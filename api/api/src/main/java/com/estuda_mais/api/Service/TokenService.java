@@ -27,7 +27,7 @@ public class TokenService {
         }
     }
 
-    public String ValidarToken(String token) {
+    public String validarToken(String token) {
         try {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
             return JWT.require(algoritmo).withIssuer("Estuda+ API").build().verify(token).getSubject();
