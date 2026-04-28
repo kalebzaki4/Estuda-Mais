@@ -23,6 +23,12 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    public Usuario getUsuarioPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return usuario;
+    }
+
     public List<Usuario> buscarPorNome(String username) {
         return usuarioRepository.findByUsernameContainingIgnoreCase(username);
 
