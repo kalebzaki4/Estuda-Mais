@@ -1,6 +1,5 @@
 {
 	"name": "estuda-mais",
-	"private": true,
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
@@ -8,8 +7,7 @@
 		"build": "vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"test": "vitest run --passWithNoTests",
-		"test:watch": "vitest"
+		"test": "vitest"
 	},
 	"dependencies": {
 		"canvas-confetti": "^1.9.4",
