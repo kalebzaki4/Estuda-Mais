@@ -10,7 +10,7 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # Atualizado para v4 (mais estável)
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -37,6 +37,7 @@ jobs:
           cache: 'maven'
 
       - name: Build backend
-        # Ajustado para a pasta onde está o pom.xml
         working-directory: ./api/api
-        run: mvn clean install
+        run: |
+          chmod +x mvnw
+          ./mvnw clean install
