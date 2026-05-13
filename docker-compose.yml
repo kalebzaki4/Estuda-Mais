@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: estuda_mais_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: estuda_mais_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - estuda-mais-network
+
+  # Backend API (Spring Boot)
+  api:
+    build:
+      context: ./api/api
+      dockerfile: Dockerfile
+    container_name: estuda_mais_api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/estuda_mais_db
+      SPRING_DATASOURCE_USERNAME: app_user
+      SPRING_DATASOURCE_PASSWORD: app_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      JWT_SECRET: ${JWT_SECRET:-32323232323232323232323232323232323232323232323232323232323232323232323232323232323}
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - estuda-mais-network
+    restart: unless-stopped
+
+  # Frontend (React + Vite)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: estuda_mais_frontend
+    environment:
+      VITE_API_URL: http://api:8080
+      VITE_ALLOW_DASHBOARD_WITHOUT_AUTH: ${VITE_ALLOW_DASHBOARD_WITHOUT_AUTH:-true}
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    networks:
+      - estuda-mais-network
+    restart: unless-stopped
+
+  # PhpMyAdmin (Optional - for database management)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: estuda_mais_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: app_user
+      PMA_PASSWORD: app_password
+      PMA_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - estuda-mais-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  estuda-mais-network:
+    driver: bridge
+
