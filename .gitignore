@@ -15,3 +15,36 @@ target/
 .env.local
 .env.production
 .env.development
+
+# Docker
+.docker/
+.dockerignore
+
+# Docker Compose
+docker-compose.override.yml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# OS
+.gradle/
+build/
+.m2/
+.gradle
+
+# Test reports
+coverage/
+.nyc_output/
+
+# Node
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
