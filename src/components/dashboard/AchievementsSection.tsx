@@ -1,5 +1,4 @@
 import { FaAward, FaStar, FaBullseye } from 'react-icons/fa'
-import { Target } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 type Goal = {
