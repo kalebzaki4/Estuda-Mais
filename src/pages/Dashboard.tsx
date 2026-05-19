@@ -5,7 +5,6 @@ import { FaBookOpen, FaChartLine, FaFire, FaClock, FaBullseye, FaTrophy, FaPlay,
 import { motion, AnimatePresence } from 'framer-motion'
 // TODO: Conectar com novo backend quando studyService estiver disponível
 // import studyService from '../services/studyService.js'
-import ProgressOverview from '../components/dashboard/ProgressOverview'
 import StudyStatistics from '../components/dashboard/StudyStatistics'
 import NewStudySection from '../components/dashboard/NewStudySection'
 import RoadmapsSection from '../components/dashboard/RoadmapsSection'
