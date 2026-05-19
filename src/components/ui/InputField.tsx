@@ -1,6 +1,18 @@
-import React from 'react'
+import type { ChangeEventHandler, ReactNode } from 'react'
 
-export default function InputField({ id, label, type = 'text', placeholder, value, onChange, leftIcon, rightElement, required = true }) {
+type InputFieldProps = {
+  id: string;
+  label?: string;
+  type?: string;
+  placeholder?: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  leftIcon?: ReactNode;
+  rightElement?: ReactNode;
+  required?: boolean;
+};
+
+export default function InputField({ id, label, type = 'text', placeholder, value, onChange, leftIcon, rightElement, required = true }: InputFieldProps) {
   return (
     <div>
       {label ? <label htmlFor={id} className="sr-only">{label}</label> : null}

@@ -1,0 +1,506 @@
+﻿node_modules/aria-query/lib/index.ts(3,23): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(6,1): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(6,17): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(6,40): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(6,63): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(6,77): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(7,44): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/aria-query/lib/index.ts(8,38): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/aria-query/lib/index.ts(9,40): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/aria-query/lib/index.ts(10,46): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/aria-query/lib/index.ts(11,46): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/aria-query/lib/index.ts(12,33): error TS7006: Parameter 'obj' implicitly has an 'any' type.
+node_modules/aria-query/lib/index.ts(15,1): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(17,1): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(19,1): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(21,1): error TS2304: Cannot find name 'exports'.
+node_modules/aria-query/lib/index.ts(23,1): error TS2304: Cannot find name 'exports'.
+node_modules/canvas-confetti/src/confetti.ts(25,7): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(27,7): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(39,20): error TS7006: Parameter 'func' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(59,27): error TS7006: Parameter 'bitmap' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(70,9): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(89,25): error TS7006: Parameter 'cb' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(92,9): error TS7053: Element implicitly has an 'any' type because expression of type 'number' can't be used to index type '{}'.
+  No index signature with a parameter of type 'number' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(95,20): error TS7053: Element implicitly has an 'any' type because expression of type 'number' can't be used to index type '{}'.
+  No index signature with a parameter of type 'number' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(99,13): error TS7053: Element implicitly has an 'any' type because expression of type 'number' can't be used to index type '{}'.
+  No index signature with a parameter of type 'number' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(105,26): error TS7006: Parameter 'id' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(106,13): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(107,32): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(111,25): error TS7006: Parameter 'cb' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(114,26): error TS7006: Parameter 'timer' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(123,9): error TS7034: Variable 'worker' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(124,9): error TS7034: Variable 'prom' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(127,23): error TS7006: Parameter 'worker' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(128,24): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(128,33): error TS7006: Parameter 'callback' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(131,41): error TS7006: Parameter 'canvas' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(136,41): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(136,50): error TS7006: Parameter 'size' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(136,56): error TS7006: Parameter 'done' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(137,13): error TS7005: Variable 'prom' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(144,34): error TS7006: Parameter 'resolve' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(145,31): error TS7006: Parameter 'msg' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(150,20): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(164,11): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(174,11): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(175,18): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'.
+node_modules/canvas-confetti/src/confetti.ts(181,11): error TS7005: Variable 'worker' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(220,14): error TS7005: Variable 'worker' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(251,20): error TS7006: Parameter 'val' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(251,25): error TS7006: Parameter 'transform' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(255,17): error TS7006: Parameter 'val' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(259,17): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(259,26): error TS7006: Parameter 'name' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(259,32): error TS7006: Parameter 'transform' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(261,56): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ particleCount: number; angle: number; spread: number; startVelocity: number; decay: number; gravity: number; drift: number; ticks: number; x: number; y: number; shapes: string[]; zIndex: number; colors: string[]; disableForReducedMotion: boolean; scalar: number; }'.
+node_modules/canvas-confetti/src/confetti.ts(266,28): error TS7006: Parameter 'number' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(270,22): error TS7006: Parameter 'min' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(270,27): error TS7006: Parameter 'max' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(275,22): error TS7006: Parameter 'str' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(279,24): error TS7006: Parameter 'colors' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(283,21): error TS7006: Parameter 'str' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(297,22): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(305,32): error TS7006: Parameter 'canvas' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(310,30): error TS7006: Parameter 'canvas' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(316,22): error TS7006: Parameter 'zIndex' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,20): error TS7006: Parameter 'context' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,29): error TS7006: Parameter 'x' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,32): error TS7006: Parameter 'y' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,35): error TS7006: Parameter 'radiusX' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,44): error TS7006: Parameter 'radiusY' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,53): error TS7006: Parameter 'rotation' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,63): error TS7006: Parameter 'startAngle' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,75): error TS7006: Parameter 'endAngle' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(328,85): error TS7006: Parameter 'antiClockwise' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(337,26): error TS7006: Parameter 'opts' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(367,24): error TS7006: Parameter 'context' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(367,33): error TS7006: Parameter 'fetti' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(446,9): error TS2554: Expected 9 arguments, but got 8.
+node_modules/canvas-confetti/src/confetti.ts(480,20): error TS7006: Parameter 'canvas' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(480,28): error TS7006: Parameter 'fettis' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(480,36): error TS7006: Parameter 'resizer' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(480,45): error TS7006: Parameter 'size' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(480,51): error TS7006: Parameter 'done' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(483,9): error TS7034: Variable 'animationFrame' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(484,9): error TS7034: Variable 'destroy' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(486,34): error TS7006: Parameter 'resolve' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(498,42): error TS18048: 'workerSize' is possibly 'undefined'.
+node_modules/canvas-confetti/src/confetti.ts(498,78): error TS18048: 'workerSize' is possibly 'undefined'.
+node_modules/canvas-confetti/src/confetti.ts(499,39): error TS18048: 'workerSize' is possibly 'undefined'.
+node_modules/canvas-confetti/src/confetti.ts(500,41): error TS18048: 'workerSize' is possibly 'undefined'.
+node_modules/canvas-confetti/src/confetti.ts(511,60): error TS7006: Parameter 'fetti' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(527,28): error TS7006: Parameter 'fettis' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(535,13): error TS7005: Variable 'animationFrame' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(539,13): error TS7005: Variable 'destroy' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(546,27): error TS7006: Parameter 'canvas' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(546,35): error TS7006: Parameter 'globalOpts' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(548,25): error TS2554: Expected 3 arguments, but got 2.
+node_modules/canvas-confetti/src/confetti.ts(551,45): error TS2554: Expected 3 arguments, but got 2.
+node_modules/canvas-confetti/src/confetti.ts(556,9): error TS7034: Variable 'animationObj' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(558,24): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(558,33): error TS7006: Parameter 'size' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(558,39): error TS7006: Parameter 'done' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(568,20): error TS2554: Expected 3 arguments, but got 2.
+node_modules/canvas-confetti/src/confetti.ts(569,20): error TS2554: Expected 3 arguments, but got 2.
+node_modules/canvas-confetti/src/confetti.ts(570,20): error TS2554: Expected 3 arguments, but got 2.
+node_modules/canvas-confetti/src/confetti.ts(601,11): error TS7005: Variable 'animationObj' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(610,19): error TS7006: Parameter 'options' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(615,34): error TS7006: Parameter 'resolve' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(620,26): error TS7005: Variable 'animationObj' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(664,26): error TS2339: Property 'width' does not exist on type '{ getBoundingClientRect: () => any; }'.
+node_modules/canvas-confetti/src/confetti.ts(665,27): error TS2339: Property 'height' does not exist on type '{ getBoundingClientRect: () => any; }'.
+node_modules/canvas-confetti/src/confetti.ts(710,11): error TS7005: Variable 'animationObj' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(719,7): error TS7034: Variable 'defaultFire' implicitly has type 'any' in some locations where its type cannot be determined.
+node_modules/canvas-confetti/src/confetti.ts(721,10): error TS7005: Variable 'defaultFire' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,28): error TS7006: Parameter 'pathString' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,40): error TS7006: Parameter 'pathMatrix' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,52): error TS7006: Parameter 'x' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,55): error TS7006: Parameter 'y' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,58): error TS7006: Parameter 'scaleX' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,66): error TS7006: Parameter 'scaleY' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(727,74): error TS7006: Parameter 'rotation' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(747,26): error TS7006: Parameter 'pathData' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(778,15): error TS18047: 'tempCtx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(807,26): error TS7006: Parameter 'textData' implicitly has an 'any' type.
+node_modules/canvas-confetti/src/confetti.ts(831,5): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(832,16): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(844,5): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(845,5): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(847,5): error TS18047: 'ctx' is possibly 'null'.
+node_modules/canvas-confetti/src/confetti.ts(877,10): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+node_modules/canvas-confetti/src/confetti.ts(878,7): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(6,12): error TS2304: Cannot find name '__REACT_DEVTOOLS_GLOBAL_HOOK__'.
+node_modules/react-dom/client.ts(7,12): error TS2304: Cannot find name '__REACT_DEVTOOLS_GLOBAL_HOOK__'.
+node_modules/react-dom/client.ts(11,7): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(23,5): error TS2304: Cannot find name '__REACT_DEVTOOLS_GLOBAL_HOOK__'.
+node_modules/react-dom/client.ts(31,5): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(35,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(35,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(37,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/client.ts(37,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/test-utils.ts(3,5): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/test-utils.ts(4,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/test-utils.ts(4,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/test-utils.ts(6,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-dom/test-utils.ts(6,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-icons/lib/index.ts(3,23): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(6,22): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-icons/lib/index.ts(9,14): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(9,25): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(10,25): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(17,17): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-icons/lib/index.ts(20,14): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(20,25): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(21,25): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(28,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react-icons/lib/index.ts(31,14): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(31,25): error TS2304: Cannot find name 'exports'.
+node_modules/react-icons/lib/index.ts(32,25): error TS2304: Cannot find name 'exports'.
+node_modules/react/index.ts(3,5): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/index.ts(4,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/index.ts(4,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/index.ts(6,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/index.ts(6,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/jsx-runtime.ts(3,5): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/jsx-runtime.ts(4,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/jsx-runtime.ts(4,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/jsx-runtime.ts(6,3): error TS2591: Cannot find name 'module'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+node_modules/react/jsx-runtime.ts(6,20): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/App.test.tsx(4,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/App.test.tsx(5,3): error TS2593: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+src/App.test.tsx(6,12): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/App.test.tsx(7,5): error TS2304: Cannot find name 'expect'.
+src/App.tsx(2,30): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+src/App.tsx(20,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/App.tsx(84,6): error TS2786: 'ErrorBoundary' cannot be used as a JSX component.
+  Its type 'typeof ErrorBoundary' is not a valid JSX element type.
+    Types of construct signatures are incompatible.
+      Type 'new (props: any) => ErrorBoundary' is not assignable to type 'new (props: any, context: any) => Component<any, any, any>'.
+        Type 'ErrorBoundary' is missing the following properties from type 'Component<any, any, any>': context, setState, forceUpdate, props, state
+src/App.tsx(86,21): error TS2322: Type '{ children: Element[]; future: { v7_relativeSplatPath: boolean; v7_startTransition: boolean; }; }' is not assignable to type 'IntrinsicAttributes & HashRouterProps'.
+  Property 'future' does not exist on type 'IntrinsicAttributes & HashRouterProps'.
+src/components/auth/ProtectedRoute.tsx(1,32): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/auth/ProtectedRoute.tsx(3,25): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+src/components/auth/ProtectedRoute.tsx(10,7): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/auth/PublicRoute.tsx(1,32): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/auth/PublicRoute.tsx(3,25): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+src/components/auth/PublicRoute.tsx(11,7): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/AchievementsSection.tsx(5,3): error TS7031: Binding element 'points' implicitly has an 'any' type.
+src/components/dashboard/AchievementsSection.tsx(6,3): error TS7031: Binding element 'weeklyStreak' implicitly has an 'any' type.
+src/components/dashboard/AchievementsSection.tsx(30,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/AchievementsSection.tsx(75,34): error TS2339: Property 'id' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(77,31): error TS2339: Property 'earned' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(83,59): error TS2339: Property 'icon' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(84,32): error TS2339: Property 'earned' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(90,66): error TS2339: Property 'earned' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(91,32): error TS2339: Property 'name' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(93,72): error TS2339: Property 'description' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(97,35): error TS2339: Property 'earned' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(102,54): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(106,72): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/AchievementsSection.tsx(126,14): error TS2304: Cannot find name 'LuTarget'.
+src/components/dashboard/AchievementsSection.tsx(150,14): error TS2304: Cannot find name 'LuTarget'.
+src/components/dashboard/CompetitionSection.tsx(1,37): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/dashboard/CompetitionSection.tsx(6,9): error TS7031: Binding element 'currentUser' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(7,11): error TS7031: Binding element 'initialPoints' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(15,32): error TS2304: Cannot find name 'axios'.
+src/components/dashboard/CompetitionSection.tsx(16,41): error TS7006: Parameter 'user' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(16,47): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(51,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/CompetitionSection.tsx(75,31): error TS7006: Parameter 'user' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(118,12): error TS2304: Cannot find name 'friendsProgress'.
+src/components/dashboard/CompetitionSection.tsx(120,16): error TS2304: Cannot find name 'friendsProgress'.
+src/components/dashboard/CompetitionSection.tsx(120,37): error TS7006: Parameter 'friend' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(120,45): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(148,12): error TS2304: Cannot find name 'recentActivity'.
+src/components/dashboard/CompetitionSection.tsx(150,16): error TS2304: Cannot find name 'recentActivity'.
+src/components/dashboard/CompetitionSection.tsx(150,36): error TS7006: Parameter 'activity' implicitly has an 'any' type.
+src/components/dashboard/CompetitionSection.tsx(150,46): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(3,50): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/dashboard/NewStudySection.tsx(23,43): error TS7031: Binding element 'user' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(23,49): error TS7031: Binding element 'onSessionComplete' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(104,54): error TS7006: Parameter 'data' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(153,39): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(196,36): error TS7006: Parameter 'topicToRemove' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(197,29): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(200,38): error TS7006: Parameter 'materia' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(205,45): error TS7006: Parameter 'm' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(219,27): error TS7006: Parameter 'nome' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(220,20): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Java: { icon: IconType; color: string; glow: string; active: string; }; React: { icon: IconType; color: string; glow: string; active: string; }; JavaScript: { icon: IconType; color: string; glow: string; active: string; }; Python: { icon: IconType; color: string; glow: string; active: string; }; SQL: { ...; }; Ter...'.
+src/components/dashboard/NewStudySection.tsx(224,29): error TS7006: Parameter 'nome' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(226,20): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Java: { icon: IconType; color: string; glow: string; active: string; }; React: { icon: IconType; color: string; glow: string; active: string; }; JavaScript: { icon: IconType; color: string; glow: string; active: string; }; Python: { icon: IconType; color: string; glow: string; active: string; }; SQL: { ...; }; Ter...'.
+src/components/dashboard/NewStudySection.tsx(235,7): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/NewStudySection.tsx(354,57): error TS7006: Parameter 'materia' implicitly has an 'any' type.
+src/components/dashboard/NewStudySection.tsx(412,34): error TS7006: Parameter 'topic' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(1,45): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/dashboard/PomodoroTimer.tsx(7,22): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/canvas-confetti/src/confetti.ts' is not a module.
+src/components/dashboard/PomodoroTimer.tsx(12,3): error TS7031: Binding element 'user' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(13,3): error TS7031: Binding element 'onSessionComplete' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(14,3): error TS7031: Binding element 'onReset' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(42,59): error TS2551: Property 'webkitAudioContext' does not exist on type 'Window & typeof globalThis'. Did you mean 'AudioContext'?
+src/components/dashboard/PomodoroTimer.tsx(92,28): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(116,23): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(189,27): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(210,17): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(215,24): error TS7006: Parameter 'topicToRemove' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(216,29): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(225,9): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/components/dashboard/PomodoroTimer.tsx(230,23): error TS7006: Parameter 'seconds' implicitly has an 'any' type.
+src/components/dashboard/PomodoroTimer.tsx(240,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/PomodoroTimer.tsx(347,32): error TS7006: Parameter 'topic' implicitly has an 'any' type.
+src/components/dashboard/ProgressOverview.tsx(4,44): error TS7031: Binding element 'studyMinutesToday' implicitly has an 'any' type.
+src/components/dashboard/ProgressOverview.tsx(4,63): error TS7031: Binding element 'weeklyStreak' implicitly has an 'any' type.
+src/components/dashboard/ProgressOverview.tsx(4,77): error TS7031: Binding element 'totalSessions' implicitly has an 'any' type.
+src/components/dashboard/ProgressOverview.tsx(4,92): error TS7031: Binding element 'totalHours' implicitly has an 'any' type.
+src/components/dashboard/ProgressOverview.tsx(24,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/RoadmapsSection.tsx(20,58): error TS2339: Property 'recommended' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(21,53): error TS2339: Property 'recommended' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(24,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/RoadmapsSection.tsx(37,30): error TS2339: Property 'id' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(41,52): error TS2339: Property 'icon' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(47,28): error TS2339: Property 'title' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(50,28): error TS2339: Property 'completed' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(50,51): error TS2339: Property 'topics' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(55,81): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(60,50): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(65,68): error TS2339: Property 'status' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(85,30): error TS2339: Property 'id' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(89,52): error TS2339: Property 'icon' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(90,68): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(93,28): error TS2339: Property 'title' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(98,48): error TS2339: Property 'progress' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(102,28): error TS2339: Property 'completed' does not exist on type 'never'.
+src/components/dashboard/RoadmapsSection.tsx(102,48): error TS2339: Property 'topics' does not exist on type 'never'.
+src/components/dashboard/SocialFeed.tsx(1,37): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/dashboard/SocialFeed.tsx(18,38): error TS7031: Binding element 'user' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(18,44): error TS7031: Binding element 'onStartNewStudy' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(89,29): error TS7006: Parameter 'postId' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(92,16): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(92,33): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(106,18): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(106,35): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(115,16): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(115,33): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(128,27): error TS7006: Parameter 'postId' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(129,14): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(129,31): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(134,35): error TS7006: Parameter 'postId' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(141,16): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(141,33): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(150,22): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(156,27): error TS7006: Parameter 'nome' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(157,20): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ Java: { icon: IconType; color: string; }; React: { icon: IconType; color: string; }; JavaScript: { icon: IconType; color: string; }; Python: { icon: IconType; color: string; }; SQL: { icon: IconType; color: string; }; Terminal: { icon: IconType; color: string; }; default: { ...; }; }'.
+src/components/dashboard/SocialFeed.tsx(162,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/SocialFeed.tsx(193,22): error TS7006: Parameter 'post' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(193,28): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(244,39): error TS7006: Parameter 'topic' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(244,46): error TS7006: Parameter 'tIdx' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(324,44): error TS7006: Parameter 'comment' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(324,53): error TS7006: Parameter 'cIdx' implicitly has an 'any' type.
+src/components/dashboard/SocialFeed.tsx(348,61): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(3,26): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/dashboard/StudyStatistics.tsx(7,3): error TS7031: Binding element 'pomodoroHistory' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(22,30): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(25,51): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(33,13): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(39,14): error TS7006: Parameter 'sum' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(39,19): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/components/dashboard/StudyStatistics.tsx(57,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/StudyStatistics.tsx(181,54): error TS2339: Property 'completed' does not exist on type 'never'.
+src/components/dashboard/StudyStatistics.tsx(181,74): error TS2339: Property 'total' does not exist on type 'never'.
+src/components/dashboard/StudyStatistics.tsx(185,79): error TS2339: Property 'name' does not exist on type 'never'.
+src/components/dashboard/StudyStatistics.tsx(186,70): error TS2339: Property 'completed' does not exist on type 'never'.
+src/components/dashboard/StudyStatistics.tsx(186,90): error TS2339: Property 'total' does not exist on type 'never'.
+src/components/dashboard/StudyStatistics.tsx(190,69): error TS2339: Property 'color' does not exist on type 'never'.
+src/components/dashboard/StudySummaryComponent.tsx(5,3): error TS7031: Binding element 'data' implicitly has an 'any' type.
+src/components/dashboard/StudySummaryComponent.tsx(6,3): error TS7031: Binding element 'onViewStats' implicitly has an 'any' type.
+src/components/dashboard/StudySummaryComponent.tsx(7,3): error TS7031: Binding element 'onNewStudy' implicitly has an 'any' type.
+src/components/dashboard/StudySummaryComponent.tsx(35,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/dashboard/StudySummaryComponent.tsx(104,30): error TS7006: Parameter 'topic' implicitly has an 'any' type.
+src/components/dashboard/StudySummaryComponent.tsx(104,37): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/ErrorBoundary.tsx(1,19): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ErrorBoundary.tsx(5,15): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/components/ErrorBoundary.tsx(7,10): error TS2339: Property 'state' does not exist on type 'ErrorBoundary'.
+src/components/ErrorBoundary.tsx(10,35): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/components/ErrorBoundary.tsx(14,21): error TS7006: Parameter 'error' implicitly has an 'any' type.
+src/components/ErrorBoundary.tsx(14,28): error TS7006: Parameter 'errorInfo' implicitly has an 'any' type.
+src/components/ErrorBoundary.tsx(19,10): error TS2339: Property 'setState' does not exist on type 'ErrorBoundary'.
+src/components/ErrorBoundary.tsx(24,14): error TS2339: Property 'state' does not exist on type 'ErrorBoundary'.
+src/components/ErrorBoundary.tsx(26,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(26,9): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ErrorBoundary.tsx(27,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(28,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(30,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(32,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(32,84): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(33,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(35,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(37,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(43,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(45,14): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/components/ErrorBoundary.tsx(45,61): error TS2339: Property 'state' does not exist on type 'ErrorBoundary'.
+src/components/ErrorBoundary.tsx(46,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(47,17): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(48,25): error TS2339: Property 'state' does not exist on type 'ErrorBoundary'.
+src/components/ErrorBoundary.tsx(49,17): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(50,15): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(52,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(53,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ErrorBoundary.tsx(57,17): error TS2339: Property 'props' does not exist on type 'ErrorBoundary'.
+src/components/layout/Layout.tsx(1,32): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/layout/Layout.tsx(3,25): error TS5097: An import path can only end with a '.tsx' extension when 'allowImportingTsExtensions' is enabled.
+src/components/layout/Layout.tsx(25,12): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/layout/Layout.tsx(28,21): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/components/layout/Layout.tsx(34,25): error TS7006: Parameter 'path' implicitly has an 'any' type.
+src/components/ui/Card.tsx(1,19): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/Card.tsx(3,17): error TS7031: Binding element 'children' implicitly has an 'any' type.
+src/components/ui/Card.tsx(5,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/Card.tsx(5,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/Card.tsx(10,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/Card.tsx(11,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/Card.tsx(13,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/Card.tsx(14,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/Divider.tsx(7,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/HighlightsCarousel.tsx(1,45): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/HighlightsCarousel.tsx(78,16): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(86,14): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(90,31): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(91,31): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(93,18): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(101,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/HighlightsCarousel.tsx(114,55): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/components/ui/HighlightsCarousel.tsx(137,60): error TS2339: Property 'cta' does not exist on type '{ id: string; title: string; Icon: IconType; description: string; bullets: string[]; }'.
+src/components/ui/InputField.tsx(1,52): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/InputField.tsx(17,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/PressableButton.tsx(1,51): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/PressableButton.tsx(13,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/SocialButton.tsx(1,51): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/SocialButton.tsx(12,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/TabNavigation.tsx(1,19): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/ui/TabNavigation.tsx(3,26): error TS7031: Binding element 'tabs' implicitly has an 'any' type.
+src/components/ui/TabNavigation.tsx(3,32): error TS7031: Binding element 'activeTab' implicitly has an 'any' type.
+src/components/ui/TabNavigation.tsx(3,43): error TS7031: Binding element 'onTabChange' implicitly has an 'any' type.
+src/components/ui/TabNavigation.tsx(5,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(5,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/ui/TabNavigation.tsx(6,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(7,20): error TS7006: Parameter 'tab' implicitly has an 'any' type.
+src/components/ui/TabNavigation.tsx(8,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(9,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(17,13): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(18,11): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(20,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/ui/TabNavigation.tsx(21,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/BackgroundDecor.tsx(1,32): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/visual/BackgroundDecor.tsx(10,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/visual/BrandPanel.tsx(9,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/visual/OrbitEstudaPlus.tsx(1,19): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/components/visual/OrbitEstudaPlus.tsx(18,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(18,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/components/visual/OrbitEstudaPlus.tsx(23,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(24,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(25,7): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(27,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(33,9): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/components/visual/OrbitEstudaPlus.tsx(35,5): error TS7026: JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.
+src/context/AuthContext.tsx(1,88): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/context/AuthContext.tsx(102,9): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/context/AuthContextCore.tsx(1,88): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/context/AuthContextCore.tsx(102,9): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/main.tsx(1,28): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/main.tsx(2,28): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react-dom/client.ts' is not a module.
+src/main.tsx(8,3): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Dashboard.tsx(1,45): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/pages/Dashboard.tsx(24,41): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/pages/Dashboard.tsx(43,28): error TS7006: Parameter 'newTabId' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(80,34): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(121,49): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(123,14): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(124,14): error TS7006: Parameter 'sum' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(124,19): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+src/pages/Dashboard.tsx(132,51): error TS18046: 'b' is of type 'unknown'.
+src/pages/Dashboard.tsx(132,55): error TS18046: 'a' is of type 'unknown'.
+src/pages/Dashboard.tsx(149,62): error TS18046: 'minutes' is of type 'unknown'.
+src/pages/Dashboard.tsx(175,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Dashboard.tsx(255,19): error TS2322: Type '{ minutes: unknown; day: string; }' is not assignable to type '{ minutes: number; day: string; }'.
+  Types of property 'minutes' are incompatible.
+    Type 'unknown' is not assignable to type 'number'.
+src/pages/Dashboard.tsx(276,18): error TS2741: Property 'points' is missing in type '{ user: User | null; }' but required in type '{ user: any; points: any; }'.
+src/pages/Dashboard.tsx(281,18): error TS2739: Type '{}' is missing the following properties from type '{ points: any; weeklyStreak: any; achievements?: never[] | undefined; dailyGoal?: { current: number; target: number; } | undefined; weeklyGoal?: { current: number; target: number; } | undefined; }': points, weeklyStreak
+src/pages/Home.tsx(65,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Login.tsx(1,37): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/pages/Login.tsx(72,23): error TS7006: Parameter 'prevErrors' implicitly has an 'any' type.
+src/pages/Login.tsx(77,9): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Login.tsx(152,42): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Login.tsx(181,89): error TS2339: Property 'email' does not exist on type 'AuthResult'.
+src/pages/Login.tsx(217,62): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Login.tsx(243,62): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Login.tsx(249,68): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/Login.tsx(300,25): error TS7031: Binding element 'icon' implicitly has an 'any' type.
+src/pages/Login.tsx(300,31): error TS7031: Binding element 'label' implicitly has an 'any' type.
+src/pages/Login.tsx(300,38): error TS7031: Binding element 'onClick' implicitly has an 'any' type.
+src/pages/Login.tsx(314,20): error TS7031: Binding element 'label' implicitly has an 'any' type.
+src/pages/OAuth2RedirectHandler.tsx(1,27): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/pages/OAuth2RedirectHandler.tsx(34,55): error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string | number | boolean'.
+  Type 'null' is not assignable to type 'string | number | boolean'.
+src/pages/OAuth2RedirectHandler.tsx(50,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Settings.tsx(1,26): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/pages/Settings.tsx(26,30): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Settings.tsx(30,38): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Settings.tsx(47,39): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Settings.tsx(62,19): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/pages/Settings.tsx(91,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Signup.tsx(1,37): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/index.ts' is not a module.
+src/pages/Signup.tsx(73,38): error TS7006: Parameter 'pwd' implicitly has an 'any' type.
+src/pages/Signup.tsx(84,36): error TS7006: Parameter 'strength' implicitly has an 'any' type.
+src/pages/Signup.tsx(90,37): error TS7006: Parameter 'strength' implicitly has an 'any' type.
+src/pages/Signup.tsx(98,26): error TS2339: Property 'name' does not exist on type '{}'.
+src/pages/Signup.tsx(99,41): error TS2339: Property 'name' does not exist on type '{}'.
+src/pages/Signup.tsx(100,55): error TS2339: Property 'name' does not exist on type '{}'.
+src/pages/Signup.tsx(102,27): error TS2339: Property 'email' does not exist on type '{}'.
+src/pages/Signup.tsx(103,82): error TS2339: Property 'email' does not exist on type '{}'.
+src/pages/Signup.tsx(104,53): error TS2339: Property 'email' does not exist on type '{}'.
+src/pages/Signup.tsx(106,30): error TS2339: Property 'password' does not exist on type '{}'.
+src/pages/Signup.tsx(107,45): error TS2339: Property 'password' does not exist on type '{}'.
+src/pages/Signup.tsx(108,49): error TS2339: Property 'password' does not exist on type '{}'.
+src/pages/Signup.tsx(109,49): error TS2339: Property 'password' does not exist on type '{}'.
+src/pages/Signup.tsx(110,56): error TS2339: Property 'password' does not exist on type '{}'.
+src/pages/Signup.tsx(112,37): error TS2339: Property 'confirmPassword' does not exist on type '{}'.
+src/pages/Signup.tsx(113,54): error TS2339: Property 'confirmPassword' does not exist on type '{}'.
+src/pages/Signup.tsx(115,35): error TS2339: Property 'terms' does not exist on type '{}'.
+src/pages/Signup.tsx(121,32): error TS7031: Binding element 'nome' implicitly has an 'any' type.
+src/pages/Signup.tsx(121,38): error TS7031: Binding element 'email' implicitly has an 'any' type.
+src/pages/Signup.tsx(121,45): error TS7031: Binding element 'senha' implicitly has an 'any' type.
+src/pages/Signup.tsx(127,29): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/Signup.tsx(131,41): error TS18004: No value exists in scope for the shorthand property 'nome'. Either declare one or provide an initializer.
+src/pages/Signup.tsx(131,54): error TS18004: No value exists in scope for the shorthand property 'senha'. Either declare one or provide an initializer.
+src/pages/Signup.tsx(154,5): error TS2306: File 'C:/Users/Kaleb/Documents/GitHub/Estuda-Mais/node_modules/react/jsx-runtime.ts' is not a module.
+src/pages/Signup.tsx(254,44): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Signup.tsx(276,44): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Signup.tsx(298,44): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Signup.tsx(303,70): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/Signup.tsx(344,44): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/Signup.tsx(349,77): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/Signup.tsx(419,25): error TS7031: Binding element 'icon' implicitly has an 'any' type.
+src/pages/Signup.tsx(419,31): error TS7031: Binding element 'label' implicitly has an 'any' type.
+src/pages/Signup.tsx(419,38): error TS7031: Binding element 'onClick' implicitly has an 'any' type.
+src/pages/Signup.tsx(432,20): error TS7031: Binding element 'label' implicitly has an 'any' type.
+src/utils/auth.ts(3,36): error TS7006: Parameter 'token' implicitly has an 'any' type.
+src/utils/auth.ts(14,30): error TS7006: Parameter 'token' implicitly has an 'any' type.
+src/utils/auth.ts(22,34): error TS7006: Parameter 'token' implicitly has an 'any' type.
+src/utils/auth.ts(28,27): error TS2339: Property 'name' does not exist on type 'JwtPayload'.
+src/utils/auth.ts(28,35): error TS18048: 'decoded.sub' is possibly 'undefined'.
+src/utils/validators.ts(3,30): error TS7006: Parameter 'email' implicitly has an 'any' type.
+src/utils/validators.ts(12,35): error TS7006: Parameter 'password' implicitly has an 'any' type.
+src/utils/validators.ts(25,33): error TS7006: Parameter 'password' implicitly has an 'any' type.
+src/utils/validators.ts(31,30): error TS7006: Parameter 'name' implicitly has an 'any' type.
+src/utils/validators.ts(38,31): error TS7006: Parameter 'input' implicitly has an 'any' type.
+src/utils/validators.ts(43,38): error TS7006: Parameter 'input' implicitly has an 'any' type.

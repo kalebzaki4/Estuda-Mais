@@ -1,17 +1,17 @@
 import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AuthProvider } from "./context/AuthContextCore.jsx";
+import { AuthProvider } from './context/AuthContextCore'
 import { AnimatePresence } from 'framer-motion'
 import { Toaster } from 'sonner'
-import Layout from './components/layout/Layout.jsx'
-import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
-import PublicRoute from './components/auth/PublicRoute.jsx'
-import Login from './pages/Login.jsx'
-import Signup from './pages/Signup.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import Home from './pages/Home.jsx'
-import Settings from './pages/Settings.jsx'
-import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler.jsx'
-import ErrorBoundary from './components/ErrorBoundary.jsx'
+import Layout from './components/layout/Layout'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import PublicRoute from './components/auth/PublicRoute'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import Dashboard from './pages/Dashboard'
+import Home from './pages/Home'
+import Settings from './pages/Settings'
+import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -83,7 +83,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <HashRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+        <HashRouter>
           <AnimatedRoutes />
           <Toaster
             theme="dark"

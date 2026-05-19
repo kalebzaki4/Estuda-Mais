@@ -1,8 +1,13 @@
+import type { ReactNode } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContextCore.jsx'
+import { useAuth } from '../../context/AuthContextCore'
 import { FaBookOpen, FaTachometerAlt, FaMap, FaUser, FaCog, FaSignOutAlt, FaPlus } from 'react-icons/fa'
 
-export default function Layout({ children }) {
+type LayoutProps = {
+  children: ReactNode;
+};
+
+export default function Layout({ children }: LayoutProps) {
   const { user, isAuthenticated, logout } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
@@ -20,13 +25,13 @@ export default function Layout({ children }) {
     return <>{children}</>
   }
 
-  const isActive = (path) => {
+  const isActive = (path: string): boolean => {
     if (path === '/dashboard' && location.pathname === '/dashboard') return true;
     if (path !== '/dashboard' && location.pathname.startsWith(path)) return true;
     return false;
   }
 
-  const navLinkClass = (path) => `
+  const navLinkClass = (path: string): string => `
     flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200
     ${isActive(path) 
       ? 'bg-white/10 text-white font-medium' 

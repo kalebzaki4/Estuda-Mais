@@ -1,7 +1,8 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContextCore.jsx";
+import type { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContextCore';
 
-export default function PublicRoute({ children }) {
+export default function PublicRoute({ children }: { children: ReactNode }) {
   const { loading, isAuthenticated } = useAuth();
 
   if (loading) {
@@ -20,3 +21,4 @@ export default function PublicRoute({ children }) {
 
   return children;
 }
+

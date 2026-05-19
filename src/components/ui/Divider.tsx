@@ -1,6 +1,8 @@
-import React from 'react'
+type DividerProps = {
+  label?: string;
+};
 
-export default function Divider({ label }) {
+export default function Divider({ label }: DividerProps) {
   return (
     <div className="my-6 flex items-center gap-3" aria-hidden="true">
       <div className="h-px w-full bg-white/10" />

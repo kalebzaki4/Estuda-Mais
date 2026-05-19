@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { FaBookOpen, FaShieldAlt, FaChartLine, FaUsers, FaTrophy } from 'react-icons/fa'
 import * as FM from 'framer-motion'
 import styles from '../styles/Home.module.css'
-import HighlightsCarousel from '../components/ui/HighlightsCarousel.jsx'
-import Layout from '../components/layout/Layout.jsx'
+import HighlightsCarousel from '../components/ui/HighlightsCarousel'
+import Layout from '../components/layout/Layout'
 
 const Motion = FM.motion
 
@@ -244,3 +244,4 @@ export default function Home() {
     </Motion.div>
   )
 }
+

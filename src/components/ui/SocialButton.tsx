@@ -1,6 +1,13 @@
-import React from 'react'
+import type { MouseEventHandler, ReactNode } from 'react'
 
-export default function SocialButton({ icon, label, onClick, ariaLabel }) {
+type SocialButtonProps = {
+  icon: ReactNode;
+  label: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  ariaLabel?: string;
+};
+
+export default function SocialButton({ icon, label, onClick, ariaLabel }: SocialButtonProps) {
   return (
     <button
       type="button"

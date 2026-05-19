@@ -1,8 +1,9 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContextCore.jsx"
+import type { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContextCore';
 
-export default function ProtectedRoute({ children }) {
-  const { user, loading, isAuthenticated } = useAuth();
+export default function ProtectedRoute({ children }: { children: ReactNode }) {
+  const { loading, isAuthenticated } = useAuth();
 
   if (loading) {
     return (
@@ -18,3 +19,4 @@ export default function ProtectedRoute({ children }) {
 
   return children;
 }
+

@@ -1,17 +1,22 @@
 import React from 'react';
 import { FaExclamationTriangle, FaRedo } from 'react-icons/fa';
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, ErrorBoundaryState> {
+  constructor(props: React.PropsWithChildren<{}>) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('ErrorBoundary caught an error', error, errorInfo);
   }
 
@@ -42,7 +47,7 @@ class ErrorBoundary extends React.Component {
               Recarregar Aplicação
             </button>
 
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {import.meta.env.DEV && this.state.error && (
               <div className="mt-8 text-left">
                 <p className="text-xs text-red-400 font-mono overflow-auto max-h-40 p-4 bg-black/40 rounded-lg border border-red-500/20">
                   {this.state.error.toString()}

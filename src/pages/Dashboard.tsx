@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../context/AuthContextCore.jsx'
+import { useAuth } from '../context/AuthContextCore'
 import { FaBookOpen, FaChartLine, FaFire, FaClock, FaBullseye, FaTrophy, FaPlay, FaChevronRight, FaBook } from 'react-icons/fa'
 import { motion, AnimatePresence } from 'framer-motion'
 // TODO: Conectar com novo backend quando studyService estiver disponível
 // import studyService from '../services/studyService.js'
-import ProgressOverview from '../components/dashboard/ProgressOverview.jsx'
-import StudyStatistics from '../components/dashboard/StudyStatistics.jsx'
-import NewStudySection from '../components/dashboard/NewStudySection.jsx'
-import RoadmapsSection from '../components/dashboard/RoadmapsSection.jsx'
-import CompetitionSection from '../components/dashboard/CompetitionSection.jsx'
-import AchievementsSection from '../components/dashboard/AchievementsSection.jsx'
-import SocialFeed from '../components/dashboard/SocialFeed.jsx'
+import ProgressOverview from '../components/dashboard/ProgressOverview'
+import StudyStatistics from '../components/dashboard/StudyStatistics'
+import NewStudySection from '../components/dashboard/NewStudySection'
+import RoadmapsSection from '../components/dashboard/RoadmapsSection'
+import CompetitionSection from '../components/dashboard/CompetitionSection'
+import AchievementsSection from '../components/dashboard/AchievementsSection'
+import SocialFeed from '../components/dashboard/SocialFeed'
 
 export default function Dashboard() {
   const { user, refreshUser } = useAuth()
@@ -287,3 +287,4 @@ export default function Dashboard() {
     </div>
   )
 }
+

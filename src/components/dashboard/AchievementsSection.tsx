@@ -1,13 +1,36 @@
 import { FaAward, FaStar, FaBullseye } from 'react-icons/fa'
+import { Target } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-export default function AchievementsSection({ 
-  points, 
+type Goal = {
+  current: number
+  target: number
+}
+
+type Achievement = {
+  id: string | number
+  name: string
+  description: string
+  icon: React.ReactNode
+  earned: boolean
+  progress: number
+}
+
+type AchievementsSectionProps = {
+  points: number
+  weeklyStreak: number
+  achievements?: Achievement[]
+  dailyGoal?: Goal
+  weeklyGoal?: Goal
+}
+
+export default function AchievementsSection({
+  points,
   weeklyStreak,
-  achievements = [], // Pass empty array by default
+  achievements = [],
   dailyGoal = { current: 0, target: 60 },
   weeklyGoal = { current: 0, target: 10 }
-}) {
+}: AchievementsSectionProps) {
   const container = {
     hidden: { opacity: 0 },
     show: {
