@@ -1,6 +1,6 @@
 import { FaPlus, FaSearch, FaStopwatch, FaBook, FaJava, FaReact, FaCode, FaPython, FaJsSquare, FaDatabase, FaTerminal } from 'react-icons/fa'
 import { HiXMark } from 'react-icons/hi2'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, type FormEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -9,6 +9,28 @@ import PomodoroTimer from './PomodoroTimer'
 import StudySummaryComponent from './StudySummaryComponent'
 // TODO: Conectar com novo backend para carregar matérias e preparar sessões
 // import studyService from '../../services/studyService.js'
+
+type Materia = {
+  id: number
+  nome: string
+  descricao: string
+}
+
+type StudySummaryData = {
+  subject: string
+  minutes: number
+  xp: number
+  finishedAt: string
+  topics?: string[]
+}
+
+type NewStudySectionProps = {
+  user?: {
+    id?: string | number
+    name?: string
+  }
+  onSessionComplete?: (data: StudySummaryData) => void
+}
 
 const subjectConfig = {
   'Java': { icon: FaJava, color: 'text-orange-500', glow: 'group-hover:border-orange-500/50 group-hover:shadow-[0_0_15px_rgba(249,115,22,0.3)]', active: 'border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)]' },
@@ -20,25 +42,33 @@ const subjectConfig = {
   'default': { icon: FaCode, color: 'text-gray-400', glow: 'group-hover:border-brand-500/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]', active: 'border-brand-500 shadow-[0_0_20px_rgba(139,92,246,0.4)]' }
 }
 
-export default function NewStudySection({ user, onSessionComplete }) {
+type NewStudySectionProps = {
+  user?: {
+    id?: string | number
+    name?: string
+  }
+  onSessionComplete?: (data: unknown) => void
+}
+
+export default function NewStudySection({ user, onSessionComplete }: NewStudySectionProps) {
   const navigate = useNavigate()
 
   // ============ ESTADO PRINCIPAL - UMA ÚNICA FONTE DE VERDADE ============
   // Estados possíveis: 'setup' | 'timer' | 'summary'
-  const [view, setView] = useState('setup')
+  const [view, setView] = useState<'setup' | 'timer' | 'summary'>('setup')
 
   // ============ DADOS DE SESSÃO ============
-  const [selectedMateria, setSelectedMateria] = useState(null)
-  const [topics, setTopics] = useState([])
+  const [selectedMateria, setSelectedMateria] = useState<Materia | null>(null)
+  const [topics, setTopics] = useState<string[]>([])
   const [currentTopic, setCurrentTopic] = useState('')
-  const [sessionId, setSessionId] = useState(null)
-  const [summaryData, setSummaryData] = useState(null)
+  const [sessionId, setSessionId] = useState<string | null>(null)
+  const [summaryData, setSummaryData] = useState<StudySummaryData | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   // ============ ESTADO DE CARREGAMENTO ============
-  const [materias, setMaterias] = useState([])
+  const [materias, setMaterias] = useState<Materia[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const [startingSession, setStartingSession] = useState(false)
   const [topicError, setTopicError] = useState(false)
 

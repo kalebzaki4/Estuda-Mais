@@ -8,6 +8,8 @@ import { useAuth } from '../context/AuthContextCore'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
 
+const easeOut = 'easeOut' as const
+
 export default function Login() {
     const { login } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
@@ -23,7 +25,7 @@ export default function Login() {
 
     const container = {
         initial: { opacity: 0 },
-        animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } },
+        animate: { opacity: 1, transition: { duration: 0.4, ease: easeOut } },
         exit: { opacity: 0, transition: { duration: 0.3 } }
     }
     
@@ -33,14 +35,14 @@ export default function Login() {
             y: 0, 
             opacity: 1, 
             scale: 1, 
-            transition: { duration: 0.4, ease: 'easeOut', delay: 0.1 } 
+            transition: { duration: 0.4, ease: easeOut, delay: 0.1 } 
         },
         exit: { y: 20, opacity: 0, scale: 0.99, transition: { duration: 0.3 } }
     }
 
     const leftVariant = { 
         initial: { x: -10, opacity: 0 }, 
-        animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut', delay: 0.2 } } 
+        animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: easeOut, delay: 0.2 } } 
     }
     
     const rightVariant = { 
@@ -48,13 +50,13 @@ export default function Login() {
         animate: { 
             x: 0, 
             opacity: 1, 
-            transition: { duration: 0.4, ease: 'easeOut', delay: 0.2, staggerChildren: 0.05 } 
+            transition: { duration: 0.4, ease: easeOut, delay: 0.2, staggerChildren: 0.05 } 
         } 
     }
     
     const childVariant = { 
         initial: { opacity: 0, y: 10 }, 
-        animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } } 
+        animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: easeOut } } 
     }
 
     useEffect(() => {
@@ -178,7 +180,7 @@ export default function Login() {
                                 const result = await login(email, password);
                                 
                                 // Verifica se o login retornou sucesso (objeto com token ou flag success)
-                                if (result && (result.token || result.success || result.email)) {
+                                if (result && (result.token || result.success)) {
                                     navigate("/dashboard");
                                 } else {
                                     setErrors({ ...newErrors, general: result?.error || "E-mail ou senha incorretos." });
@@ -297,7 +299,7 @@ export default function Login() {
     )
 }
 
-function SocialButton({ icon, label, onClick }) {
+function SocialButton({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick: () => void }) {
     return (
         <button
             type="button"
@@ -311,7 +313,7 @@ function SocialButton({ icon, label, onClick }) {
     )
 }
 
-function Divider({ label }) {
+function Divider({ label }: { label: string }) {
     return (
         <div className={styles.dividerWrap} aria-hidden="true">
             <div className={styles.dividerLine} />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = ({ children, className = '', ...props }) => {
+const Card = ({ children, className = '', ...props }: { children: React.ReactNode; className?: string } & React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <div
       className={`relative rounded-xl shadow-soft overflow-hidden bg-surface-800 ${className}`}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUser, FaEnvelope, FaSignOutAlt, FaShieldAlt, FaTrash, FaSave, FaLock, FaExclamationTriangle } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContextCore'
@@ -10,7 +10,13 @@ export default function Settings() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string
+    email: string
+    currentPassword: string
+    newPassword: string
+    confirmNewPassword: string
+  }>({
     name: user?.name || '',
     email: user?.email || '',
     currentPassword: '',
@@ -19,15 +25,15 @@ export default function Settings() {
   })
   
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState(null)
-  const [error, setError] = useState(null)
+  const [message, setMessage] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleUpdateProfile = async (e) => {
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setMessage(null)
@@ -44,7 +50,7 @@ export default function Settings() {
     }
   }
 
-  const handleChangePassword = async (e) => {
+  const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (formData.newPassword !== formData.confirmNewPassword) {
       setError('As novas senhas não coincidem')

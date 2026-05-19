@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom' 
+import { useEffect, useState, FormEvent } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import { FaBookOpen, FaShieldAlt } from 'react-icons/fa'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { SiGoogle, SiGithub } from 'react-icons/si'
 import { useAuth } from '../context/AuthContextCore'
-import { hasDangerousPatterns } from '../utils/validators.js'
+import { hasDangerousPatterns } from '../utils/validators'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
+
+const easeOut = 'easeOut' as const
 
 const Motion = FM.motion
 const AnimatePresence = FM.AnimatePresence
 
 const container = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } },
+  animate: { opacity: 1, transition: { duration: 0.4, ease: easeOut } },
   exit: { opacity: 0, transition: { duration: 0.3 } }
 }
 
@@ -23,14 +25,14 @@ const panelVariant = {
       y: 0, 
       opacity: 1, 
       scale: 1, 
-      transition: { duration: 0.4, ease: 'easeOut', delay: 0.1 } 
+      transition: { duration: 0.4, ease: easeOut, delay: 0.1 } 
   },
   exit: { y: 20, opacity: 0, scale: 0.99, transition: { duration: 0.3 } }
 }
 
 const leftVariant = { 
   initial: { x: -10, opacity: 0 }, 
-  animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut', delay: 0.2 } } 
+  animate: { x: 0, opacity: 1, transition: { duration: 0.4, ease: easeOut, delay: 0.2 } } 
 }
 
 const rightVariant = { 
@@ -38,13 +40,13 @@ const rightVariant = {
   animate: { 
       x: 0, 
       opacity: 1, 
-      transition: { duration: 0.4, ease: 'easeOut', delay: 0.2, staggerChildren: 0.05 } 
+      transition: { duration: 0.4, ease: easeOut, delay: 0.2, staggerChildren: 0.05 } 
   } 
 }
 
 const childVariant = { 
   initial: { opacity: 0, y: 10 }, 
-  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } } 
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: easeOut } } 
 }
 
 export default function Signup() {
@@ -56,8 +58,8 @@ export default function Signup() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const navigate = useNavigate()
@@ -70,7 +72,7 @@ export default function Signup() {
     calculatePasswordStrength(password)
   }, [password])
 
-  const calculatePasswordStrength = (pwd) => {
+  const calculatePasswordStrength = (pwd: string) => {
     let strength = 0
     if (pwd.length > 5) strength += 20
     if (pwd.length > 8) strength += 20
@@ -81,20 +83,20 @@ export default function Signup() {
     setPasswordStrength(Math.min(strength, 100))
   }
 
-  const getPasswordStrengthText = (strength) => {
+  const getPasswordStrengthText = (strength: number): string => {
     if (strength < 40) return 'Fraca'
     if (strength < 70) return 'Média'
     return 'Forte'
   }
 
-  const getPasswordStrengthColor = (strength) => {
+  const getPasswordStrengthColor = (strength: number): string => {
     if (strength < 40) return '#ef4444'
     if (strength < 70) return '#f59e0b'
     return '#22c55e'
   }
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: Record<string, string> = {}
     if (!name) newErrors.name = 'Nome é obrigatório.'
     else if (name.length < 4) newErrors.name = 'Nome deve ter pelo menos 4 caracteres.'
     else if (!/^[a-zA-Z0-9_]+$/.test(name)) newErrors.name = 'Nome não deve conter caracteres especiais.'
@@ -118,17 +120,17 @@ export default function Signup() {
     return Object.keys(newErrors).length === 0
   }
 
-const makeRegisterPayload = ({ nome, email, senha }) => ({
+const makeRegisterPayload = ({ nome, email, senha }: { nome?: string, email?: string, senha?: string }) => ({
   nome: String(nome || '').trim(), 
   email: String(email || '').trim(),
   senha: String(senha || ''), 
 })
 
-const handleSubmit = async (e) => {
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   setLoading(true);
 
-  const payload = makeRegisterPayload({ nome, email, senha });
+  const payload = makeRegisterPayload({ nome: name, email, senha: password });
 
   try {
     const response = await fetch('http://localhost:8080/usuarios', {

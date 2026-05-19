@@ -27,7 +27,7 @@ export default function OrbitEstudaPlus({
         <span
           key={i}
           className="plus-node"
-          style={{ '--angle': p.angle, '--radius': p.radius, '--pulseDur': p.pulseDur, '--pulseDelay': p.pulseDelay }}
+          style={{ '--angle': p.angle, '--radius': p.radius, '--pulseDur': p.pulseDur, '--pulseDelay': p.pulseDelay } as React.CSSProperties}
         >
           +
         </span>
