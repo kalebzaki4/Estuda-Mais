@@ -1,9 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, KeyboardEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaPlus, FaClock, FaTrophy, FaBook, FaFire, FaJava, FaReact, FaJsSquare, FaPython, FaDatabase, FaTerminal, FaCode } from 'react-icons/fa'
 import { Heart, MessageCircle, Share2, Sparkles } from 'lucide-react'
 // TODO: Conectar com novo backend para obter feed e posts reais
 // import axios from 'axios'
+
+type SocialFeedProps = {
+  user?: { name?: string }
+  onStartNewStudy: () => void
+}
+
+type Comment = {
+  user: string
+  text: string
+}
+
+type FeedPost = {
+  id: number
+  user: { name: string; avatar: string }
+  subject: string
+  duration: number
+  xp: number
+  topics: string[]
+  summary?: string
+  createdAt: Date
+  likes: number
+  comments: Comment[]
+  isLiked: boolean
+  showComments: boolean
+  isLiking: boolean
+}
 
 const subjectConfig = {
   'Java': { icon: FaJava, color: 'text-orange-500' },
@@ -15,10 +41,10 @@ const subjectConfig = {
   'default': { icon: FaCode, color: 'text-brand-400' }
 }
 
-export default function SocialFeed({ user, onStartNewStudy }) {
-  const [posts, setPosts] = useState([])
+export default function SocialFeed({ user, onStartNewStudy }: SocialFeedProps) {
+  const [posts, setPosts] = useState<FeedPost[]>([])
   const [loading, setLoading] = useState(true)
-  const [commentText, setCommentText] = useState({})
+  const [commentText, setCommentText] = useState<Record<number, string>>({})
 
   // TODO: Implementar chamada ao novo backend para obter feed
   // Mock data - remover quando backend estiver pronto
@@ -78,15 +104,15 @@ export default function SocialFeed({ user, onStartNewStudy }) {
   useEffect(() => {
     // TODO: Remover este bloco mock quando backend estiver pronto
     // Simular carregamento
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setPosts(mockPosts)
       setLoading(false)
     }, 500)
     
-    return () => clearTimeout(timer)
+    return () => window.clearTimeout(timer)
   }, [user])
 
-  const handleLike = async (postId) => {
+  const handleLike = async (postId: number) => {
     try {
       // Otimistic UI - atualizar localmente primeiro
       setPosts(prev => prev.map(post => 
@@ -125,13 +151,13 @@ export default function SocialFeed({ user, onStartNewStudy }) {
     }
   }
 
-  const toggleComments = (postId) => {
+  const toggleComments = (postId: number) => {
     setPosts(prev => prev.map(post => 
       post.id === postId ? { ...post, showComments: !post.showComments } : post
     ))
   }
 
-  const handleAddComment = async (postId) => {
+  const handleAddComment = async (postId: number) => {
     const text = commentText[postId]
     if (!text?.trim()) return
 
@@ -153,8 +179,8 @@ export default function SocialFeed({ user, onStartNewStudy }) {
     }
   }
 
-  const getSubjectIcon = (nome) => {
-    const config = subjectConfig[nome] || subjectConfig['default']
+  const getSubjectIcon = (nome: string) => {
+    const config = subjectConfig[nome as keyof typeof subjectConfig] || subjectConfig['default']
     return <config.icon className={`text-2xl ${config.color}`} />
   }
 
@@ -346,7 +372,7 @@ export default function SocialFeed({ user, onStartNewStudy }) {
                             placeholder="Deixe um comentário..."
                             value={commentText[post.id] || ''}
                             onChange={(e) => setCommentText(prev => ({ ...prev, [post.id]: e.target.value }))}
-                            onKeyPress={(e) => e.key === 'Enter' && handleAddComment(post.id)}
+                            onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleAddComment(post.id)}
                             className="flex-1 bg-zinc-900/50 border border-zinc-700/50 rounded-lg px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-purple-600/50 transition-colors"
                           />
                           <motion.button

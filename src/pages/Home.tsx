@@ -7,6 +7,9 @@ import Layout from '../components/layout/Layout'
 
 const Motion = FM.motion
 
+const easeOut = 'easeOut' as const
+const easeIn = 'easeIn' as const
+
 // Animação principal da página (Entrada/Saída)
 const pageVariants = {
   initial: { opacity: 0, y: 10 },
@@ -15,14 +18,14 @@ const pageVariants = {
     y: 0, 
     transition: { 
       duration: 0.4, 
-      ease: 'easeOut',
+      ease: easeOut,
       when: 'beforeChildren',
       staggerChildren: 0.1
     } 
   },
   exit: { 
     opacity: 0, 
-    transition: { duration: 0.2, ease: 'easeIn' } 
+    transition: { duration: 0.2, ease: easeIn } 
   }
 }
 
@@ -32,7 +35,7 @@ const itemVariants = {
   animate: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.4, ease: 'easeOut' } 
+    transition: { duration: 0.4, ease: easeOut } 
   }
 }
 
@@ -44,7 +47,7 @@ const sectionVariants = {
     y: 0, 
     transition: { 
       duration: 0.5, 
-      ease: 'easeOut',
+      ease: easeOut,
       staggerChildren: 0.1 
     } 
   }
@@ -56,7 +59,7 @@ const cardVariants = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.4, ease: 'easeOut' } 
+    transition: { duration: 0.4, ease: easeOut } 
   }
 }
 

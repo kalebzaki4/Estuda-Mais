@@ -31,7 +31,7 @@ export default function OAuth2RedirectHandler() {
         if (error || errorKey) {
           // Try to keep the same semantic key so Login can show contextual messages
           const query = errorKey || error
-          navigate(`/login?error=${encodeURIComponent(query)}`, { replace: true })
+          navigate(`/login?error=${encodeURIComponent(query ?? '')}`, { replace: true })
           return
         }
 

@@ -1,6 +1,7 @@
 import { FaAward, FaStar, FaBullseye } from 'react-icons/fa'
 import { Target } from 'lucide-react'
 import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 
 type Goal = {
   current: number
@@ -11,22 +12,22 @@ type Achievement = {
   id: string | number
   name: string
   description: string
-  icon: React.ReactNode
+  icon: ReactNode
   earned: boolean
   progress: number
 }
 
 type AchievementsSectionProps = {
-  points: number
-  weeklyStreak: number
+  points?: number
+  weeklyStreak?: number
   achievements?: Achievement[]
   dailyGoal?: Goal
   weeklyGoal?: Goal
 }
 
 export default function AchievementsSection({
-  points,
-  weeklyStreak,
+  points = 0,
+  weeklyStreak = 0,
   achievements = [],
   dailyGoal = { current: 0, target: 60 },
   weeklyGoal = { current: 0, target: 10 }
@@ -43,7 +44,7 @@ export default function AchievementsSection({
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' as const } }
   }
 
   const userLevel = Math.floor(points / 500) + 1
@@ -78,7 +79,7 @@ export default function AchievementsSection({
                 className="h-full bg-gradient-to-r from-yellow-500 to-orange-500"
                 initial={{ width: 0 }}
                 animate={{ width: `${levelProgress}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
+                transition={{ duration: 1, ease: 'easeOut' as const }}
               />
             </div>
           </div>
@@ -146,7 +147,7 @@ export default function AchievementsSection({
         <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">🎯 Meta Diária</h3>
-            <LuTarget size={20} className="text-brand-300" />
+            <Target size={20} className="text-brand-300" />
           </div>
           <div className="space-y-4">
             <div>
@@ -170,7 +171,7 @@ export default function AchievementsSection({
         <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">📅 Meta Semanal</h3>
-            <LuTarget size={20} className="text-brand-300" />
+            <Target size={20} className="text-brand-300" />
           </div>
           <div className="space-y-4">
             <div>

@@ -3,6 +3,37 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import ProgressOverview from './ProgressOverview'
 
+type PomodoroEntry = {
+  minutes: number
+  finishedAt: string
+  type: string
+}
+
+type SubjectStat = {
+  name: string
+  completed: number
+  total: number
+  color?: string
+}
+
+type CompletionStats = {
+  completed: number
+  remaining: number
+}
+
+type StudyStatisticsProps = {
+  pomodoroHistory: PomodoroEntry[]
+  subjectStats?: SubjectStat[]
+  completionStats?: CompletionStats
+  studyMinutesToday?: number
+  weeklyStreak?: number
+  totalSessions?: number
+  totalHours?: number
+  bestDay?: { minutes: number; day: string }
+  dailyAverage?: number
+  initialFilter?: string | null
+}
+
 export default function StudyStatistics({ 
   pomodoroHistory, 
   subjectStats = [], // Default to empty if not provided
@@ -14,7 +45,7 @@ export default function StudyStatistics({
   bestDay = { minutes: 0, day: '-' },
   dailyAverage = 0,
   initialFilter = null
-}) {
+}: StudyStatisticsProps) {
   const [filter, setFilter] = useState(initialFilter)
 
   // Calculate statistics from pomodoro history
@@ -30,7 +61,7 @@ export default function StudyStatistics({
   }).length
 
   const thisWeekMinutes = filteredHistory
-    .filter(entry => {
+    .filter((entry): entry is PomodoroEntry => {
       const entryDate = new Date(entry.finishedAt)
       const weekAgo = new Date()
       weekAgo.setDate(weekAgo.getDate() - 7)
@@ -50,7 +81,7 @@ export default function StudyStatistics({
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' as const } }
   }
 
   return (
@@ -177,7 +208,7 @@ export default function StudyStatistics({
         </div>
         <div className="space-y-5">
           {subjectStats.length > 0 ? (
-            subjectStats.map((subject, idx) => {
+            subjectStats.map((subject: SubjectStat, idx: number) => {
               const percentage = Math.round((subject.completed / subject.total) * 100)
               return (
                 <div key={idx}>
@@ -190,7 +221,7 @@ export default function StudyStatistics({
                       className={`h-full bg-gradient-to-r ${subject.color || 'from-brand-500 to-purple-500'} transition-all duration-500`}
                       initial={{ width: 0 }}
                       animate={{ width: `${percentage}%` }}
-                      transition={{ duration: 1, ease: "easeOut", delay: 0.2 + (idx * 0.1) }}
+                      transition={{ duration: 1, ease: 'easeOut' as const, delay: 0.2 + (idx * 0.1) }}
                     />
                   </div>
                   <p className="text-white/50 text-xs mt-1">{percentage}% concluído</p>

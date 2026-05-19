@@ -21,10 +21,10 @@ export default function Dashboard() {
   
   // Mapeamento de abas válidas
   const validTabs = ['visao-geral', 'estatisticas', 'novo-estudo', 'roadmaps', 'competicao', 'conquistas']
-  const initialTab = validTabs.includes(tab) ? tab : 'visao-geral'
+  const initialTab = typeof tab === 'string' && validTabs.includes(tab) ? tab : 'visao-geral'
   
-  const [activeTab, setActiveTab] = useState(initialTab)
-  const [statsFilter, setStatsFilter] = useState(location.state?.filter || null)
+  const [activeTab, setActiveTab] = useState<string>(initialTab)
+  const [statsFilter, setStatsFilter] = useState<string | null>(location.state?.filter || null)
 
   // Sincronizar URL com activeTab se o parametro mudar (navegação externa/menu)
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Dashboard() {
   }, [tab, location.state])
 
   // Função para mudar aba e atualizar URL
-  const handleTabChange = (newTabId) => {
+  const handleTabChange = (newTabId: string) => {
     setActiveTab(newTabId)
     navigate(`/dashboard/${newTabId}`)
   }
@@ -60,7 +60,7 @@ export default function Dashboard() {
       return 0
     }
   })
-  const [pomodoroHistory, setPomodoroHistory] = useState(() => {
+  const [pomodoroHistory, setPomodoroHistory] = useState<Array<{ type: string; minutes: number; finishedAt?: string; topics?: string[]; summary?: string; xp?: number; subject?: string }>>(() => {
     try {
       const raw = localStorage.getItem('pomodoroHistory')
       return raw ? JSON.parse(raw) : []
@@ -68,7 +68,7 @@ export default function Dashboard() {
       return []
     }
   })
-  const [studyHistory, setStudyHistory] = useState(() => {
+  const [studyHistory, setStudyHistory] = useState<Record<string, number>>(() => {
     try {
       const raw = localStorage.getItem('studyHistory')
       return raw ? JSON.parse(raw) : {}
@@ -77,7 +77,7 @@ export default function Dashboard() {
     }
   })
 
-  const handleSessionComplete = (entry) => {
+  const handleSessionComplete = (entry: { type: string; minutes: number; finishedAt?: string; topics?: string[]; summary?: string; xp?: number; subject?: string }) => {
     const updatedHistory = [entry, ...pomodoroHistory].slice(0, 40)
     setPomodoroHistory(updatedHistory)
     try {
@@ -154,8 +154,8 @@ export default function Dashboard() {
   // Animation Variants
   const tabContentVariants = {
     initial: { opacity: 0, y: 10 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
-    exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: 'easeIn' } }
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+    exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: 'easeIn' as const } }
   }
 
   const containerVariants = {

@@ -1,6 +1,12 @@
 import React from 'react';
 
-const TabNavigation = ({ tabs, activeTab, onTabChange }) => {
+type TabNavigationProps = {
+  tabs: Array<{ id: string; label: string }>
+  activeTab: string
+  onTabChange: (tabId: string) => void
+}
+
+const TabNavigation = ({ tabs, activeTab, onTabChange }: TabNavigationProps) => {
   return (
     <nav className="relative z-10 mb-8">
       <ul className="flex space-x-4 border-b border-white/10">

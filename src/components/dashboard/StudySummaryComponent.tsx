@@ -1,11 +1,25 @@
 import { motion } from 'framer-motion'
 import { FaBook, FaClock, FaTrophy, FaCalendarAlt, FaChartBar, FaPlus } from 'react-icons/fa'
 
+type StudySummaryData = {
+  subject: string
+  minutes: number
+  xp: number
+  finishedAt: string
+  topics?: string[]
+}
+
+type StudySummaryComponentProps = {
+  data: StudySummaryData
+  onViewStats: () => void
+  onNewStudy: () => void
+}
+
 export default function StudySummaryComponent({ 
   data, 
   onViewStats, 
   onNewStudy 
-}) {
+}: StudySummaryComponentProps) {
   const { subject, minutes, xp, finishedAt, topics = [] } = data
 
   const container = {

@@ -2,20 +2,63 @@ import { useState, useEffect } from 'react'
 import { FaMedal, FaChartLine } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 
+type CompetitionSectionProps = {
+  user?: { id?: string | number } | null
+  points?: number
+}
+
+type RankingUser = {
+  rank: number
+  name: string
+  points: number
+  avatar: string
+  isYou: boolean
+  trend: 'up' | 'down'
+}
+
+type FriendProgress = {
+  name: string
+  progress: number
+  rank: number
+  streak: number
+  studyToday: string
+}
+
+type Activity = {
+  id: number
+  icon: string
+  user: string
+  action: string
+  time: string
+}
+
+const friendsProgress: FriendProgress[] = [
+  { name: 'Ana', progress: 78, rank: 2, streak: 12, studyToday: '1h 25m' },
+  { name: 'Bruno', progress: 91, rank: 1, streak: 18, studyToday: '2h 10m' },
+  { name: 'Carlos', progress: 63, rank: 4, streak: 9, studyToday: '55m' }
+]
+
+const recentActivity: Activity[] = [
+  { id: 1, icon: '🔥', user: 'João', action: 'concluiu 45 minutos de JavaScript', time: '10 min atrás' },
+  { id: 2, icon: '⚡', user: 'Maria', action: 'ganhou 150 XP em React', time: '25 min atrás' },
+  { id: 3, icon: '📘', user: 'Pedro', action: 'finalizou 30 min de Python', time: '45 min atrás' }
+]
+
 export default function CompetitionSection({ 
   user: currentUser,
   points: initialPoints,
-}) {
-  const [leaderboard, setLeaderboard] = useState([])
+}: CompetitionSectionProps) {
+  const [leaderboard, setLeaderboard] = useState<RankingUser[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/usuarios/ranking')
-        const data = response.data.map((user, index) => ({
+        const response = await fetch('http://localhost:8080/usuarios/ranking')
+        const json = await response.json()
+        const data: RankingUser[] = json.map((user: any, index: number) => ({
           rank: index + 1,
-          name: user.nome,
+          name: user.nome || 'Usuário',
           points: user.xp || 0,
           avatar: user.avatar || '👤',
           isYou: user.id === currentUser?.id,
@@ -44,7 +87,7 @@ export default function CompetitionSection({
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' as const } }
   }
 
   return (

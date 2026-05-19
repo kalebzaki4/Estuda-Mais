@@ -1,7 +1,37 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, KeyboardEvent } from 'react'
 import { FaChevronLeft, FaChevronRight, FaBookOpen, FaUsers, FaTrophy, FaMapMarkerAlt } from 'react-icons/fa'
 import { GiTomato, GiTargetPrize } from 'react-icons/gi'
 import styles from '../../styles/HighlightsCarousel.module.css'
+
+type CarouselItem = {
+  id: string
+  title: string
+  Icon: React.ComponentType<{ size?: number }>
+  description: string
+  bullets: string[]
+  cta?: string
+}
+
+type HighlightsCarouselProps = {
+  items?: CarouselItem[]
+  autoPlay?: boolean
+  interval?: number
+}
+
+type CarouselItem = {
+  id: string
+  title: string
+  Icon: React.ComponentType<{ size?: number }>
+  description: string
+  bullets: string[]
+  cta?: string
+}
+
+type HighlightsCarouselProps = {
+  items?: CarouselItem[]
+  autoPlay?: boolean
+  interval?: number
+}
 
 const DEFAULT_ITEMS = [
   {
@@ -48,12 +78,12 @@ const DEFAULT_ITEMS = [
   }
 ]
 
-export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = true, interval = 4500 }) {
+export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = true, interval = 4500 }: HighlightsCarouselProps) {
   const [index, setIndex] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(1)
   const total = items.length
-  const timerRef = useRef(null)
-  const rootRef = useRef(null)
+  const timerRef = useRef<number | null>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     function update() {
@@ -72,12 +102,18 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
   // autoplay with pause on hover
   useEffect(() => {
     if (!autoPlay) return
-    clearInterval(timerRef.current)
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current)
+    }
     const maxStart = Math.max(0, total - slidesToShow)
-    timerRef.current = setInterval(() => {
+    timerRef.current = window.setInterval(() => {
       setIndex(i => Math.min(maxStart, i + 1))
     }, interval)
-    return () => clearInterval(timerRef.current)
+    return () => {
+      if (timerRef.current !== null) {
+        clearInterval(timerRef.current)
+      }
+    }
   }, [autoPlay, interval, total, slidesToShow])
 
   useEffect(() => {
@@ -90,7 +126,7 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
   const prev = () => setIndex(i => (i <= 0 ? maxStart : i - 1))
   const next = () => setIndex(i => (i >= maxStart ? 0 : i + 1))
 
-  function onKey(e) {
+  function onKey(e: KeyboardEvent<HTMLDivElement>) {
     if (e.key === 'ArrowLeft') prev()
     if (e.key === 'ArrowRight') next()
   }
@@ -106,17 +142,23 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
       tabIndex={0}
       onKeyDown={onKey}
       ref={rootRef}
-      onMouseEnter={() => clearInterval(timerRef.current)}
+      onMouseEnter={() => {
+        if (timerRef.current !== null) {
+          clearInterval(timerRef.current)
+        }
+      }}
       onMouseLeave={() => {
         if (!autoPlay) return
-        clearInterval(timerRef.current)
+        if (timerRef.current !== null) {
+          clearInterval(timerRef.current)
+        }
         const maxStart = Math.max(0, total - slidesToShow)
-        timerRef.current = setInterval(() => setIndex(i => Math.min(maxStart, i + 1)), interval)
+        timerRef.current = window.setInterval(() => setIndex(i => Math.min(maxStart, i + 1)), interval)
       }}
     >
       <div className={`relative ${styles.frame}`}>
         <div className={styles.track} style={{ transform: `translateX(-${transform}%)` }}>
-          {items.map((it) => (
+          {items.map((it: CarouselItem) => (
             <div key={it.id} className={styles.slide} style={{ flex: `0 0 ${100 / Math.max(1, slidesToShow)}%` }}>
               <article className={styles.card}>
                 <div className={styles.cardLeft}>
@@ -134,7 +176,7 @@ export default function HighlightsCarousel({ items = DEFAULT_ITEMS, autoPlay = t
                     </ul>
                   )}
                   <div className={styles.cardCtaWrap}>
-                    <button className={styles.cardCta}>{it.cta}</button>
+                    <button className={styles.cardCta}>{it.cta ?? 'Ver mais'}</button>
                   </div>
                 </div>
               </article>
