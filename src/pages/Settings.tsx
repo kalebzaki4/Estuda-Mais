@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUser, FaEnvelope, FaSignOutAlt, FaShieldAlt, FaTrash, FaSave, FaLock, FaExclamationTriangle } from 'react-icons/fa'
-import { useAuth } from '../context/AuthContextCore.jsx'
+import { useAuth } from '../context/AuthContextCore'
 // TODO: Conectar com novo backend quando userService estiver disponível
 // import userService from '../services/userService.js'
 import { motion } from 'framer-motion'
@@ -283,3 +283,4 @@ export default function Settings() {
     </div>
   )
 }
+

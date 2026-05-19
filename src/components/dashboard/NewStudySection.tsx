@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { sanitizeInput } from '../../utils/validators.js'
-import PomodoroTimer from './PomodoroTimer.jsx'
-import StudySummaryComponent from './StudySummaryComponent.jsx'
+import PomodoroTimer from './PomodoroTimer'
+import StudySummaryComponent from './StudySummaryComponent'
 // TODO: Conectar com novo backend para carregar matérias e preparar sessões
 // import studyService from '../../services/studyService.js'
 
@@ -475,3 +475,4 @@ export default function NewStudySection({ user, onSessionComplete }) {
     </motion.div>
   )
 }
+

@@ -4,7 +4,7 @@ import { FaBookOpen, FaShieldAlt } from 'react-icons/fa'
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { isValidEmail, getPasswordIssues, hasDangerousPatterns } from '../utils/validators'
-import { useAuth } from '../context/AuthContextCore.jsx'
+import { useAuth } from '../context/AuthContextCore'
 import styles from '../styles/Login.module.css'
 import * as FM from 'framer-motion'
 
