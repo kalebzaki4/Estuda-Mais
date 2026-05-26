@@ -19,7 +19,6 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
-
             return JWT.create().withIssuer("API Estuda Mais").withSubject(usuario.getEmail()).withExpiresAt(dataExpiracao()).sign(algoritmo);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar token JWT", e);
