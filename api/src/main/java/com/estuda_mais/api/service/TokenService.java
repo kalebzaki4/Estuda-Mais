@@ -19,7 +19,10 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
-            return JWT.create().withIssuer("API Estuda Mais").withSubject(usuario.getEmail()).withExpiresAt(dataExpiracao()).sign(algoritmo);
+            return JWT.create()
+                    .withIssuer("api-estuda-mais")
+                    .withSubject(usuario.getEmail())
+                    .withExpiresAt(dataExpiracao()).sign(algoritmo);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao gerar token JWT", e);
         }
@@ -28,7 +31,7 @@ public class TokenService {
     public String getSubject(String token) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
-            return JWT.require(algoritmo).withIssuer("API Estuda Mais").build().verify(token).getSubject();
+            return JWT.require(algoritmo).withIssuer("api-estuda-mais").build().verify(token).getSubject();
         } catch (Exception e) {
             throw new RuntimeException("Token JWT inválido ou expirado", e);
         }
