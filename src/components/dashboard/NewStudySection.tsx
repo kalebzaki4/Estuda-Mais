@@ -177,9 +177,11 @@ export default function NewStudySection({ user, onSessionComplete }: NewStudySec
     const sanitized = sanitizeInput(currentTopic).trim()
     
     // Validação Anti-Cheat: 2 palavras ou 10 caracteres, sem caracteres repetidos 5+ vezes
-    const topicRegex = /^(?=(?:.*\s.*){1,}|.{10,})(?!.*(.)\1{4,}).*$/
+    const isLongEnough = sanitized.length >= 10;
+    const hasSpace = /\s/.test(sanitized);
+    const hasRepeatingChars = /(.)\1{4,}/.test(sanitized);
     
-    if (!topicRegex.test(sanitized)) {
+    if (!(isLongEnough || hasSpace) || hasRepeatingChars) {
       setTopicError(true)
       toast.custom((t) => (
         <div className="bg-black/90 backdrop-blur-md border-2 border-purple-600 p-4 rounded-2xl flex items-center gap-4 shadow-[0_0_15px_rgba(124,58,237,0.4)] animate-in fade-in slide-in-from-top-5">

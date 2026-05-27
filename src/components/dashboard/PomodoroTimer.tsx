@@ -191,9 +191,11 @@ export default function PomodoroTimer({
     const sanitized = newTopic.trim()
     
     // Validação Anti-Cheat: 2 palavras ou 10 caracteres, sem caracteres repetidos 5+ vezes
-    const topicRegex = /^(?=(?:.*\s.*){1,}|.{10,})(?!.*(.)\1{4,}).*$/
+    const isLongEnough = sanitized.length >= 10
+    const hasSpace = /\s/.test(sanitized)
+    const hasRepeatingChars = /(.)\1{4,}/.test(sanitized)
     
-    if (!topicRegex.test(sanitized)) {
+    if (!(isLongEnough || hasSpace) || hasRepeatingChars) {
       toast.error("Tópico inválido!", {
         description: "Use pelo menos 10 caracteres ou 2 palavras. Evite repetições.",
         style: {
