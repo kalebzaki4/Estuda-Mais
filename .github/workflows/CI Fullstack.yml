@@ -37,7 +37,7 @@ jobs:
           cache: 'maven'
 
       - name: Build backend
-        working-directory: ./api/api
+        working-directory: ./api
         run: |
           chmod +x mvnw
           ./mvnw clean install

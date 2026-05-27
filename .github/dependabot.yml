@@ -10,7 +10,7 @@ updates:
       - "dependencies"
 
   - package-ecosystem: "maven"
-    directory: "/api/api" 
+    directory: "/api" 
     schedule:
       interval: "weekly"
     labels:

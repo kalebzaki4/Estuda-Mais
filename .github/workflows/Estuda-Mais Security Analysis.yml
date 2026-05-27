@@ -51,7 +51,7 @@ jobs:
         if: matrix.language == 'java-kotlin'
         run: |
           # Entra na pasta correta e dá permissão ao wrapper
-          cd api/api
+          cd api
           chmod +x mvnw
           ./mvnw clean package \
             -B -V -e \

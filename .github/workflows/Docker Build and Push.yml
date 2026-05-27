@@ -58,7 +58,7 @@ jobs:
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
         with:
-          context: ./api/api
+          context: ./api
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:${{ github.sha }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:latest
@@ -111,7 +111,7 @@ jobs:
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
         run: |
-          cd api/api
+          cd api
           mvn clean package
 
       - name: Set up Node.js
@@ -131,4 +131,3 @@ jobs:
 
       - name: Run tests (Frontend)
         run: npm test
-
