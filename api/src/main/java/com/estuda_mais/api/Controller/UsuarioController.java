@@ -3,10 +3,7 @@ package com.estuda_mais.api.Controller;
 import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,5 +36,28 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(usuario);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario updatedUsuario) {
+        try {
+            Usuario existingUsuario = usuarioService.findById(id);
+            if (existingUsuario == null) {
+                return ResponseEntity.notFound().build();
+            }
+            updatedUsuario.setId(id);
+            Usuario updated = usuarioService.update(updatedUsuario);
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @DeleteMapping("/id")
+    public ResponseEntity<Usuario> delete(@RequestParam @PathVariable String id) {
+        Long parsedId;
+        try {
+            parsedId = Long.valueOf(id);
+        } catch (NumberFormatException e) {}
     }
 }

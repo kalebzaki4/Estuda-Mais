@@ -40,9 +40,7 @@ public class UsuarioService {
         usuario.setName(registerRequestDTO.name());
         usuario.setEmail(registerRequestDTO.email());
 
-        usuario.setPassword(
-                passwordEncoder.encode(registerRequestDTO.password())
-        );
+        usuario.setPassword(passwordEncoder.encode(registerRequestDTO.password()));
 
         return usuarioRepository.save(usuario);
     }
@@ -53,5 +51,21 @@ public class UsuarioService {
             throw new IllegalArgumentException("Usuário não encontrado");
         }
         return usuarioEncontrado;
+    }
+
+    public Usuario update(Usuario updatedUsuario) {
+        Usuario existingUsuario = usuarioRepository.findById(updatedUsuario.getId()).orElse(null);
+        if (existingUsuario == null) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+
+        existingUsuario.setName(updatedUsuario.getName());
+        existingUsuario.setEmail(updatedUsuario.getEmail());
+
+        if (updatedUsuario.getPassword() != null && !updatedUsuario.getPassword().isEmpty()) {
+            existingUsuario.setPassword(passwordEncoder.encode(updatedUsuario.getPassword()));
+        }
+
+        return usuarioRepository.save(existingUsuario);
     }
 }
