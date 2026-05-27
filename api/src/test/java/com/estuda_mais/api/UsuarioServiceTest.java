@@ -11,12 +11,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
 public class UsuarioServiceTest {
 
     @Mock
@@ -33,6 +34,7 @@ public class UsuarioServiceTest {
         // Arrange
         Usuario usuario1 = new Usuario();
         Usuario usuario2 = new Usuario();
+        when(usuarioRepository.findAll()).thenReturn(Arrays.asList(usuario1, usuario2));
 
         // Act
         List<Usuario> usuarios = usuarioService.findAll();
