@@ -46,4 +46,12 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario findById(Long id) {
+        Usuario usuarioEncontrado = usuarioRepository.findById(id).orElse(null);
+        if (usuarioEncontrado == null) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+        return usuarioEncontrado;
+    }
 }
