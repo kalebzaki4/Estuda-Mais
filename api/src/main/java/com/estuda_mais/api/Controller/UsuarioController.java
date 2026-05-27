@@ -27,7 +27,14 @@ public class UsuarioController {
 
     @GetMapping("/id")
     public ResponseEntity<Usuario> findById(@RequestParam String id) {
-        Usuario usuario = usuarioService.findById(Long.valueOf(id));
+        Long parsedId;
+        try {
+            parsedId = Long.valueOf(id);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Usuario usuario = usuarioService.findById(parsedId);
         if (usuario == null) {
             return ResponseEntity.notFound().build();
         }
