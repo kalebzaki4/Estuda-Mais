@@ -31,8 +31,6 @@ public class UsuarioServiceTest {
     @Test
     public void deveBuscarTodosOsUsuarios() {
         // Arrange
-        Usuario usuario1 = new Usuario();
-        Usuario usuario2 = new Usuario();
 
         // Act
         List<Usuario> usuarios = usuarioService.findAll();
