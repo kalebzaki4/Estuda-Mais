@@ -68,4 +68,8 @@ public class UsuarioService {
 
         return usuarioRepository.save(existingUsuario);
     }
+
+    public void delete(Usuario usuario) {
+        usuarioRepository.delete(usuario);
+    }
 }

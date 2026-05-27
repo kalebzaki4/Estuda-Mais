@@ -22,42 +22,41 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<Usuario> findById(@RequestParam String id) {
-        Long parsedId;
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> findById(@PathVariable Long id) {
         try {
-            parsedId = Long.valueOf(id);
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Usuario usuario = usuarioService.findById(parsedId);
-        if (usuario == null) {
+            Usuario usuario = usuarioService.findById(id);
+            return ResponseEntity.ok(usuario);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(usuario);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario updatedUsuario) {
-        try {
-            Usuario existingUsuario = usuarioService.findById(id);
-            if (existingUsuario == null) {
-                return ResponseEntity.notFound().build();
-            }
-            updatedUsuario.setId(id);
-            Usuario updated = usuarioService.update(updatedUsuario);
-            return ResponseEntity.ok(updated);
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
     }
 
-    @DeleteMapping("/id")
-    public ResponseEntity<Usuario> delete(@RequestParam @PathVariable String id) {
-        Long parsedId;
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario updatedUsuario) {
         try {
-            parsedId = Long.valueOf(id);
-        } catch (NumberFormatException e) {}
+            updatedUsuario.setId(id);
+            Usuario updated = usuarioService.update(updatedUsuario);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            Usuario usuario = usuarioService.findById(id);
+            usuarioService.delete(usuario);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 }
