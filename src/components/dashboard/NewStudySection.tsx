@@ -42,14 +42,6 @@ const subjectConfig = {
   'default': { icon: FaCode, color: 'text-gray-400', glow: 'group-hover:border-brand-500/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]', active: 'border-brand-500 shadow-[0_0_20px_rgba(139,92,246,0.4)]' }
 }
 
-type NewStudySectionProps = {
-  user?: {
-    id?: string | number
-    name?: string
-  }
-  onSessionComplete?: (data: unknown) => void
-}
-
 export default function NewStudySection({ user, onSessionComplete }: NewStudySectionProps) {
   const navigate = useNavigate()
 

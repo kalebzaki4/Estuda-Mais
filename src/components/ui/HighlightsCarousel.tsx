@@ -18,21 +18,6 @@ type HighlightsCarouselProps = {
   interval?: number
 }
 
-type CarouselItem = {
-  id: string
-  title: string
-  Icon: React.ComponentType<{ size?: number }>
-  description: string
-  bullets: string[]
-  cta?: string
-}
-
-type HighlightsCarouselProps = {
-  items?: CarouselItem[]
-  autoPlay?: boolean
-  interval?: number
-}
-
 const DEFAULT_ITEMS = [
   {
     id: 'courses',

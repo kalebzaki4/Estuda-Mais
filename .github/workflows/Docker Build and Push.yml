@@ -107,12 +107,13 @@ jobs:
 
       - name: Build and test Backend
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/estuda_mais_db
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/estuda_mais_db?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
         run: |
           cd api
-          mvn clean package
+          chmod +x mvnw
+          ./mvnw clean package
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

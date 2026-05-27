@@ -1,38 +1,57 @@
 package com.estuda_mais.api.service;
 
+import com.estuda_mais.api.dto.RegisterRequestDTO;
 import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.repository.UsuarioRepository;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import org.jspecify.annotations.Nullable;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UsuarioService implements UserDetailsService {
-    @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
+    private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
-    public Usuario autenticar(@NotBlank @Email String email, @Nullable String password) {
+    @Transactional
+    public Usuario save(@Valid RegisterRequestDTO registerRequestDTO) {
 
+        if (usuarioRepository.existsByEmail(registerRequestDTO.email())) {
+            throw new IllegalArgumentException("Email já cadastrado");
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setName(registerRequestDTO.name());
+        usuario.setEmail(registerRequestDTO.email());
+
+        usuario.setPassword(
+                passwordEncoder.encode(registerRequestDTO.password())
+        );
+
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario findById(Long id) {
+        Usuario usuarioEncontrado = usuarioRepository.findById(id).orElse(null);
+        if (usuarioEncontrado == null) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+        return usuarioEncontrado;
     }
 }
