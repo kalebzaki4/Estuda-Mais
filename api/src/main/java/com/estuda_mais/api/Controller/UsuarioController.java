@@ -4,7 +4,9 @@ import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,15 +25,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable Long id) {
-        try {
-            Usuario usuario = usuarioService.findById(id);
-            return ResponseEntity.ok(usuario);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity<Usuario> findById(@PathVariable Long id, UriComponentsBuilder ucBuilder) {
+        Usuario usuario = usuarioService.findById(id);
+        URI uri = ucBuilder.path("/usuarios/{id}").buildAndExpand(id).toUri();
+        return ResponseEntity.created(uri).body(usuario);
     }
 
     @PutMapping("/{id}")
