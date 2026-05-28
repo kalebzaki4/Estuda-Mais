@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -41,5 +42,19 @@ public class UsuarioServiceTest {
         // Assert
         assertEquals(2, usuarios.size());
 
+    }
+
+    @Test
+    public void deveBuscarPorIdUsuario() {
+        // Arrange
+        Usuario usuario1 = new Usuario();
+        usuario1.setId(1L);
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario1));
+
+        // Act
+        Optional<Usuario> usuario = Optional.ofNullable(usuarioService.findById(1L));
+
+        // Assert
+        assertEquals(usuario1, usuario.orElse(null));
     }
 }
