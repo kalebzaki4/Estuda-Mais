@@ -29,6 +29,14 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario findById(Long id) {
+        Usuario usuarioEncontrado = usuarioRepository.findById(id).orElse(null);
+        if (usuarioEncontrado == null) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+        return usuarioEncontrado;
+    }
+
     @Transactional
     public Usuario save(@Valid RegisterRequestDTO registerRequestDTO) {
 
@@ -46,14 +54,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario findById(Long id) {
-        Usuario usuarioEncontrado = usuarioRepository.findById(id).orElse(null);
-        if (usuarioEncontrado == null) {
-            throw new IllegalArgumentException("Usuário não encontrado");
-        }
-        return usuarioEncontrado;
-    }
-
+    @Transactional
     public Usuario update(Long id, UsuarioUpdateDTO updatedUsuario) {
         Usuario usuarioExistente = findById(id);
         if (usuarioExistente == null) {
@@ -67,6 +68,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuarioExistente);
     }
 
+    @Transactional
     public void delete(Usuario usuario) {
         usuarioRepository.delete(usuario);
     }
