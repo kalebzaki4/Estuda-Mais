@@ -1,5 +1,6 @@
-package com.estuda_mais.api.Controller;
+package com.estuda_mais.api.controller;
 
+import com.estuda_mais.api.dto.UsuarioUpdateDTO;
 import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +33,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario updatedUsuario) {
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody UsuarioUpdateDTO dto) {
         try {
-            updatedUsuario.setId(id);
-            Usuario updated = usuarioService.update(updatedUsuario);
-            return ResponseEntity.ok(updated);
+            Usuario updatedUsuario = usuarioService.update(id, dto);
+            return ResponseEntity.ok(updatedUsuario);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

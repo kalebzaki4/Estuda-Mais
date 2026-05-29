@@ -1,4 +1,4 @@
-package com.estuda_mais.api.Controller;
+package com.estuda_mais.api.controller;
 
 import com.estuda_mais.api.dto.LoginRequestDTO;
 import com.estuda_mais.api.dto.RegisterRequestDTO;

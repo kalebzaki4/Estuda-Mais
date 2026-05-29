@@ -1,6 +1,7 @@
 package com.estuda_mais.api.service;
 
 import com.estuda_mais.api.dto.RegisterRequestDTO;
+import com.estuda_mais.api.dto.UsuarioUpdateDTO;
 import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -53,20 +54,17 @@ public class UsuarioService {
         return usuarioEncontrado;
     }
 
-    public Usuario update(Usuario updatedUsuario) {
-        Usuario existingUsuario = usuarioRepository.findById(updatedUsuario.getId()).orElse(null);
-        if (existingUsuario == null) {
+    public Usuario update(Long id, UsuarioUpdateDTO updatedUsuario) {
+        Usuario usuarioExistente = findById(id);
+        if (usuarioExistente == null) {
             throw new IllegalArgumentException("Usuário não encontrado");
         }
 
-        existingUsuario.setName(updatedUsuario.getName());
-        existingUsuario.setEmail(updatedUsuario.getEmail());
+        usuarioExistente.setName(updatedUsuario.name());
+        usuarioExistente.setEmail(updatedUsuario.email());
+        usuarioExistente.setPassword(passwordEncoder.encode(updatedUsuario.password()));
 
-        if (updatedUsuario.getPassword() != null && !updatedUsuario.getPassword().isEmpty()) {
-            existingUsuario.setPassword(passwordEncoder.encode(updatedUsuario.getPassword()));
-        }
-
-        return usuarioRepository.save(existingUsuario);
+        return usuarioRepository.save(usuarioExistente);
     }
 
     public void delete(Usuario usuario) {
