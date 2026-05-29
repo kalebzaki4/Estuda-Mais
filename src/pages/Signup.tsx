@@ -89,12 +89,6 @@ export default function Signup() {
     return 'Forte'
   }
 
-  const getPasswordStrengthColor = (strength: number): string => {
-    if (strength < 40) return '#ef4444'
-    if (strength < 70) return '#f59e0b'
-    return '#22c55e'
-  }
-
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
     if (!name) newErrors.name = 'Nome é obrigatório.'
