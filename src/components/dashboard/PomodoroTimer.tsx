@@ -523,11 +523,11 @@ export default function PomodoroTimer({
                   <div className="relative z-10">
                     <motion.div
                       initial={{ y: 0, opacity: 1 }}
-                      animate={showRewardModal ? { 
+                      animate={{ 
                         y: [0, -40, -100], 
                         opacity: [1, 1, 0],
                         scale: [1, 1.2, 0.8]
-                      } : {}}
+                      }}
                       transition={{ duration: 2, ease: "easeOut", delay: 1 }}
                       className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
                     >
