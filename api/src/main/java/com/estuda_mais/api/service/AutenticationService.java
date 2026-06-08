@@ -1,5 +1,6 @@
 package com.estuda_mais.api.service;
 
+import com.estuda_mais.api.exception.UsuarioNaoEncontradoException;
 import com.estuda_mais.api.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,6 @@ public class AutenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado com email: " + username));
     }
 }

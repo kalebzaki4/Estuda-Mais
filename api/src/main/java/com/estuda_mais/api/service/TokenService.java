@@ -2,6 +2,8 @@ package com.estuda_mais.api.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.estuda_mais.api.exception.ErroAoGerarTokenException;
+import com.estuda_mais.api.exception.TokenInvalidoOuExpiradoException;
 import com.estuda_mais.api.model.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,9 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
-            return JWT.create()
-                    .withIssuer("api-estuda-mais")
-                    .withSubject(usuario.getEmail())
-                    .withExpiresAt(dataExpiracao()).sign(algoritmo);
+            return JWT.create().withIssuer("api-estuda-mais").withSubject(usuario.getEmail()).withExpiresAt(dataExpiracao()).sign(algoritmo);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao gerar token JWT", e);
+            throw new ErroAoGerarTokenException("Erro ao gerar token: " + e.getMessage());
         }
     }
 
@@ -33,7 +32,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.require(algoritmo).withIssuer("api-estuda-mais").build().verify(token).getSubject();
         } catch (Exception e) {
-            throw new RuntimeException("Token JWT inválido ou expirado", e);
+            throw new TokenInvalidoOuExpiradoException("Token inválido ou expirado");
         }
     }
 
