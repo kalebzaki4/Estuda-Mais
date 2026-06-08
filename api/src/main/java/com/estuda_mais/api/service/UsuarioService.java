@@ -28,14 +28,17 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ver todos os usuarios
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
+    // ver usuario por id
     public Usuario findById(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com ID " + id + " não encontrado"));
     }
 
+    // criar usuario
     @Transactional
     public Usuario save(@Valid RegisterRequestDTO registerRequestDTO) {
         if (usuarioRepository.existsByEmail(registerRequestDTO.email())) {
@@ -52,6 +55,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    // atualizar usuario
     @Transactional
     public Usuario update(Long id, UsuarioUpdateDTO updatedUsuario) {
         Usuario usuario = findById(id);
@@ -61,6 +65,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    // deletar usuario
     @Transactional
     public void delete(Usuario usuario) {
         usuarioRepository.delete(usuario);

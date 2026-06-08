@@ -16,6 +16,7 @@ public class AutenticationService implements UserDetailsService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    // verificação de autenticação do usuário pelo email
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmail(username)
