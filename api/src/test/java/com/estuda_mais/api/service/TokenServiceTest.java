@@ -1,9 +1,8 @@
-package com.estuda_mais.api;
+package com.estuda_mais.api.service;
 
 import com.estuda_mais.api.exception.ErroAoGerarTokenException;
 import com.estuda_mais.api.exception.TokenInvalidoOuExpiradoException;
 import com.estuda_mais.api.model.Usuario;
-import com.estuda_mais.api.service.TokenService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

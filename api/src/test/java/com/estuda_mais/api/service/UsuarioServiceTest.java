@@ -1,4 +1,4 @@
-package com.estuda_mais.api;
+package com.estuda_mais.api.service;
 
 import com.estuda_mais.api.dto.RegisterRequestDTO;
 import com.estuda_mais.api.dto.UsuarioUpdateDTO;
@@ -6,7 +6,6 @@ import com.estuda_mais.api.exception.EmailJaCadastradoException;
 import com.estuda_mais.api.exception.UsuarioNaoEncontradoException;
 import com.estuda_mais.api.model.Usuario;
 import com.estuda_mais.api.repository.UsuarioRepository;
-import com.estuda_mais.api.service.UsuarioService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
