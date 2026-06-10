@@ -1,4 +1,4 @@
-package com.estuda_mais.api.exception;
+package com.estuda_mais.api.infra.exception;
 
 public class EmailJaCadastradoException extends RuntimeException {
     public EmailJaCadastradoException(String message) {

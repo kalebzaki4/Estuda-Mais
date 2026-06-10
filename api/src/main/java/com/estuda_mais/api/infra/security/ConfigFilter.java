@@ -1,7 +1,7 @@
-package com.estuda_mais.api.config;
+package com.estuda_mais.api.infra.security;
 
-import com.estuda_mais.api.repository.UsuarioRepository;
-import com.estuda_mais.api.service.TokenService;
+import com.estuda_mais.api.domain.usuario.UsuarioRepository;
+import com.estuda_mais.api.infra.security.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

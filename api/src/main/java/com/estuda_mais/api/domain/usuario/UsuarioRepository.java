@@ -1,6 +1,5 @@
-package com.estuda_mais.api.repository;
+package com.estuda_mais.api.domain.usuario;
 
-import com.estuda_mais.api.model.Usuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;

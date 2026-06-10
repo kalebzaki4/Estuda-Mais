@@ -1,4 +1,4 @@
-package com.estuda_mais.api.model;
+package com.estuda_mais.api.domain.usuario;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -22,6 +22,7 @@ import java.util.List;
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(unique = true)

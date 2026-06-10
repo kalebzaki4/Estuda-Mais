@@ -1,7 +1,7 @@
-package com.estuda_mais.api.service;
+package com.estuda_mais.api.infra.security;
 
-import com.estuda_mais.api.exception.UsuarioNaoEncontradoException;
-import com.estuda_mais.api.repository.UsuarioRepository;
+import com.estuda_mais.api.infra.exception.UsuarioNaoEncontradoException;
+import com.estuda_mais.api.domain.usuario.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

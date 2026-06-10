@@ -1,4 +1,4 @@
-package com.estuda_mais.api.exception;
+package com.estuda_mais.api.infra.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

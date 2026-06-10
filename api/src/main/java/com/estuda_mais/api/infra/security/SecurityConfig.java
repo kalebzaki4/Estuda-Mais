@@ -1,4 +1,4 @@
-package com.estuda_mais.api.config;
+package com.estuda_mais.api.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

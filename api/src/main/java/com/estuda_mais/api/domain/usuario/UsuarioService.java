@@ -1,11 +1,7 @@
-package com.estuda_mais.api.service;
+package com.estuda_mais.api.domain.usuario;
 
-import com.estuda_mais.api.dto.RegisterRequestDTO;
-import com.estuda_mais.api.dto.UsuarioUpdateDTO;
-import com.estuda_mais.api.exception.EmailJaCadastradoException;
-import com.estuda_mais.api.exception.UsuarioNaoEncontradoException;
-import com.estuda_mais.api.model.Usuario;
-import com.estuda_mais.api.repository.UsuarioRepository;
+import com.estuda_mais.api.infra.exception.EmailJaCadastradoException;
+import com.estuda_mais.api.infra.exception.UsuarioNaoEncontradoException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

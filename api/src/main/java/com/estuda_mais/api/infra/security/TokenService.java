@@ -1,10 +1,10 @@
-package com.estuda_mais.api.service;
+package com.estuda_mais.api.infra.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.estuda_mais.api.exception.ErroAoGerarTokenException;
-import com.estuda_mais.api.exception.TokenInvalidoOuExpiradoException;
-import com.estuda_mais.api.model.Usuario;
+import com.estuda_mais.api.infra.exception.ErroAoGerarTokenException;
+import com.estuda_mais.api.infra.exception.TokenInvalidoOuExpiradoException;
+import com.estuda_mais.api.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

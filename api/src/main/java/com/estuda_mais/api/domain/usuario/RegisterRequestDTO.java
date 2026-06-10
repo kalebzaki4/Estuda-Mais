@@ -1,4 +1,4 @@
-package com.estuda_mais.api.dto;
+package com.estuda_mais.api.domain.usuario;
 
 public record RegisterRequestDTO(
         String name,

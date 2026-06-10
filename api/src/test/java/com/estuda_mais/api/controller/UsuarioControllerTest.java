@@ -1,8 +1,8 @@
 package com.estuda_mais.api.controller;
 
-import com.estuda_mais.api.dto.UsuarioUpdateDTO;
-import com.estuda_mais.api.model.Usuario;
-import com.estuda_mais.api.service.UsuarioService;
+import com.estuda_mais.api.domain.usuario.UsuarioUpdateDTO;
+import com.estuda_mais.api.domain.usuario.Usuario;
+import com.estuda_mais.api.domain.usuario.UsuarioService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
